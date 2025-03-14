@@ -17,7 +17,17 @@ const advancedExampleDir = "examples/advanced"
 const basicExampleDir = "examples/basic"
 
 // Since Event Notifications is used in example, need to use a region it supports
-var validRegions = []string{}
+var validRegions = []string{
+	"au-syd",
+	"br-sao",
+	"ca-tor",
+	"eu-de",
+	"eu-gb",
+	"jp-osa",
+	"jp-tok",
+	"us-south",
+	"us-east",
+}
 
 func setupOptions(t *testing.T, prefix string, dir string) *testhelper.TestOptions {
 	options := testhelper.TestOptionsDefaultWithVars(&testhelper.TestOptions{
