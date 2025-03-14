@@ -18,6 +18,7 @@ variable "ibmcloud_api_key" {
 variable "prefix" {
   type        = string
   description = "A string value to prefix to all resources created by this example."
+  default     = "cloud-monitoring"
 }
 
 variable "resource_group" {
@@ -32,7 +33,7 @@ variable "region" {
   default     = "us-south"
 }
 
-variable "tags" {
+variable "resource_tags" {
   type        = list(string)
   description = "Tags associated with the IBM Cloud Monitoring instance (Optional, array of strings)."
   default     = []

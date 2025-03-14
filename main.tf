@@ -38,11 +38,17 @@ resource "ibm_resource_key" "resource_key" {
   tags                 = var.manager_key_tags
 }
 
+resource "time_sleep" "wait_for_cloud_monitoring_instance" {
+  depends_on      = [ibm_resource_instance.cloud_monitoring]
+  create_duration = "30s"
+}
+
 ########################################################################
 # IBM Cloud Metric Routing
 #########################################################################
 
-resource "ibm_iam_authorization_policy" "metrics_router_cloud_monitoring" {
+resource "ibm_iam_authorization_policy" "cloud_monitoring_policy" {
+  depends_on                  = [time_sleep.wait_for_cloud_monitoring_instance]
   for_each                    = { for target in var.metrics_router_targets : target.target_name => target if !target.skip_mrouter_sysdig_iam_auth_policy }
   source_service_name         = "metrics-router"
   target_service_name         = "sysdig-monitor"
@@ -52,7 +58,7 @@ resource "ibm_iam_authorization_policy" "metrics_router_cloud_monitoring" {
 }
 
 resource "time_sleep" "wait_for_cloud_monitoring_auth_policy" {
-  depends_on      = [ibm_iam_authorization_policy.metrics_router_cloud_monitoring]
+  depends_on      = [ibm_iam_authorization_policy.cloud_monitoring_policy]
   create_duration = "30s"
 }
 
@@ -61,7 +67,7 @@ resource "time_sleep" "wait_for_cloud_monitoring_auth_policy" {
 #########################################################################
 
 resource "ibm_metrics_router_target" "metrics_router_targets" {
-  depends_on      = [time_sleep.wait_for_cloud_monitoring_auth_policy]
+  depends_on      = [time_sleep.wait_for_cloud_monitoring_instance]
   for_each        = { for target in var.metrics_router_targets : target.target_name => target }
   destination_crn = each.value.destination_crn
   name            = each.key
@@ -73,8 +79,9 @@ resource "ibm_metrics_router_target" "metrics_router_targets" {
 #########################################################################
 
 resource "ibm_metrics_router_route" "metrics_router_routes" {
-  for_each = { for route in var.metrics_router_routes : route.name => route }
-  name     = each.key
+  depends_on = [ibm_metrics_router_target.metrics_router_targets]
+  for_each   = { for route in var.metrics_router_routes : route.name => route }
+  name       = each.key
   dynamic "rules" {
     for_each = each.value.rules
     content {
@@ -102,7 +109,8 @@ resource "ibm_metrics_router_route" "metrics_router_routes" {
 #########################################################################
 
 resource "ibm_metrics_router_settings" "metrics_router_settings" {
-  count = length(var.metrics_router_settings == null ? [] : [1])
+  depends_on = [ibm_metrics_router_target.metrics_router_targets]
+  count      = length(var.metrics_router_settings == null ? [] : [1])
   dynamic "default_targets" {
     for_each = var.metrics_router_settings.default_targets
     content {

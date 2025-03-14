@@ -38,17 +38,17 @@ output "manager_key_name" {
   description = "The cloud monitoring manager key name."
 }
 
-output "metrics_router_routes" {
-  value       = module.cloud_monitoring_adv.metrics_router_routes
-  description = "The created metrics routing routes."
-}
-
-output "metrics_router_targets" {
-  value       = module.cloud_monitoring_adv.metrics_router_targets
-  description = "The created metrics routing targets."
-}
-
-output "metrics_router_settings" {
-  value       = module.cloud_monitoring_adv.metrics_router_settings
-  description = "The global metrics routing settings."
-}
+# output "metrics_router_routes" {
+#   value       = module.cloud_monitoring_adv.metrics_router_routes
+#   description = "The created metrics routing routes."
+# }
+# 
+# output "metrics_router_targets" {
+#   value       = module.cloud_monitoring_adv.metrics_router_targets
+#   description = "The created metrics routing targets."
+# }
+# 
+# output "metrics_router_settings" {
+#   value       = module.cloud_monitoring_adv.metrics_router_settings
+#   description = "The global metrics routing settings."
+# }

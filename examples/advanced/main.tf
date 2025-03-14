@@ -16,14 +16,14 @@ module "resource_group" {
 
 locals {
   cloud_monitoring_instance_name = "${var.prefix}-cloud-monitoring"
-  mr_target_name                 = "${var.prefix}-cloud-monitoring-target"
+  metrics_router_target_name     = "${var.prefix}-cloud-monitoring-target"
 }
 
 module "cloud_monitoring_adv" {
   source            = "../../"
   resource_group_id = module.resource_group.resource_group_id
   region            = var.region
-  tags              = var.tags
+  tags              = var.resource_tags
   access_tags       = var.access_tags
   plan              = "graduated-tier"
   instance_name     = local.cloud_monitoring_instance_name
@@ -34,11 +34,10 @@ module "cloud_monitoring_adv" {
   #   - Metrics Router route to the target
   ##############################################################################
 
-
   metrics_router_targets = [
     {
       destination_crn = module.cloud_monitoring_adv.cloud_monitoring_crn
-      target_name     = local.mr_target_name
+      target_name     = local.metrics_router_target_name
       target_region   = var.region
     }
   ]
@@ -50,7 +49,7 @@ module "cloud_monitoring_adv" {
         {
           action = "send"
           targets = [{
-            id = module.cloud_monitoring_adv.metrics_router_targets[local.mr_target_name].id
+            id = module.cloud_monitoring_adv.metrics_router_targets[local.metrics_router_target_name].id
           }]
           inclusion_filters = [{
             operand  = "location"
@@ -68,7 +67,7 @@ module "cloud_monitoring_adv" {
 
   metrics_router_settings = {
     default_targets = [{
-      id = module.cloud_monitoring_adv.metrics_router_targets[local.mr_target_name].id
+      id = module.cloud_monitoring_adv.metrics_router_targets[local.metrics_router_target_name].id
     }]
     permitted_target_regions  = ["us-south", "eu-de", "us-east", "eu-es", "eu-gb", "au-syd", "br-sao", "ca-tor", "jp-tok", "jp-osa"]
     primary_metadata_region   = "us-south"
