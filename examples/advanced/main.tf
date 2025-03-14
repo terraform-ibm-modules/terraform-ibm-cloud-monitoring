@@ -1,6 +1,6 @@
-########################################################################################################################
-# Resource group
-########################################################################################################################
+##############################################################################
+# Resource Group
+##############################################################################
 
 module "resource_group" {
   source  = "terraform-ibm-modules/resource-group/ibm"
@@ -10,23 +10,69 @@ module "resource_group" {
   existing_resource_group_name = var.resource_group
 }
 
-########################################################################################################################
-# COS
-########################################################################################################################
+##############################################################################
+# Cloud Monitoring
+##############################################################################
 
-#
-# Developer tips:
-#   - Call the local module / modules in the example to show how they can be consumed
-#   - Include the actual module source as a code comment like below so consumers know how to consume from correct location
-#
+locals {
+  cloud_monitoring_instance_name = "${var.prefix}-cloud-monitoring"
+  mr_target_name                 = "${var.prefix}-cloud-monitoring-target"
+}
 
-module "cos" {
-  source = "../.."
-  # remove the above line and uncomment the below 2 lines to consume the module from the registry
-  # source            = "terraform-ibm-modules/<replace>/ibm"
-  # version           = "X.Y.Z" # Replace "X.Y.Z" with a release version to lock into a specific release
-  name              = "${var.prefix}-cos"
+module "cloud_monitoring_adv" {
+  source            = "../../"
   resource_group_id = module.resource_group.resource_group_id
-  resource_tags     = var.resource_tags
-  plan              = "cos-one-rate-plan"
+  region            = var.region
+  tags              = var.tags
+  access_tags       = var.access_tags
+  plan              = "graduated-tier"
+  instance_name     = local.cloud_monitoring_instance_name
+
+  ##############################################################################
+  # IBM Cloud Metrics Routing
+  #   - Cloud Monitoring target
+  #   - Metrics Router route to the target
+  ##############################################################################
+
+
+  metrics_router_targets = [
+    {
+      destination_crn = module.cloud_monitoring_adv.cloud_monitoring_crn
+      target_name     = local.mr_target_name
+      target_region   = var.region
+    }
+  ]
+
+  metrics_router_routes = [
+    {
+      name = "${var.prefix}-metric-routing-route"
+      rules = [
+        {
+          action = "send"
+          targets = [{
+            id = module.cloud_monitoring_adv.metrics_router_targets[local.mr_target_name].id
+          }]
+          inclusion_filters = [{
+            operand  = "location"
+            operator = "is"
+            values   = ["us-south"]
+          }]
+        }
+      ]
+    }
+  ]
+
+  ##############################################################################
+  # - Global Metrics Routing configuration
+  ##############################################################################
+
+  metrics_router_settings = {
+    default_targets = [{
+      id = module.cloud_monitoring_adv.metrics_router_targets[local.mr_target_name].id
+    }]
+    permitted_target_regions  = ["us-south", "eu-de", "us-east", "eu-es", "eu-gb", "au-syd", "br-sao", "ca-tor", "jp-tok", "jp-osa"]
+    primary_metadata_region   = "us-south"
+    backup_metadata_region    = "us-east"
+    private_api_endpoint_only = false
+  }
 }

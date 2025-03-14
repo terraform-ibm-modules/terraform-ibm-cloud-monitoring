@@ -1,5 +1,5 @@
 <!-- Update this title with a descriptive name. Use sentence case. -->
-# Terraform modules template project
+# IBM Cloud Monitoring module
 
 <!--
 Update status and "latest release" badges:
@@ -20,19 +20,17 @@ For information, see "Module names and descriptions" at
 https://terraform-ibm-modules.github.io/documentation/#/implementation-guidelines?id=module-names-and-descriptions
 -->
 
-TODO: Replace this with a description of the modules in this repo.
-
+This module supports configuring an IBM Cloud Monitoring instance, metrics routing target and routes.
 
 <!-- The following content is automatically populated by the pre-commit hook -->
 <!-- BEGIN OVERVIEW HOOK -->
 ## Overview
 * [terraform-ibm-cloud-monitoring](#terraform-ibm-cloud-monitoring)
 * [Examples](./examples)
-    * [Advanced example](./examples/advanced)
+    * [Advanced Examples](./examples/advanced)
     * [Basic example](./examples/basic)
 * [Contributing](#contributing)
 <!-- END OVERVIEW HOOK -->
-
 
 <!--
 If this repo contains any reference architectures, uncomment the heading below and link to them.
@@ -41,7 +39,6 @@ See "Reference architecture" in the public documentation at
 https://terraform-ibm-modules.github.io/documentation/#/implementation-guidelines?id=reference-architecture
 -->
 <!-- ## Reference architectures -->
-
 
 <!-- Replace this heading with the name of the root level module (the repo name) -->
 ## terraform-ibm-cloud-monitoring
@@ -115,15 +112,15 @@ statement instead the previous block.
 
 <!-- No permissions are needed to run this module.-->
 
-
 <!-- The following content is automatically populated by the pre-commit hook -->
 <!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 ### Requirements
 
 | Name | Version |
 |------|---------|
-| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.9.0 |
-| <a name="requirement_ibm"></a> [ibm](#requirement\_ibm) | >= 1.71.2, < 2.0.0 |
+| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.0.0 |
+| <a name="requirement_ibm"></a> [ibm](#requirement\_ibm) | >= 1.70.0, < 2.0.0 |
+| <a name="requirement_time"></a> [time](#requirement\_time) | >= 0.9.1, < 1.0.0 |
 
 ### Modules
 
@@ -133,25 +130,46 @@ No modules.
 
 | Name | Type |
 |------|------|
-| [ibm_resource_instance.cos_instance](https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/resources/resource_instance) | resource |
+| [ibm_iam_authorization_policy.metrics_router_cloud_monitoring](https://registry.terraform.io/providers/ibm-cloud/ibm/latest/docs/resources/iam_authorization_policy) | resource |
+| [ibm_metrics_router_route.metrics_router_routes](https://registry.terraform.io/providers/ibm-cloud/ibm/latest/docs/resources/metrics_router_route) | resource |
+| [ibm_metrics_router_settings.metrics_router_settings](https://registry.terraform.io/providers/ibm-cloud/ibm/latest/docs/resources/metrics_router_settings) | resource |
+| [ibm_metrics_router_target.metrics_router_targets](https://registry.terraform.io/providers/ibm-cloud/ibm/latest/docs/resources/metrics_router_target) | resource |
+| [ibm_resource_instance.cloud_monitoring](https://registry.terraform.io/providers/ibm-cloud/ibm/latest/docs/resources/resource_instance) | resource |
+| [ibm_resource_key.resource_key](https://registry.terraform.io/providers/ibm-cloud/ibm/latest/docs/resources/resource_key) | resource |
+| [ibm_resource_tag.cloud_monitoring_tag](https://registry.terraform.io/providers/ibm-cloud/ibm/latest/docs/resources/resource_tag) | resource |
+| [time_sleep.wait_for_cloud_monitoring_auth_policy](https://registry.terraform.io/providers/hashicorp/time/latest/docs/resources/sleep) | resource |
 
 ### Inputs
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| <a name="input_name"></a> [name](#input\_name) | A descriptive name used to identify the resource instance. | `string` | n/a | yes |
-| <a name="input_plan"></a> [plan](#input\_plan) | The name of the plan type supported by service. | `string` | `"standard"` | no |
-| <a name="input_resource_group_id"></a> [resource\_group\_id](#input\_resource\_group\_id) | The ID of the resource group where you want to create the service. | `string` | n/a | yes |
-| <a name="input_resource_tags"></a> [resource\_tags](#input\_resource\_tags) | List of resource tag to associate with the instance. | `list(string)` | `[]` | no |
+| <a name="input_access_tags"></a> [access\_tags](#input\_access\_tags) | Access Management Tags associated with the IBM Cloud Monitoring instance (Optional, array of strings). | `list(string)` | `[]` | no |
+| <a name="input_enable_platform_metrics"></a> [enable\_platform\_metrics](#input\_enable\_platform\_metrics) | Receive platform metrics in the provisioned IBM Cloud Monitoring instance. | `bool` | `false` | no |
+| <a name="input_instance_name"></a> [instance\_name](#input\_instance\_name) | The name of the IBM Cloud Monitoring instance to create. Defaults to 'cloud-monitoring-<region>' | `string` | `null` | no |
+| <a name="input_manager_key_name"></a> [manager\_key\_name](#input\_manager\_key\_name) | The name to give the IBM Cloud Monitoring manager key. | `string` | `"SysdigManagerKey"` | no |
+| <a name="input_manager_key_tags"></a> [manager\_key\_tags](#input\_manager\_key\_tags) | Tags associated with the IBM Cloud Monitoring manager key. | `list(string)` | `[]` | no |
+| <a name="input_metrics_router_routes"></a> [metrics\_router\_routes](#input\_metrics\_router\_routes) | List of routes for IBM Metrics Router | <pre>list(object({<br>    name = string<br>    rules = list(object({<br>      action = optional(string, "send")<br>      targets = optional(list(object({<br>        id = string<br>      })))<br>      inclusion_filters = list(object({<br>        operand  = string<br>        operator = string<br>        values   = list(string)<br>      }))<br>    }))<br>  }))</pre> | `[]` | no |
+| <a name="input_metrics_router_settings"></a> [metrics\_router\_settings](#input\_metrics\_router\_settings) | Global settings for Metrics Routing | <pre>object({<br>    permitted_target_regions  = optional(list(string))<br>    primary_metadata_region   = optional(string)<br>    backup_metadata_region    = optional(string)<br>    private_api_endpoint_only = optional(bool, false)<br>    default_targets = optional(list(object({<br>      id = string<br>    })))<br>  })</pre> | `null` | no |
+| <a name="input_metrics_router_targets"></a> [metrics\_router\_targets](#input\_metrics\_router\_targets) | List of Metrics Router targets to be created. | <pre>list(object({<br>    destination_crn                     = string<br>    target_name                         = string<br>    target_region                       = optional(string)<br>    skip_mrouter_sysdig_iam_auth_policy = optional(bool, false)<br>  }))</pre> | `[]` | no |
+| <a name="input_plan"></a> [plan](#input\_plan) | The IBM Cloud Monitoring plan to provision. Available: lite, graduated-tier | `string` | `"lite"` | no |
+| <a name="input_region"></a> [region](#input\_region) | The IBM Cloud region where instances will be created. | `string` | `"us-south"` | no |
+| <a name="input_resource_group_id"></a> [resource\_group\_id](#input\_resource\_group\_id) | The id of the IBM Cloud resource group where the instance(s) will be created. | `string` | n/a | yes |
+| <a name="input_service_endpoints"></a> [service\_endpoints](#input\_service\_endpoints) | The type of the service endpoint that will be set for the Sisdig instance. | `string` | `"public-and-private"` | no |
+| <a name="input_tags"></a> [tags](#input\_tags) | Tags associated with the IBM Cloud Monitoring instance (Optional, array of strings). | `list(string)` | `[]` | no |
 
 ### Outputs
 
 | Name | Description |
 |------|-------------|
-| <a name="output_account_id"></a> [account\_id](#output\_account\_id) | An alpha-numeric value identifying the account ID. |
-| <a name="output_crn"></a> [crn](#output\_crn) | The CRN of the resource instance. |
-| <a name="output_guid"></a> [guid](#output\_guid) | The GUID of the resource instance. |
-| <a name="output_id"></a> [id](#output\_id) | The unique identifier of the resource instance. |
+| <a name="output_access_key"></a> [access\_key](#output\_access\_key) | The cloud monitoring access key for agents to use |
+| <a name="output_crn"></a> [crn](#output\_crn) | The id of the provisioned cloud monitoring instance. |
+| <a name="output_guid"></a> [guid](#output\_guid) | The guid of the provisioned cloud monitoring instance. |
+| <a name="output_manager_key_name"></a> [manager\_key\_name](#output\_manager\_key\_name) | The cloud monitoring manager key name |
+| <a name="output_metrics_router_routes"></a> [metrics\_router\_routes](#output\_metrics\_router\_routes) | The created metrics routing routes. |
+| <a name="output_metrics_router_settings"></a> [metrics\_router\_settings](#output\_metrics\_router\_settings) | The global metrics routing settings. |
+| <a name="output_metrics_router_targets"></a> [metrics\_router\_targets](#output\_metrics\_router\_targets) | The created metrics routing targets. |
+| <a name="output_name"></a> [name](#output\_name) | The name of the provisioned cloud monitoring instance. |
+| <a name="output_resource_group_id"></a> [resource\_group\_id](#output\_resource\_group\_id) | The resource group where cloud monitoring monitor instance resides |
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 
 <!-- Leave this section as is so that your module has a link to local development environment set-up steps for contributors to follow -->
