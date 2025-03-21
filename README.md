@@ -58,7 +58,7 @@ module "cloud_monitoring" {
 module "metric_router" {
   source    = "terraform-ibm-modules/cloud_monitoring/ibm//modules/metrics_routing"
   version   = "X.Y.Z" # Replace "X.Y.Z" with a release version to lock into a specific release
-  
+
   metrics_router_targets = [
     {
       # ID of the Cloud Monitoring instance
