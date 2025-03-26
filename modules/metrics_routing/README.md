@@ -31,11 +31,11 @@ provider "ibm" {
 }
 
 # Create Metric Router target and route
-module "metric_router" {
-  source    = "terraform-ibm-modules/observability-instances/ibm//modules/metrics_routing"
+module "metrics_router" {
+  source    = "terraform-ibm-modules/cloud_monitoring/ibm//modules/metrics_routing"
   version   = "X.Y.Z" # Replace "X.Y.Z" with a release version to lock into a specific release
   # Create Metric Router target
-  metric_router_targets = [
+  metrics_router_targets = [
     {
       # ID of the Cloud Monitoring instance
       destination_crn   = "crn:v1:bluemix:public:sysdig-monitor:eu-de:a/xxXXxxXXxXxXXXXxxXxxxXXXXxXXXXX:xxxxxx-XXXX-XXXX-XXXX-xxxxxx::"
@@ -43,7 +43,7 @@ module "metric_router" {
       target_name   = "my-mr-target"
     }
   ]
-  metric_router_routes = [
+  metrics_router_routes = [
     {
         name = "my-mr-route"
         rules = [

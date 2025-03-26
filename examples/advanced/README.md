@@ -1,4 +1,4 @@
-# Advanced Examples
+# Advanced example
 
 Example that configures:
 

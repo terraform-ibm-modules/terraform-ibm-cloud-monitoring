@@ -37,6 +37,7 @@ module "cloud_monitoring" {
 
 module "metrics_routing" {
   source = "../../modules/metrics_routing"
+
   metrics_router_targets = [
     {
       destination_crn = module.cloud_monitoring.crn
