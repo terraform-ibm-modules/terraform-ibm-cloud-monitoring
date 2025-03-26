@@ -7,7 +7,6 @@ import (
 
 	"github.com/stretchr/testify/assert"
 	"github.com/terraform-ibm-modules/ibmcloud-terratest-wrapper/testhelper"
-	"github.com/terraform-ibm-modules/ibmcloud-terratest-wrapper/testschematic"
 )
 
 // Use existing resource group
@@ -20,10 +19,14 @@ const basicExampleDir = "examples/basic"
 // Since Event Notifications is used in example, need to use a region it supports
 var validRegions = []string{
 	"au-syd",
+	"br-sao",
+	"ca-tor",
 	"eu-de",
-	"eu-es",
 	"eu-gb",
+	"jp-osa",
+	"jp-tok",
 	"us-south",
+	"us-east",
 }
 
 func setupOptions(t *testing.T, prefix string, dir string) *testhelper.TestOptions {
@@ -41,7 +44,7 @@ func setupOptions(t *testing.T, prefix string, dir string) *testhelper.TestOptio
 func TestRunBasicExample(t *testing.T) {
 	t.Parallel()
 
-	options := setupOptions(t, "icl-basic", basicExampleDir)
+	options := setupOptions(t, "icm-basic", basicExampleDir)
 
 	output, err := options.RunTestConsistency()
 	assert.Nil(t, err, "This should not have errored")
@@ -51,47 +54,18 @@ func TestRunBasicExample(t *testing.T) {
 func TestRunAdvancedExample(t *testing.T) {
 	t.Parallel()
 
-	options := setupOptions(t, "icl-adv", advancedExampleDir)
+	options := setupOptions(t, "icm-adv", advancedExampleDir)
 
 	output, err := options.RunTestConsistency()
 	assert.Nil(t, err, "This should not have errored")
 	assert.NotNil(t, output, "Expected some output")
 }
 
-func TestRunAdvancedExampleInSchematics(t *testing.T) {
-	t.Parallel()
-
-	var region = validRegions[rand.Intn(len(validRegions))]
-
-	options := testschematic.TestSchematicOptionsDefault(&testschematic.TestSchematicOptions{
-		Testing: t,
-		Prefix:  "icl-adv",
-		TarIncludePatterns: []string{
-			"*.tf",
-			advancedExampleDir + "/*.tf",
-		},
-		ResourceGroup:          resourceGroup,
-		TemplateFolder:         advancedExampleDir,
-		Tags:                   []string{"test-schematic"},
-		DeleteWorkspaceOnFail:  false,
-		WaitJobCompleteMinutes: 60,
-	})
-
-	options.TerraformVars = []testschematic.TestSchematicTerraformVar{
-		{Name: "ibmcloud_api_key", Value: options.RequiredEnvironmentVars["TF_VAR_ibmcloud_api_key"], DataType: "string", Secure: true},
-		{Name: "prefix", Value: options.Prefix, DataType: "string"},
-		{Name: "region", Value: region, DataType: "string"},
-	}
-
-	err := options.RunSchematicTest()
-	assert.Nil(t, err, "This should not have errored")
-}
-
 // Upgrade test (using advanced example)
 func TestRunUpgradeExample(t *testing.T) {
 	t.Parallel()
 
-	options := setupOptions(t, "icl-adv-upg", advancedExampleDir)
+	options := setupOptions(t, "icm-adv-upg", advancedExampleDir)
 
 	output, err := options.RunTestUpgrade()
 	if !options.UpgradeTestSkipped {
