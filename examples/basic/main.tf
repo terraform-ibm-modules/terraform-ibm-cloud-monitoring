@@ -14,12 +14,6 @@ module "resource_group" {
 # Cloud Monitoring
 ##############################################################################
 
-#
-# Developer tips:
-#   - Call the local module / modules in the example to show how they can be consumed
-#   - include the actual module source as a code comment like below so consumers know how to consume from correct location
-#
-
 locals {
   cloud_monitoring_instance_name = "${var.prefix}-cloud-monitoring"
 }

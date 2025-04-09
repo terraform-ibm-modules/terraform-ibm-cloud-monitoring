@@ -1,30 +1,35 @@
 output "crn" {
-  value       = length(ibm_resource_instance.cloud_monitoring) > 0 ? ibm_resource_instance.cloud_monitoring.id : null
+  value       = ibm_resource_instance.cloud_monitoring.id
   description = "The id of the provisioned cloud monitoring instance."
 }
 
 output "guid" {
-  value       = length(ibm_resource_instance.cloud_monitoring) > 0 ? ibm_resource_instance.cloud_monitoring.guid : null
+  value       = ibm_resource_instance.cloud_monitoring.guid
   description = "The guid of the provisioned cloud monitoring instance."
 }
 
+output "account_id" {
+  value       = ibm_resource_instance.cloud_monitoring.account_id
+  description = "The account id where cloud monitoring instance is provisioned."
+}
+
 output "name" {
-  value       = length(ibm_resource_instance.cloud_monitoring) > 0 ? ibm_resource_instance.cloud_monitoring.name : null
+  value       = ibm_resource_instance.cloud_monitoring.name
   description = "The name of the provisioned cloud monitoring instance."
 }
 
 output "resource_group_id" {
-  value       = length(ibm_resource_instance.cloud_monitoring) > 0 ? ibm_resource_instance.cloud_monitoring.resource_group_id : null
+  value       = ibm_resource_instance.cloud_monitoring.resource_group_id
   description = "The resource group where cloud monitoring monitor instance resides"
 }
 
 output "access_key" {
-  value       = length(ibm_resource_key.resource_key) > 0 ? ibm_resource_key.resource_key.credentials["Sysdig Access Key"] : null
+  value       = ibm_resource_key.resource_key.credentials["Sysdig Access Key"]
   description = "The cloud monitoring access key for agents to use"
   sensitive   = true
 }
 
 output "manager_key_name" {
-  value       = length(ibm_resource_key.resource_key) > 0 ? ibm_resource_key.resource_key.name : null
+  value       = ibm_resource_key.resource_key.name
   description = "The cloud monitoring manager key name"
 }

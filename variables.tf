@@ -52,7 +52,7 @@ variable "access_tags" {
 
 variable "enable_platform_metrics" {
   type        = bool
-  description = "Receive platform metrics in the provisioned IBM Cloud Monitoring instance."
+  description = "Receive platform metrics in the provisioned IBM Cloud Monitoring instance. Only 1 instance in a given region can be enabled for platform metrics."
   default     = false
 }
 

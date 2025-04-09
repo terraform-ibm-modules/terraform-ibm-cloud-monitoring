@@ -1,11 +1,12 @@
 variable "metrics_router_targets" {
   type = list(object({
-    destination_crn                     = string
-    target_name                         = string
-    target_region                       = optional(string)
-    skip_mrouter_sysdig_iam_auth_policy = optional(bool, false)
+    destination_crn                 = string
+    target_name                     = string
+    target_region                   = optional(string)
+    skip_metrics_router_auth_policy = optional(bool, false)
   }))
   default     = []
+  nullable    = false
   description = "List of Metrics Router targets to be created."
 }
 
@@ -25,6 +26,7 @@ variable "metrics_router_routes" {
     }))
   }))
   default     = []
+  nullable    = false
   description = "List of routes for IBM Metrics Router"
 
   validation {
@@ -56,7 +58,7 @@ variable "metrics_router_settings" {
       id = string
     })))
   })
-  description = "Global settings for Metrics Routing"
+  description = "The global account settings for Metrics Routing. To configure metrics routing, the account must have a `primary_metadata_region` set. You will be unable to view the account settings in the UI if `private_api_endpoint_only` is set to true. For more information, see https://cloud.ibm.com/docs/metrics-router?topic=metrics-router-settings-about&interface=ui."
   default     = null
 
   validation {

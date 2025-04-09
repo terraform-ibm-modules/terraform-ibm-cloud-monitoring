@@ -22,8 +22,6 @@ This module supports configuring an IBM Cloud Monitoring instance, metrics routi
 
 ### Usage
 
-To provision cloud monitoring instance
-
 ```hcl
 terraform {
   required_version = ">= 1.9.0"

@@ -32,7 +32,7 @@ module "cloud_monitoring" {
 ##############################################################################
 # IBM Cloud Metrics Routing
 #   - Cloud Monitoring target
-#   - Metrics Router route to the target
+#   - Metrics Router route to the cloud monitoring target
 ##############################################################################
 
 module "metrics_routing" {

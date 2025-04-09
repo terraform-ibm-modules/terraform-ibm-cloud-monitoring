@@ -4,7 +4,7 @@
 
 # metric routing to cloud monitoring s2s auth policy
 resource "ibm_iam_authorization_policy" "metrics_router_cloud_monitoring" {
-  for_each                    = { for target in var.metrics_router_targets : target.target_name => target if !target.skip_mrouter_sysdig_iam_auth_policy }
+  for_each                    = { for target in var.metrics_router_targets : target.target_name => target if !target.skip_metrics_router_auth_policy }
   source_service_name         = "metrics-router"
   target_service_name         = "sysdig-monitor"
   target_resource_instance_id = regex(".*:(.*)::", each.value.destination_crn)[0]
@@ -57,6 +57,10 @@ resource "ibm_metrics_router_route" "metrics_router_routes" {
       }
     }
   }
+  # The create_before_destroy meta-argument makes sure that the routes are created first before the prior ones are destroyed.
+  lifecycle {
+    create_before_destroy = true
+  }
 }
 
 
@@ -77,6 +81,7 @@ resource "ibm_metrics_router_settings" "metrics_router_settings" {
   backup_metadata_region    = var.metrics_router_settings.backup_metadata_region
   private_api_endpoint_only = var.metrics_router_settings.private_api_endpoint_only
 
+  # The create_before_destroy meta-argument makes sure that the new settings are applied first before the prior ones are removed.
   lifecycle {
     create_before_destroy = true
   }
