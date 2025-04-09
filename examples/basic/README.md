@@ -7,5 +7,6 @@ The text below should describe exactly what resources are provisioned / configur
 -->
 
 An end-to-end basic example that will provision the following:
+
 - A new resource group if one is not passed in.
-- A new standard plan Cloud Object Storage instance using the root level module.
+- An new Cloud Monitoring instance.

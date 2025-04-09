@@ -7,32 +7,48 @@
 #   - Include all relevant outputs from the modules being called in the example
 #
 
-output "account_id" {
-  description = "An alpha-numeric value identifying the account ID."
-  value       = module.cos.account_id
+output "cloud_monitoring_crn" {
+  value       = module.cloud_monitoring.crn
+  description = "The CRN of the provisioned IBM cloud monitoring instance."
 }
 
-output "guid" {
-  description = "The GUID of the resource instance."
-  value       = module.cos.account_id
+output "cloud_monitoring_guid" {
+  value       = module.cloud_monitoring.guid
+  description = "The GUID of the provisioned IBM cloud monitoring instance."
 }
 
-output "id" {
-  description = "The unique identifier of the resource instance."
-  value       = module.cos.id
-}
-
-output "crn" {
-  description = "The CRN of the resource instance."
-  value       = module.cos.crn
-}
-
-output "resource_group_name" {
-  description = "Resource group name."
-  value       = module.resource_group.resource_group_name
+output "cloud_monitoring_name" {
+  value       = module.cloud_monitoring.name
+  description = "The name of the provisioned IBM cloud monitoring instance."
 }
 
 output "resource_group_id" {
-  description = "Resource group ID."
   value       = module.resource_group.resource_group_id
+  description = "The resource group where cloud monitoring monitor instance resides."
+}
+
+output "access_key" {
+  value       = module.cloud_monitoring.access_key
+  description = "The cloud monitoring access key for agents to use."
+  sensitive   = true
+}
+
+output "manager_key_name" {
+  value       = module.cloud_monitoring.manager_key_name
+  description = "The cloud monitoring manager key name."
+}
+
+output "metrics_router_routes" {
+  value       = module.metrics_routing.metrics_router_routes
+  description = "The created metrics routing routes."
+}
+
+output "metrics_router_targets" {
+  value       = module.metrics_routing.metrics_router_targets
+  description = "The created metrics routing targets."
+}
+
+output "metrics_router_settings" {
+  value       = module.metrics_routing.metrics_router_settings
+  description = "The global metrics routing settings."
 }

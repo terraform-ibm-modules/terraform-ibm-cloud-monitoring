@@ -1,6 +1,6 @@
-########################################################################################################################
-# Input variables
-########################################################################################################################
+##############################################################################
+# Variables
+##############################################################################
 
 #
 # Module developer tips:
@@ -15,15 +15,10 @@ variable "ibmcloud_api_key" {
   description = "The IBM Cloud API Key."
   sensitive   = true
 }
-
-variable "region" {
-  type        = string
-  description = "Region to provision all resources created by this example."
-}
-
 variable "prefix" {
   type        = string
   description = "A string value to prefix to all resources created by this example."
+  default     = "cloud-monitoring"
 }
 
 variable "resource_group" {
@@ -32,8 +27,20 @@ variable "resource_group" {
   default     = null
 }
 
+variable "region" {
+  type        = string
+  description = "The IBM Cloud region where instances will be created."
+  default     = "us-south"
+}
+
 variable "resource_tags" {
   type        = list(string)
-  description = "List of resource tag to associate with all resource instances created by this example."
+  description = "Tags associated with the IBM Cloud Monitoring instance (Optional, array of strings)."
+  default     = []
+}
+
+variable "access_tags" {
+  type        = list(string)
+  description = "Access Management Tags associated with the IBM Cloud Monitoring instance (Optional, array of strings)."
   default     = []
 }

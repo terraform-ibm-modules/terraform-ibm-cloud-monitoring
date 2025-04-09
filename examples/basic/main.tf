@@ -1,6 +1,6 @@
-########################################################################################################################
-# Resource group
-########################################################################################################################
+##############################################################################
+# Resource Group
+##############################################################################
 
 module "resource_group" {
   source  = "terraform-ibm-modules/resource-group/ibm"
@@ -10,22 +10,18 @@ module "resource_group" {
   existing_resource_group_name = var.resource_group
 }
 
-########################################################################################################################
-# COS
-########################################################################################################################
+##############################################################################
+# Cloud Monitoring
+##############################################################################
 
-#
-# Developer tips:
-#   - Call the local module / modules in the example to show how they can be consumed
-#   - include the actual module source as a code comment like below so consumers know how to consume from correct location
-#
+locals {
+  cloud_monitoring_instance_name = "${var.prefix}-cloud-monitoring"
+}
 
-module "cos" {
-  source = "../.."
-  # remove the above line and uncomment the below 2 lines to consume the module from the registry
-  # source            = "terraform-ibm-modules/<replace>/ibm"
-  # version           = "X.Y.Z" # Replace "X.Y.Z" with a release version to lock into a specific release
-  name              = "${var.prefix}-cos"
+module "cloud_monitoring" {
+  source            = "../../"
   resource_group_id = module.resource_group.resource_group_id
+  region            = var.region
   resource_tags     = var.resource_tags
+  instance_name     = local.cloud_monitoring_instance_name
 }
