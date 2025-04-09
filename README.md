@@ -45,7 +45,7 @@ provider "ibm" {
 # IBM Cloud Monitoring
 
 module "cloud_monitoring" {
-  source            = ""terraform-ibm-modules/cloud_monitoring/ibm""
+  source            = "terraform-ibm-modules/cloud_monitoring/ibm"
   version           = "X.Y.Z" # Replace "X.Y.Z" with a release version to lock into a specific release
   region            = local.region
   resource_group_id = "xxXXxxXXxXxXXXXxxXxxxXXXXxXXXXX"
