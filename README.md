@@ -49,6 +49,25 @@ module "cloud_monitoring" {
   version           = "X.Y.Z" # Replace "X.Y.Z" with a release version to lock into a specific release
   region            = local.region
   resource_group_id = "xxXXxxXXxXxXXXXxxXxxxXXXXxXXXXX"
+
+  # CBR
+  cbr_rules = [{
+    description      = "Rules for cloud monitoring access"
+    account_id       = "xxXXxxXXxXxXXXXxxXxxxXXXXxXXXXX"
+    enforcement_mode = "report"
+    rule_contexts = [{
+      attributes = [
+        {
+          "name" : "endpointType",
+          "value" : "private"
+        },
+        {
+          name  = "networkZoneId"
+          value = "xxXXxxXXxXxXXXXxxXxxxXXXXxXXXXX"
+        }
+      ]
+      }]
+  }]
 }
 
 # IBM Cloud Metrics Routing

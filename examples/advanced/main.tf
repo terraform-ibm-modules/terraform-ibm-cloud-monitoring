@@ -30,19 +30,8 @@ module "cloud_monitoring" {
   cbr_rules = [{
     description      = "${var.prefix}-cloud-monitoring access from vpc and schematics"
     account_id       = module.cloud_monitoring.account_id
-    enforcement_mode = "report"
+    enforcement_mode = "enabled"
     rule_contexts = [{
-      attributes = [
-        {
-          "name" : "endpointType",
-          "value" : "private"
-        },
-        {
-          name  = "networkZoneId"
-          value = module.cbr_monitoring_zone.zone_id
-        }
-      ]
-      }, {
       attributes = [
         {
           "name" : "endpointType",
@@ -60,21 +49,6 @@ module "cloud_monitoring" {
 ##############################################################################
 # CBR
 ##############################################################################
-
-module "cbr_monitoring_zone" {
-  source           = "terraform-ibm-modules/cbr/ibm//modules/cbr-zone-module"
-  version          = "1.29.0"
-  name             = "${var.prefix}-monitoring-zone"
-  zone_description = "CBR Network zone containing Cloud Monitoring"
-  account_id       = module.cloud_monitoring.account_id
-  addresses = [{
-    type = "serviceRef",
-    ref = {
-      account_id   = module.cloud_monitoring.account_id
-      service_name = "sysdig-monitor"
-    }
-  }]
-}
 
 module "cbr_schematics_zone" {
   source           = "terraform-ibm-modules/cbr/ibm//modules/cbr-zone-module"
