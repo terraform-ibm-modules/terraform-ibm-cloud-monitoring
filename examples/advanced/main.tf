@@ -27,6 +27,68 @@ module "cloud_monitoring" {
   access_tags       = var.access_tags
   plan              = "graduated-tier"
   instance_name     = local.cloud_monitoring_instance_name
+  cbr_rules = [{
+    description      = "${var.prefix}-cloud-monitoring access from vpc and schematics"
+    account_id       = module.cloud_monitoring.account_id
+    enforcement_mode = "report"
+    rule_contexts = [{
+      attributes = [
+        {
+          "name" : "endpointType",
+          "value" : "private"
+        },
+        {
+          name  = "networkZoneId"
+          value = module.cbr_monitoring_zone.zone_id
+        }
+      ]
+      }, {
+      attributes = [
+        {
+          "name" : "endpointType",
+          "value" : "private"
+        },
+        {
+          name  = "networkZoneId"
+          value = module.cbr_schematics_zone.zone_id
+        }
+      ]
+    }]
+  }]
+}
+
+##############################################################################
+# CBR 
+##############################################################################
+
+module "cbr_monitoring_zone" {
+  source           = "terraform-ibm-modules/cbr/ibm//modules/cbr-zone-module"
+  version          = "1.29.0"
+  name             = "${var.prefix}-monitoring-zone"
+  zone_description = "CBR Network zone containing Cloud Monitoring"
+  account_id       = module.cloud_monitoring.account_id
+  addresses = [{
+    type = "serviceRef",
+    ref = {
+      account_id   = module.cloud_monitoring.account_id
+      service_name = "sysdig-monitor"
+    }
+  }]
+}
+
+module "cbr_schematics_zone" {
+  source           = "terraform-ibm-modules/cbr/ibm//modules/cbr-zone-module"
+  version          = "1.29.0"
+  name             = "${var.prefix}-schematics-network-zone"
+  zone_description = "CBR Network zone containing Schematics"
+  account_id       = module.cloud_monitoring.account_id
+  addresses = [{
+    type = "serviceRef"
+    ref = {
+      account_id   = module.cloud_monitoring.account_id
+      service_name = "schematics"
+    }
+  }]
 }
 
 ##############################################################################
