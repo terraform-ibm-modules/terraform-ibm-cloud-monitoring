@@ -30,7 +30,7 @@ module "cloud_monitoring" {
   cbr_rules = [{
     description      = "${var.prefix}-cloud-monitoring access from vpc and schematics"
     account_id       = module.cloud_monitoring.account_id
-    enforcement_mode = "enabled"
+    enforcement_mode = "report"
     rule_contexts = [{
       attributes = [
         {
