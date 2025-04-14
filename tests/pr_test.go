@@ -52,7 +52,8 @@ func TestRunBasicExample(t *testing.T) {
 }
 
 func TestRunAdvancedExample(t *testing.T) {
-	t.Parallel()
+	// https://github.ibm.com/GoldenEye/issues/issues/12223
+	// Avoid t.Parallel() to avoid test clashes
 
 	options := setupOptions(t, "icm-adv", advancedExampleDir)
 
@@ -63,7 +64,8 @@ func TestRunAdvancedExample(t *testing.T) {
 
 // Upgrade test (using advanced example)
 func TestRunUpgradeExample(t *testing.T) {
-	t.Parallel()
+	// https://github.ibm.com/GoldenEye/issues/issues/12223
+	// Avoid t.Parallel() to avoid test clashes
 
 	options := setupOptions(t, "icm-adv-upg", advancedExampleDir)
 
