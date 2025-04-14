@@ -93,6 +93,7 @@ func TestRunUpgradeExampleInSchematics(t *testing.T) {
 		Prefix:  "icm-adv-upg",
 		TarIncludePatterns: []string{
 			"*.tf",
+			"modules/metrics_routing" + "/*.tf",
 			advancedExampleDir + "/*.tf",
 		},
 		ResourceGroup:          resourceGroup,
