@@ -35,6 +35,13 @@ terraform {
 
 locals {
     region = "us-south"
+    default_operations = [{
+      api_types = [
+        {
+          "api_type_id" : "crn:v1:bluemix:public:context-based-restrictions::::api-type:"
+        }
+      ]
+    }]
 }
 
 provider "ibm" {
@@ -45,7 +52,7 @@ provider "ibm" {
 # IBM Cloud Monitoring
 
 module "cloud_monitoring" {
-  source            = "terraform-ibm-modules/cloud_monitoring/ibm"
+  source            = "terraform-ibm-modules/cloud-monitoring/ibm"
   version           = "X.Y.Z" # Replace "X.Y.Z" with a release version to lock into a specific release
   region            = local.region
   resource_group_id = "xxXXxxXXxXxXXXXxxXxxxXXXXxXXXXX"
@@ -67,6 +74,7 @@ module "cloud_monitoring" {
         }
       ]
       }]
+      operations = local.default_operations
   }]
 }
 
@@ -103,6 +111,17 @@ module "metric_router" {
         ]
     }
   ]
+
+  metrics_router_settings = {
+    default_targets = [{
+      id = module.metrics_routing.metrics_router_targets["my-mr-target"].id
+    }]
+    permitted_target_regions  = ["us-south", "eu-de", "us-east", "eu-es", "eu-gb"]
+    primary_metadata_region   = "us-south" # To configure metrics routing, the account must have a `primary_metadata_region` set.
+    private_api_endpoint_only = false  # You will be unable to view the metrics routing account settings in the UI if `private_api_endpoint_only` is 
+                                       # set to true.          
+                                       # For more information, see https://cloud.ibm.com/docs/metrics-router?topic=metrics-router-settings-about&interface=ui.
+  }
 }
 
 ```
