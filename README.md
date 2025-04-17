@@ -100,7 +100,7 @@ module "metric_router" {
             {
                 action = "send"
                 targets = [{
-                    id = module.metric_router.metric_router_targets["my-mr-target"].id
+                    id = module.metric_router.metric_router_targets["cloud-monitoring-target"].id
                 }]
                 inclusion_filters = [{
                     operand = "location"
@@ -114,7 +114,7 @@ module "metric_router" {
 
   metrics_router_settings = {
     default_targets = [{
-      id = module.metrics_routing.metrics_router_targets["my-mr-target"].id
+      id = module.metrics_routing.metrics_router_targets["cloud-monitoring-target"].id
     }]
     permitted_target_regions  = ["us-south", "eu-de", "us-east", "eu-es", "eu-gb"]
     primary_metadata_region   = "us-south" # To configure metrics routing, the account must have a `primary_metadata_region` set.
