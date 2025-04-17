@@ -35,6 +35,13 @@ terraform {
 
 locals {
     region = "us-south"
+    default_operations = [{
+      api_types = [
+        {
+          "api_type_id" : "crn:v1:bluemix:public:context-based-restrictions::::api-type:"
+        }
+      ]
+    }]
 }
 
 provider "ibm" {
@@ -45,10 +52,30 @@ provider "ibm" {
 # IBM Cloud Monitoring
 
 module "cloud_monitoring" {
-  source            = "terraform-ibm-modules/cloud_monitoring/ibm"
+  source            = "terraform-ibm-modules/cloud-monitoring/ibm"
   version           = "X.Y.Z" # Replace "X.Y.Z" with a release version to lock into a specific release
   region            = local.region
   resource_group_id = "xxXXxxXXxXxXXXXxxXxxxXXXXxXXXXX"
+
+  # CBR
+  cbr_rules = [{
+    description      = "Rules for cloud monitoring access"
+    account_id       = "xxXXxxXXxXxXXXXxxXxxxXXXXxXXXXX"
+    enforcement_mode = "report"
+    rule_contexts = [{
+      attributes = [
+        {
+          "name" : "endpointType",
+          "value" : "private"
+        },
+        {
+          name  = "networkZoneId"
+          value = "xxXXxxXXxXxXXXXxxXxxxXXXXxXXXXX"
+        }
+      ]
+      }]
+      operations = local.default_operations
+  }]
 }
 
 # IBM Cloud Metrics Routing
@@ -62,7 +89,7 @@ module "metric_router" {
       # ID of the Cloud Monitoring instance
       destination_crn   = "crn:v1:bluemix:public:sysdig-monitor:eu-de:a/xxXXxxXXxXxXXXXxxXxxxXXXXxXXXXX:xxxxxx-XXXX-XXXX-XXXX-xxxxxx::"
       target_region = "us-south"
-      target_name   = "my-mr-target"
+      target_name   = "cloud-monitoring-target"
     }
   ]
 
@@ -73,7 +100,7 @@ module "metric_router" {
             {
                 action = "send"
                 targets = [{
-                    id = module.metric_router.metric_router_targets["my-mr-target"].id
+                    id = module.metric_router.metric_router_targets["cloud-monitoring-target"].id
                 }]
                 inclusion_filters = [{
                     operand = "location"
@@ -84,6 +111,16 @@ module "metric_router" {
         ]
     }
   ]
+
+  metrics_router_settings = {
+    default_targets = [{
+      id = module.metrics_routing.metrics_router_targets["cloud-monitoring-target"].id
+    }]
+    permitted_target_regions  = ["us-south", "eu-de", "us-east", "eu-es", "eu-gb"]
+    primary_metadata_region   = "us-south" # To configure metrics routing, the account must have a `primary_metadata_region` set.
+    private_api_endpoint_only = false  # You will be unable to view the metrics routing account settings in the UI if `private_api_endpoint_only` is set to true.
+                                       # For more information, see https://cloud.ibm.com/docs/metrics-router?topic=metrics-router-settings-about&interface=ui.
+  }
 }
 
 ```
@@ -113,7 +150,9 @@ You need the following permissions to run this module.
 
 ### Modules
 
-No modules.
+| Name | Source | Version |
+|------|--------|---------|
+| <a name="module_cbr_rule"></a> [cbr\_rule](#module\_cbr\_rule) | terraform-ibm-modules/cbr/ibm//modules/cbr-rule-module | 1.29.0 |
 
 ### Resources
 
@@ -128,6 +167,7 @@ No modules.
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
 | <a name="input_access_tags"></a> [access\_tags](#input\_access\_tags) | Access Management Tags associated with the IBM Cloud Monitoring instance (Optional, array of strings). | `list(string)` | `[]` | no |
+| <a name="input_cbr_rules"></a> [cbr\_rules](#input\_cbr\_rules) | (Optional, list) List of context-based restrictions rules to create | <pre>list(object({<br/>    description = string<br/>    account_id  = string<br/>    rule_contexts = list(object({<br/>      attributes = optional(list(object({<br/>        name  = string<br/>        value = string<br/>    }))) }))<br/>    enforcement_mode = string<br/>    operations = optional(list(object({<br/>      api_types = list(object({<br/>        api_type_id = string<br/>      }))<br/>    })))<br/>  }))</pre> | `[]` | no |
 | <a name="input_enable_platform_metrics"></a> [enable\_platform\_metrics](#input\_enable\_platform\_metrics) | Receive platform metrics in the provisioned IBM Cloud Monitoring instance. Only 1 instance in a given region can be enabled for platform metrics. | `bool` | `false` | no |
 | <a name="input_instance_name"></a> [instance\_name](#input\_instance\_name) | The name of the IBM Cloud Monitoring instance to create. Defaults to 'cloud-monitoring-<region>' | `string` | `null` | no |
 | <a name="input_manager_key_name"></a> [manager\_key\_name](#input\_manager\_key\_name) | The name to give the IBM Cloud Monitoring manager key. | `string` | `"SysdigManagerKey"` | no |
