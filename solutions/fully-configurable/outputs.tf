@@ -23,7 +23,7 @@ output "cloud_monitoring_name" {
 }
 
 output "cloud_monitoring_guid" {
-  value       = local.create_cloud_monitoring ? module.cloud_monitoring[0].guid : null
+  value       = local.create_cloud_monitoring ? module.cloud_monitoring[0].guid : module.existing_cloud_monitoring_crn_parser[0].service_instance
   description = "The guid of the provisioned IBM cloud monitoring instance."
 }
 
@@ -34,6 +34,6 @@ output "cloud_monitoring_access_key" {
 }
 
 output "account_id" {
-  value       = module.cloud_monitoring[0].account_id
+  value       = local.create_cloud_monitoring ? module.cloud_monitoring[0].account_id : module.existing_cloud_monitoring_crn_parser[0].account_id
   description = "The account id where cloud monitoring instance is provisioned."
 }

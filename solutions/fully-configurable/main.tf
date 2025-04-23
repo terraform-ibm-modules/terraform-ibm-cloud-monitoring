@@ -8,6 +8,16 @@ module "resource_group" {
   existing_resource_group_name = var.existing_resource_group_name
 }
 
+#######################################################################################################################
+# Cloud Monitoring CRN Parser
+#######################################################################################################################
+
+module "existing_cloud_monitoring_crn_parser" {
+  count   = var.existing_cloud_monitoring_crn != null ? 1 : 0
+  source  = "terraform-ibm-modules/common-utilities/ibm//modules/crn-parser"
+  version = "1.1.0"
+  crn     = var.existing_cloud_monitoring_crn
+}
 
 #######################################################################################################################
 # IBM Cloud Monitoring
