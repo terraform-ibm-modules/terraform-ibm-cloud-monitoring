@@ -2,9 +2,9 @@
 
 Several optional input variables in the IBM Cloud [Cloud Monitoring instances deployable architecture](https://cloud.ibm.com/catalog#deployable_architecture) use complex object types. You specify these inputs when you configure deployable architecture.
 
-* IBM Cloud Metrics Router Routes(`metrics_router_routes`)
+* [IBM Cloud Metrics Router Routes](#metrics_router_routes) (`metrics_router_routes`)
 
-## Metrics Router Routes <a name="cloud_logs_existing_en_instances"></a>
+## Metrics Router Routes <a name="metrics_router_routes"></a>
 
 The `metrics_router_routes` input variable allows you to provide a list of routes that will be configured in the IBM Cloud Metrics Routing. Refer [here](https://cloud.ibm.com/docs/metrics-router?topic=metrics-router-about) for more information.
 

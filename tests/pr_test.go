@@ -20,9 +20,6 @@ const advancedExampleDir = "examples/advanced"
 const basicExampleDir = "examples/basic"
 const configurableDADir = "solutions/fully-configurable"
 
-// Define a struct with fields that match the structure of the YAML data
-const yamlLocation = "../common-dev-assets/common-go-assets/common-permanent-resources.yaml"
-
 var permanentResources map[string]interface{}
 
 var validRegions = []string{
