@@ -99,6 +99,7 @@ func TestRunFullyConfigurable(t *testing.T) {
 		Prefix:  prefix,
 		TarIncludePatterns: []string{
 			"*.tf",
+			"modules/metrics_routing" + "/*.tf",
 			configurableDADir + "/*.tf",
 		},
 		TemplateFolder:         configurableDADir,
@@ -112,7 +113,6 @@ func TestRunFullyConfigurable(t *testing.T) {
 		{Name: "existing_resource_group_name", Value: resourceGroup, DataType: "string"},
 		{Name: "region", Value: region, DataType: "string"},
 		{Name: "cloud_monitoring_resource_tags", Value: options.Tags, DataType: "list(string)"},
-		{Name: "cloud_monitoring_access_tags", Value: permanentResources["accessTags"], DataType: "list(string)"},
 		{Name: "prefix", Value: options.Prefix, DataType: "string"},
 	}
 
