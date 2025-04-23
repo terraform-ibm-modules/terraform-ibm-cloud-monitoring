@@ -20,8 +20,6 @@ const advancedExampleDir = "examples/advanced"
 const basicExampleDir = "examples/basic"
 const configurableDADir = "solutions/fully-configurable"
 
-var permanentResources map[string]interface{}
-
 var validRegions = []string{
 	"au-syd",
 	"br-sao",
