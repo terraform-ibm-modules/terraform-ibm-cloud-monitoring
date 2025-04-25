@@ -181,6 +181,9 @@
                         },
                         {
                             "key": "metrics_router_routes"
+                        },
+                        {
+                            "key": "cbr_rules"
                         }
                     ],
                     "iam_permissions": [],
