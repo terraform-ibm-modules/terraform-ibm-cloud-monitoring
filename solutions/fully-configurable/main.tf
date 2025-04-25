@@ -53,6 +53,7 @@ module "cloud_monitoring" {
   access_tags             = var.cloud_monitoring_access_tags
   service_endpoints       = "public-and-private"
   enable_platform_metrics = var.enable_platform_metrics
+  cbr_rules               = var.cbr_rules
 }
 
 module "metrics_routing" {
