@@ -129,6 +129,7 @@
                         },
                         {
                             "key": "cloud_monitoring_plan",
+                            "required": true,
                             "options": [
                                 {
                                     "displayname": "graduated-tier",
@@ -163,7 +164,8 @@
                             }
                         },
                         {
-                            "key": "enable_platform_metrics"
+                            "key": "enable_platform_metrics",
+                            "required": true
                         },
                         {
                             "key": "existing_cloud_monitoring_crn"
