@@ -1,0 +1,229 @@
+{
+    "products": [
+        {
+            "name": "deploy-arch-ibm-cloud-monitoring",
+            "label": "Cloud automation for Cloud Monitoring",
+            "product_kind": "solution",
+            "tags": [
+                "ibm_created",
+                "target_terraform",
+                "terraform",
+                "solution",
+                "logging_monitoring"
+            ],
+            "keywords": [
+                "IaC",
+                "infrastructure as code",
+                "terraform",
+                "solution",
+                "cloud monitoring",
+                "observability"
+            ],
+            "short_description": "Creates and configures IBM Cloud Monitoring resources",
+            "long_description": "This architecture supports creating and configuring [IBM Cloud Monitoring](https://www.ibm.com/products/cloud-monitoring) resources. IBM Cloud® Monitoring is a cloud-native, and container-intelligence management system that you can include as part of your IBM Cloud architecture. Use it to gain operational visibility into the performance and health of your applications, services, and platforms. It offers administrators, DevOps teams and developers full-stack telemetry with advanced features to monitor and troubleshoot, define alerts, and design custom dashboards.",
+            "offering_docs_url": "https://github.com/terraform-ibm-modules/terraform-ibm-cloud-monitoring/blob/main/README.md",
+            "offering_icon_url": "https://github.com/terraform-ibm-modules/terraform-ibm-cloud-monitoring/blob/main/images/observability-icon.svg",
+            "provider_name": "IBM",
+            "features": [
+                {
+                    "title": "Configures IBM Cloud Monitoring",
+                    "description": "Configures the IBM Cloud Monitoring instance."
+                },
+                {
+                    "title": "Configures an IBM Cloud Metrics Routing",
+                    "description": "Configures an IBM Cloud Metrics Routing route with a cloud monitoring target."
+                }
+            ],
+            "support_details": "This product is in the community registry, as such support is handled through the originated repo. If you experience issues please open an issue in that repository [https://github.com/terraform-ibm-modules/terraform-ibm-cloud-monitoring/issues](https://github.com/terraform-ibm-modules/terraform-ibm-cloud-monitoring/issues). Please note this product is not supported via the IBM Cloud Support Center.",
+            "flavors": [
+                {
+                    "label": "Fully configurable",
+                    "name": "fully-configurable",
+                    "install_type": "fullstack",
+                    "working_directory": "solutions/fully-configurable",
+                    "configuration": [
+                        {
+                            "key": "ibmcloud_api_key"
+                        },
+                        {
+                            "key": "prefix",
+                            "required": true
+                        },
+                        {
+                            "key": "existing_resource_group_name",
+                            "required": true,
+                            "custom_config": {
+                                "type": "resource_group",
+                                "grouping": "deployment",
+                                "original_grouping": "deployment",
+                                "config_constraints": {
+                                    "identifier": "rg_name"
+                                }
+                            }
+                        },
+                        {
+                            "key": "region",
+                            "required": true,
+                            "options": [
+                                {
+                                    "displayname": "Sydney (au-syd)",
+                                    "value": "au-syd"
+                                },
+                                {
+                                    "displayname": "Sao Paulo (br-sao)",
+                                    "value": "br-sao"
+                                },
+                                {
+                                    "displayname": "Toronto (ca-tor)",
+                                    "value": "ca-tor"
+                                },
+                                {
+                                    "displayname": "Frankfurt (eu-de)",
+                                    "value": "eu-de"
+                                },
+                                {
+                                    "displayname": "London (eu-gb)",
+                                    "value": "eu-gb"
+                                },
+                                {
+                                    "displayname": "Madrid (eu-es)",
+                                    "value": "eu-es"
+                                },
+                                {
+                                    "displayname": "Dallas (us-south)",
+                                    "value": "us-south"
+                                },
+                                {
+                                    "displayname": "Washington (us-east)",
+                                    "value": "us-east"
+                                },
+                                {
+                                    "displayname": "Osaka (jp-osa)",
+                                    "value": "jp-osa"
+                                },
+                                {
+                                    "displayname": "Tokyo (jp-tok)",
+                                    "value": "jp-tok"
+                                }
+                            ]
+                        },
+                        {
+                            "key": "provider_visibility",
+                            "options": [
+                                {
+                                    "displayname": "private",
+                                    "value": "private"
+                                },
+                                {
+                                    "displayname": "public",
+                                    "value": "public"
+                                },
+                                {
+                                    "displayname": "public-and-private",
+                                    "value": "public-and-private"
+                                }
+                            ]
+                        },
+                        {
+                            "key": "cloud_monitoring_instance_name"
+                        },
+                        {
+                            "key": "cloud_monitoring_plan",
+                            "required": true,
+                            "options": [
+                                {
+                                    "displayname": "graduated-tier",
+                                    "value": "graduated-tier"
+                                },
+                                {
+                                    "displayname": "lite",
+                                    "value": "lite"
+                                }
+                            ]
+                        },
+                        {
+                            "key": "cloud_monitoring_resource_tags",
+                            "custom_config": {
+                                "grouping": "deployment",
+                                "type": "array",
+                                "original_grouping": "deployment",
+                                "config_constraints": {
+                                    "type": "string"
+                                }
+                            }
+                        },
+                        {
+                            "key": "cloud_monitoring_access_tags",
+                            "custom_config": {
+                                "grouping": "deployment",
+                                "type": "array",
+                                "original_grouping": "deployment",
+                                "config_constraints": {
+                                    "type": "string"
+                                }
+                            }
+                        },
+                        {
+                            "key": "enable_platform_metrics",
+                            "required": true
+                        },
+                        {
+                            "key": "existing_cloud_monitoring_crn"
+                        },
+                        {
+                            "key": "enable_metrics_routing_to_cloud_monitoring"
+                        },
+                        {
+                            "key": "metrics_routing_route_name"
+                        },
+                        {
+                            "key": "metrics_routing_target_name"
+                        },
+                        {
+                            "key": "metrics_router_routes"
+                        },
+                        {
+                            "key": "cbr_rules"
+                        }
+                    ],
+                    "iam_permissions": [],
+                    "architecture": {
+                        "descriptions": "This architecture supports creating and configuring a Cloud Monitoring instance.",
+                        "features": [
+                            {
+                                "title": "Cloud Monitoring instance creation",
+                                "description": "Yes"
+                            },
+                            {
+                                "title": "Use existing Cloud Monitoring instance",
+                                "description": "Yes"
+                            },
+                            {
+                                "title": "New resource group creation",
+                                "description": "No"
+                            },
+                            {
+                                "title": "Use existing resource group",
+                                "description": "Yes"
+                            },
+                            {
+                                "title": "IAM s2s auth policies creation",
+                                "description": "Yes"
+                            }
+                        ],
+                        "diagrams": [
+                            {
+                                "diagram": {
+                                    "caption": "Cloud Monitoring",
+                                    "url": "https://github.com/terraform-ibm-modules/terraform-ibm-cloud-monitoring/blob/main/reference-architecture/deployable-architecture-cloud-monitoring.svg",
+                                    "type": "image/svg+xml"
+                                },
+                                "description": "This architecture supports creating and configuring IBM Cloud Monitoring resources & Metrics Routing route with a cloud monitoring target"
+                            }
+                        ]
+                    }
+                }
+            ]
+        }
+    ]
+}
