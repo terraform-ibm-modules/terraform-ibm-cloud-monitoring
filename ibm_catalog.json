@@ -22,7 +22,7 @@
             "short_description": "Creates and configures IBM Cloud Monitoring resources",
             "long_description": "This architecture supports creating and configuring [IBM Cloud Monitoring](https://www.ibm.com/products/cloud-monitoring) resources. IBM Cloud® Monitoring is a cloud-native, and container-intelligence management system that you can include as part of your IBM Cloud architecture. Use it to gain operational visibility into the performance and health of your applications, services, and platforms. It offers administrators, DevOps teams and developers full-stack telemetry with advanced features to monitor and troubleshoot, define alerts, and design custom dashboards.",
             "offering_docs_url": "https://github.com/terraform-ibm-modules/terraform-ibm-cloud-monitoring/blob/main/README.md",
-            "offering_icon_url": "https://github.com/terraform-ibm-modules/terraform-ibm-cloud-monitoring/blob/main/images/observability-icon.svg",
+            "offering_icon_url": "https://raw.githubusercontent.com/terraform-ibm-modules/terraform-ibm-cloud-monitoring/refs/heads/main/images/monitoring-icon.svg",
             "provider_name": "IBM",
             "features": [
                 {
@@ -186,7 +186,26 @@
                             "key": "cbr_rules"
                         }
                     ],
-                    "iam_permissions": [],
+                    "iam_permissions": [
+                        {
+                            "service_name": "sysdig-monitor",
+                            "role_crns": [
+                                "crn:v1:bluemix:public:iam::::serviceRole:Manager"
+                            ]
+                        },
+                        {
+                            "service_name": "monitoring",
+                            "role_crns": [
+                                "crn:v1:bluemix:public:iam::::role:Editor"
+                            ]
+                        },
+                        {
+                            "service_name": "metrics-router",
+                            "role_crns": [
+                                "crn:v1:bluemix:public:iam::::role:Editor"
+                            ]
+                        }
+                    ],
                     "architecture": {
                         "descriptions": "This architecture supports creating and configuring a Cloud Monitoring instance.",
                         "features": [
@@ -215,7 +234,7 @@
                             {
                                 "diagram": {
                                     "caption": "Cloud Monitoring",
-                                    "url": "https://github.com/terraform-ibm-modules/terraform-ibm-cloud-monitoring/blob/main/reference-architecture/deployable-architecture-cloud-monitoring.svg",
+                                    "url": "https://raw.githubusercontent.com/terraform-ibm-modules/terraform-ibm-cloud-monitoring/refs/heads/main/reference-architecture/deployable-architecture-cloud-monitoring.svg",
                                     "type": "image/svg+xml"
                                 },
                                 "description": "This architecture supports creating and configuring IBM Cloud Monitoring resources & Metrics Routing route with a cloud monitoring target"
