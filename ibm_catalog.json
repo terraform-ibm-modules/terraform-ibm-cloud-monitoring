@@ -186,7 +186,26 @@
                             "key": "cbr_rules"
                         }
                     ],
-                    "iam_permissions": [],
+                    "iam_permissions": [
+                        {
+                            "service_name": "sysdig-monitor",
+                            "role_crns": [
+                                "crn:v1:bluemix:public:iam::::serviceRole:Manager"
+                            ]
+                        },
+                        {
+                            "service_name": "monitoring",
+                            "role_crns": [
+                                "crn:v1:bluemix:public:iam::::role:Editor"
+                            ]
+                        },
+                        {
+                            "service_name": "metrics-router",
+                            "role_crns": [
+                                "crn:v1:bluemix:public:iam::::role:Editor"
+                            ]
+                        }
+                    ],
                     "architecture": {
                         "descriptions": "This architecture supports creating and configuring a Cloud Monitoring instance.",
                         "features": [
