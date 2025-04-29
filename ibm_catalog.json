@@ -215,7 +215,7 @@
                             {
                                 "diagram": {
                                     "caption": "Cloud Monitoring",
-                                    "url": "https://github.com/terraform-ibm-modules/terraform-ibm-cloud-monitoring/blob/main/reference-architecture/deployable-architecture-cloud-monitoring.svg",
+                                    "url": "https://raw.githubusercontent.com/terraform-ibm-modules/terraform-ibm-cloud-monitoring/refs/heads/ocofaigh-patch-1/reference-architecture/deployable-architecture-cloud-monitoring.svg",
                                     "type": "image/svg+xml"
                                 },
                                 "description": "This architecture supports creating and configuring IBM Cloud Monitoring resources & Metrics Routing route with a cloud monitoring target"
