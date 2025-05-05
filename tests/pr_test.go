@@ -167,7 +167,7 @@ func TestRunUpgradeFullyConfigurable(t *testing.T) {
 	t.Parallel()
 
 	var region = validRegions[rand.Intn(len(validRegions))]
-	prefix := "icm-da-upg"
+	prefix := fmt.Sprintf("icm-da-upg-%s", strings.ToLower(random.UniqueId()))
 
 	// ------------------------------------------------------------------------------------
 	// Provision Cloud Monitoring
@@ -175,7 +175,7 @@ func TestRunUpgradeFullyConfigurable(t *testing.T) {
 
 	var preReqDir = "./existing-resources"
 	realTerraformDir := preReqDir
-	tempTerraformDir, _ := files.CopyTerraformFolderToTemp(realTerraformDir, fmt.Sprintf(prefix+"-%s", strings.ToLower(random.UniqueId())))
+	tempTerraformDir, _ := files.CopyTerraformFolderToTemp(realTerraformDir, prefix)
 	tags := common.GetTagsFromTravis()
 
 	// Verify ibmcloud_api_key variable is set
