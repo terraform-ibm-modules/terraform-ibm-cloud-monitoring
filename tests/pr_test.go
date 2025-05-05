@@ -167,7 +167,7 @@ func TestRunUpgradeFullyConfigurable(t *testing.T) {
 	t.Parallel()
 
 	var region = validRegions[rand.Intn(len(validRegions))]
-	prefix := fmt.Sprintf("icm-da-upg-%s", strings.ToLower(random.UniqueId()))
+	prefix := "icm-da-upg"
 
 	// ------------------------------------------------------------------------------------
 	// Provision Cloud Monitoring
