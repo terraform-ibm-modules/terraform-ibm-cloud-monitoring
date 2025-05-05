@@ -101,13 +101,13 @@ module "metrics_routing" {
     }
   ]
 
-  /* 
+  /*
 
   ##############################################################################
   # - Global Metrics Routing configuration
   ##############################################################################
 
-  This block shows how to configure global metrics routing settings. 
+  This block shows how to configure global metrics routing settings.
   Removing this since it is causing intermittent failure in the pipeline as shown in https://github.ibm.com/GoldenEye/issues/issues/12223
 
   metrics_router_settings = {
