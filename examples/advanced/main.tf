@@ -101,9 +101,14 @@ module "metrics_routing" {
     }
   ]
 
+  /* 
+
   ##############################################################################
   # - Global Metrics Routing configuration
   ##############################################################################
+
+  This block shows how to configure global metrics routing settings. 
+  Removing this since it is causing intermittent failure in the pipeline as shown in https://github.ibm.com/GoldenEye/issues/issues/12223
 
   metrics_router_settings = {
     default_targets = [{
@@ -113,4 +118,5 @@ module "metrics_routing" {
     primary_metadata_region   = var.region
     private_api_endpoint_only = false
   }
+  */
 }

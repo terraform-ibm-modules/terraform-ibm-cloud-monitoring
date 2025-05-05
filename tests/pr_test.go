@@ -62,8 +62,7 @@ func TestRunBasicExample(t *testing.T) {
 }
 
 func TestRunAdvancedExampleInSchematics(t *testing.T) {
-	// https://github.ibm.com/GoldenEye/issues/issues/12223
-	// Avoid t.Parallel() to avoid test clashes
+	t.Parallel()
 
 	var region = validRegions[rand.Intn(len(validRegions))]
 
@@ -94,8 +93,7 @@ func TestRunAdvancedExampleInSchematics(t *testing.T) {
 
 // Upgrade test in schematics (using advanced example)
 func TestRunUpgradeExampleInSchematics(t *testing.T) {
-	// https://github.ibm.com/GoldenEye/issues/issues/12223
-	// Avoid t.Parallel() to avoid test clashes
+	t.Parallel()
 
 	var region = validRegions[rand.Intn(len(validRegions))]
 
