@@ -39,13 +39,6 @@ var validRegions = []string{
 	"us-east",
 }
 
-func truncate(prefix string, max int) string {
-	if len(prefix) > max {
-		return prefix[:max]
-	}
-	return prefix
-}
-
 func setupOptions(t *testing.T, prefix string, dir string) *testhelper.TestOptions {
 	options := testhelper.TestOptionsDefaultWithVars(&testhelper.TestOptions{
 		Testing:       t,
@@ -174,7 +167,11 @@ func TestRunUpgradeFullyConfigurable(t *testing.T) {
 	t.Parallel()
 
 	var region = validRegions[rand.Intn(len(validRegions))]
-	prefix := truncate(fmt.Sprintf("icm-da-upg-%s", strings.ToLower(random.UniqueId())), 16)
+	prefix := fmt.Sprintf("icm-da-upg-%s", strings.ToLower(random.UniqueId()))
+
+	if len(prefix) > 16 {
+		prefix = prefix[:16]
+	}
 
 	// ------------------------------------------------------------------------------------
 	// Provision Cloud Monitoring
