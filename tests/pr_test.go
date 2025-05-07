@@ -62,8 +62,7 @@ func TestRunBasicExample(t *testing.T) {
 }
 
 func TestRunAdvancedExampleInSchematics(t *testing.T) {
-	// https://github.ibm.com/GoldenEye/issues/issues/12223
-	// Avoid t.Parallel() to avoid test clashes
+	t.Parallel()
 
 	var region = validRegions[rand.Intn(len(validRegions))]
 
@@ -94,8 +93,7 @@ func TestRunAdvancedExampleInSchematics(t *testing.T) {
 
 // Upgrade test in schematics (using advanced example)
 func TestRunUpgradeExampleInSchematics(t *testing.T) {
-	// https://github.ibm.com/GoldenEye/issues/issues/12223
-	// Avoid t.Parallel() to avoid test clashes
+	t.Parallel()
 
 	var region = validRegions[rand.Intn(len(validRegions))]
 
@@ -169,7 +167,7 @@ func TestRunUpgradeFullyConfigurable(t *testing.T) {
 	t.Parallel()
 
 	var region = validRegions[rand.Intn(len(validRegions))]
-	prefix := fmt.Sprintf("icm-da-upg-%s", strings.ToLower(random.UniqueId()))
+	prefix := fmt.Sprintf("icm-da-up-%s", strings.ToLower(random.UniqueId()))
 
 	// ------------------------------------------------------------------------------------
 	// Provision Cloud Monitoring
@@ -177,7 +175,7 @@ func TestRunUpgradeFullyConfigurable(t *testing.T) {
 
 	var preReqDir = "./existing-resources"
 	realTerraformDir := preReqDir
-	tempTerraformDir, _ := files.CopyTerraformFolderToTemp(realTerraformDir, fmt.Sprintf(prefix+"-%s", strings.ToLower(random.UniqueId())))
+	tempTerraformDir, _ := files.CopyTerraformFolderToTemp(realTerraformDir, prefix)
 	tags := common.GetTagsFromTravis()
 
 	// Verify ibmcloud_api_key variable is set
