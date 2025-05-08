@@ -107,9 +107,8 @@ module "metrics_routing" {
   # - Global Metrics Routing configuration
   ##############################################################################
 
-  This block shows how to configure global metrics routing settings.
-  Removing this since it is causing intermittent failure in the pipeline as shown in https://github.ibm.com/GoldenEye/issues/issues/12223
-
+  Uncomment below to set metrics router settings. A `primary_metadata_region` is required to be set before metrics routing can be set.
+  
   metrics_router_settings = {
     default_targets = [{
       id = module.metrics_routing.metrics_router_targets[local.metrics_router_target_name].id
