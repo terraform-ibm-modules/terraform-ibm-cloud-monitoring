@@ -17,7 +17,10 @@ import (
 	"github.com/terraform-ibm-modules/ibmcloud-terratest-wrapper/testschematic"
 )
 
-const configurableDADir = "solutions/fully-configurable"
+// Use existing resource group
+const resourceGroup = "geretain-test-resources"
+
+const fullyconfigurableDADir = "solutions/fully-configurable"
 
 var validRegions = []string{
 	"au-syd",
@@ -30,9 +33,6 @@ var validRegions = []string{
 	"us-south",
 	"us-east",
 }
-
-// Use existing resource group
-const resourceGroup = "geretain-test-resources"
 
 func TestRunFullyConfigurable(t *testing.T) {
 	t.Parallel()
@@ -53,9 +53,9 @@ func TestRunFullyConfigurable(t *testing.T) {
 		TarIncludePatterns: []string{
 			"*.tf",
 			"modules/metrics_routing" + "/*.tf",
-			configurableDADir + "/*.tf",
+			fullyconfigurableDADir + "/*.tf",
 		},
-		TemplateFolder:         configurableDADir,
+		TemplateFolder:         fullyconfigurableDADir,
 		Tags:                   []string{"icm-da-test"},
 		DeleteWorkspaceOnFail:  false,
 		WaitJobCompleteMinutes: 60,
@@ -122,10 +122,10 @@ func TestRunUpgradeFullyConfigurable(t *testing.T) {
 			TarIncludePatterns: []string{
 				"*.tf",
 				"modules/metrics_routing" + "/*.tf",
-				configurableDADir + "/*.tf",
+				fullyconfigurableDADir + "/*.tf",
 			},
 			ResourceGroup:          resourceGroup,
-			TemplateFolder:         configurableDADir,
+			TemplateFolder:         fullyconfigurableDADir,
 			Tags:                   []string{"test-schematic"},
 			DeleteWorkspaceOnFail:  false,
 			WaitJobCompleteMinutes: 60,
