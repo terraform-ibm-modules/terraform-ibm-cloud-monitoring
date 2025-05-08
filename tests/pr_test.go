@@ -31,6 +31,9 @@ var validRegions = []string{
 	"us-east",
 }
 
+// Use existing resource group
+const resourceGroup = "geretain-test-resources"
+
 func TestRunFullyConfigurable(t *testing.T) {
 	t.Parallel()
 

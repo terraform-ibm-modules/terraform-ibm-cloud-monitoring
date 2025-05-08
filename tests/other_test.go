@@ -10,9 +10,6 @@ import (
 	"github.com/terraform-ibm-modules/ibmcloud-terratest-wrapper/testschematic"
 )
 
-// Use existing resource group
-const resourceGroup = "geretain-test-resources"
-
 // Ensure every example directory has a corresponding test
 const advancedExampleDir = "examples/advanced"
 const basicExampleDir = "examples/basic"
