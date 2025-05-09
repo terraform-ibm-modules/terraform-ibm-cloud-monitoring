@@ -107,8 +107,8 @@ module "metrics_routing" {
   # - Global Metrics Routing configuration
   ##############################################################################
 
-  Uncomment below to set metrics router settings. A `primary_metadata_region` is required to be set before metrics routing can be set.
-  
+  Uncomment below to set metrics router settings. A `primary_metadata_region` is required to be set before metrics routing can be configured.
+
   metrics_router_settings = {
     default_targets = [{
       id = module.metrics_routing.metrics_router_targets[local.metrics_router_target_name].id
