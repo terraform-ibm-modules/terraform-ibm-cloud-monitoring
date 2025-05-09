@@ -10,6 +10,7 @@ import (
 
 	"github.com/gruntwork-io/terratest/modules/files"
 	"github.com/gruntwork-io/terratest/modules/logger"
+	"github.com/gruntwork-io/terratest/modules/random"
 	"github.com/gruntwork-io/terratest/modules/terraform"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
@@ -77,7 +78,7 @@ func TestRunUpgradeFullyConfigurable(t *testing.T) {
 	t.Parallel()
 
 	var region = validRegions[rand.Intn(len(validRegions))]
-	prefix := "icm-da-up-"
+	prefix := fmt.Sprintf("icm-da-up-%s", strings.ToLower(random.UniqueId()))
 
 	// ------------------------------------------------------------------------------------
 	// Provision Cloud Monitoring
@@ -137,7 +138,7 @@ func TestRunUpgradeFullyConfigurable(t *testing.T) {
 			{Name: "existing_cloud_monitoring_crn", Value: terraform.Output(t, existingTerraformOptions, "cloud_monitoring_crn"), DataType: "string"},
 			{Name: "region", Value: region, DataType: "string"},
 			{Name: "cloud_monitoring_resource_tags", Value: options.Tags, DataType: "list(string)"},
-			{Name: "prefix", Value: options.Prefix, DataType: "string"},
+			{Name: "prefix", Value: prefix, DataType: "string"},
 		}
 
 		err := options.RunSchematicUpgradeTest()
