@@ -32,7 +32,7 @@ provider "ibm" {
 
 # Create Metric Router target and route
 module "metrics_router" {
-  source    = "terraform-ibm-modules/cloud_monitoring/ibm//modules/metrics_routing"
+  source    = "terraform-ibm-modules/cloud-monitoring/ibm//modules/metrics_routing"
   version   = "X.Y.Z" # Replace "X.Y.Z" with a release version to lock into a specific release
   # Create Metric Router target
   metrics_router_targets = [

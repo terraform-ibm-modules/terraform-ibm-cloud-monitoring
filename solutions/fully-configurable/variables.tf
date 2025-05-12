@@ -148,7 +148,7 @@ variable "cbr_rules" {
       }))
     })))
   }))
-  description = "(Optional, list) List of context-based restrictions rules to create"
+  description = "The list of context-based restriction rules to create for the instance. [Learn more](https://github.com/terraform-ibm-modules/terraform-ibm-cloud-monitoring/blob/main/solutions/fully-configurable/DA-types.md)"
   default     = []
   # Validation happens in the rule module
 }
