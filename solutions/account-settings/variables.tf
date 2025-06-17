@@ -31,27 +31,27 @@ variable "region" {
 
 variable "default_targets" {
   description = "Where metrics that are not explicitly managed in the account's routing rules are routed. Consider defining a second default target when you want to collect the data in a backup location."
-  type = list(object({
+  type = optional(list(object({
     id = string
-  }))
+  })))
 }
 
 variable "primary_metadata_region" {
   description = "The location in your IBM Cloud account where the IBM Cloud Metrics Routing account configuration metadata is stored. To store all your meta data in a single region. For new accounts, all target / route creation will fail until primary_metadata_region is set."
-  type        = string
+  type        = optional(string)
 }
 
 variable "backup_metadata_region" {
   description = "You can also configure a backup location where the metadata is stored for recovery purposes."
-  type        = string
+  type        = optional(string)
 }
 
 variable "permitted_target_regions" {
   description = "Control where targets collecting platform metrics can be located."
-  type        = list(string)
+  type        = optional(list(string), [])
 }
 
 variable "private_api_endpoint_only" {
   description = "The type of endpoints that are allowed to manage the IBM Cloud Metrics Routing account configuration in the account. By default, public and private endpoints are enabled."
-  type        = bool
+  type        = optional(bool, false)
 }

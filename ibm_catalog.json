@@ -241,6 +241,59 @@
                             }
                         ]
                     }
+                },
+                {
+                    "label": "Account settings",
+                    "name": "account-settings",
+                    "install_type": "fullstack",
+                    "working_directory": "solutions/account-settings",
+                    "configuration": [
+                        {
+                            "key": "ibmcloud_api_key"
+                        },
+                        {
+                            "key": "provider_visibility",
+                            "hidden": true
+                        },
+                        {
+                            "key": "region"
+                        },
+                        {
+                            "key": "default_targets"
+                        },
+                        {
+                            "key": "primary_metadata_region"
+                        },
+                        {
+                            "key": "backup_metadata_region"
+                        },
+                        {
+                            "key": "permitted_target_regions"
+                        },
+                        {
+                            "key": "private_api_endpoint_only"
+                        }
+                    ],
+                    "iam_permissions": [],
+                    "architecture": {
+                        "descriptions": "This architecture supports configuring the IBM Cloud Metrics Routing Account Settings.",
+                        "features": [
+                            {
+                                "title": "Configure Metrics Routing Account Settings",
+                                "description": "Yes"
+                            }
+                        ],
+                        "diagrams": [
+                            {
+                                "diagram": {
+                                    "caption": "Metrics Routing Account Settings",
+                                    "url": "",
+                                    "type": "image/svg+xml"
+                                },
+                                "description": "This architecture supports configuring the IBM Cloud Metrics Routing Account Settings."
+                            }
+                        ]
+                    }
                 }
             ]
         }
