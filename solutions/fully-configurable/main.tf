@@ -70,5 +70,5 @@ module "metrics_routing" {
   ]
 
   metrics_router_routes   = length(var.metrics_router_routes) != 0 ? var.metrics_router_routes : local.default_metrics_router_route
-  metrics_router_settings = var.enable_metrics_routing_to_cloud_monitoring ? { primary_metadata_region = var.region } : null
+  metrics_router_settings = var.enable_primary_metadata_region ? { primary_metadata_region = var.region } : null
 }

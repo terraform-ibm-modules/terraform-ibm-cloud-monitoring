@@ -2,7 +2,7 @@
 # IBM Cloud Metrics Routing
 #######################################################################################################################
 
-module "metrics_routing" {
+module "metrics_router_account_settings" {
   source = "../../modules/metrics_routing"
 
   metrics_router_settings = {

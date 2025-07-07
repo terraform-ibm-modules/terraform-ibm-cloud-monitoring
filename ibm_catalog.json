@@ -176,6 +176,9 @@
               "key": "enable_metrics_routing_to_cloud_monitoring"
             },
             {
+              "key": "enable_primary_metadata_region"
+            },
+            {
               "key": "metrics_routing_route_name"
             },
             {
