@@ -275,7 +275,7 @@
         {
           "label": "Metrics Router account settings",
           "name": "metrics-router-account-settings",
-          "index": 1,
+          "index": 2,
           "install_type": "fullstack",
           "working_directory": "solutions/metrics-router-account-settings",
           "configuration": [

@@ -41,14 +41,6 @@ locals {
       inclusion_filters = []
     }]
   }] : []
-
-  metrics_router_settings = {
-    default_targets           = []
-    primary_metadata_region   = var.region
-    backup_metadata_region    = null
-    permitted_target_regions  = []
-    private_api_endpoint_only = false
-  }
 }
 
 module "cloud_monitoring" {
