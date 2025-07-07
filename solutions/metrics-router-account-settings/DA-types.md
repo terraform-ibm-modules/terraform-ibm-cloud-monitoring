@@ -3,7 +3,6 @@
 Several optional input variables in the IBM Cloud [Cloud Monitoring account settings deployable architecture](https://cloud.ibm.com/catalog#deployable_architecture) use complex object types. You specify these inputs when you configure deployable architecture.
 
 * [Metrics Router Default target](#default_targets) (`default_targets`)
-* [Metrics Router Permitted target region](#permitted_target_regions) (`permitted_target_regions`)
 
 ## Default targets <a name="default_targets"></a>
 
