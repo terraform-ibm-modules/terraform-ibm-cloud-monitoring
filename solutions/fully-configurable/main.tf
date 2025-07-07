@@ -30,6 +30,7 @@ locals {
   cloud_monitoring_instance_name = "${local.prefix}${var.cloud_monitoring_instance_name}"
   metrics_router_target_name     = "${local.prefix}${var.metrics_routing_target_name}"
   metrics_router_route_name      = "${local.prefix}${var.metrics_routing_route_name}"
+
   default_metrics_router_route = var.enable_metrics_routing_to_cloud_monitoring ? [{
     name = local.metrics_router_route_name
     rules = [{
@@ -40,6 +41,14 @@ locals {
       inclusion_filters = []
     }]
   }] : []
+
+  metrics_router_settings = {
+    default_targets           = []
+    primary_metadata_region   = var.region
+    backup_metadata_region    = null
+    permitted_target_regions  = []
+    private_api_endpoint_only = false
+  }
 }
 
 module "cloud_monitoring" {
@@ -68,5 +77,6 @@ module "metrics_routing" {
     }
   ]
 
-  metrics_router_routes = length(var.metrics_router_routes) != 0 ? var.metrics_router_routes : local.default_metrics_router_route
+  metrics_router_routes   = length(var.metrics_router_routes) != 0 ? var.metrics_router_routes : local.default_metrics_router_route
+  metrics_router_settings = var.enable_metrics_routing_to_cloud_monitoring ? { primary_metadata_region = var.region } : null
 }
