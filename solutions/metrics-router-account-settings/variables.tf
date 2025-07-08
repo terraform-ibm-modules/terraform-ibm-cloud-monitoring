@@ -44,7 +44,7 @@ variable "primary_metadata_region" {
 }
 
 variable "backup_metadata_region" {
-  description = "You can also configure a backup location where the metadata is stored for recovery purposes."
+  description = "You can also configure a backup location where the metadata is stored for recovery purposes. The `backup_metadata_region` can't be the same as `primary_metadata_region`."
   type        = string
   default     = null
 }
