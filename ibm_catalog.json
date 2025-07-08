@@ -316,10 +316,10 @@
               {
                 "diagram": {
                   "caption": "Metrics Router Account Settings",
-                  "url": "https://raw.githubusercontent.com/terraform-ibm-modules/terraform-ibm-cloud-monitoring/refs/heads/main/reference-architecture/deployable-architecture-cloud-monitoring.svg",
+                  "url": "https://raw.githubusercontent.com/terraform-ibm-modules/terraform-ibm-cloud-monitoring/refs/heads/main/reference-architecture/deployable-architecture-account-settings.svg",
                   "type": "image/svg+xml"
                 },
-                "description": ""
+                "description": "This architecture supports configuring the IBM Cloud Metrics Router Account Settings."
               }
             ]
           }
