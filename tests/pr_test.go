@@ -22,6 +22,7 @@ import (
 const resourceGroup = "geretain-test-resources"
 
 const fullyconfigurableDADir = "solutions/fully-configurable"
+const AccountSettingsDADir = "solutions/metrics-router-account-settings"
 
 var validRegions = []string{
 	"au-syd",
@@ -157,4 +158,45 @@ func TestRunUpgradeFullyConfigurable(t *testing.T) {
 		terraform.WorkspaceDelete(t, existingTerraformOptions, prefix)
 		logger.Log(t, "END: Destroy (prereq resources)")
 	}
+}
+
+func TestRunAccountSettings(t *testing.T) {
+	t.Parallel()
+
+	region := validRegions[rand.Intn(len(validRegions))]
+	prefix := "mr"
+
+	// Verify ibmcloud_api_key variable is set
+	checkVariable := "TF_VAR_ibmcloud_api_key"
+	val, present := os.LookupEnv(checkVariable)
+	require.True(t, present, checkVariable+" environment variable not set")
+	require.NotEqual(t, "", val, checkVariable+" environment variable is empty")
+
+	permitted_target_regions := []string{"us-south", "eu-de", "us-east", "eu-es", "eu-gb", "au-syd", "br-sao", "ca-tor", "jp-tok", "jp-osa"}
+
+	options := testschematic.TestSchematicOptionsDefault(&testschematic.TestSchematicOptions{
+		Testing: t,
+		Region:  region,
+		Prefix:  prefix,
+		TarIncludePatterns: []string{
+			"*.tf",
+			"modules/metrics_routing" + "/*.tf",
+			AccountSettingsDADir + "/*.tf",
+		},
+		TemplateFolder:         AccountSettingsDADir,
+		Tags:                   []string{"mr-da-test"},
+		DeleteWorkspaceOnFail:  false,
+		WaitJobCompleteMinutes: 60,
+	})
+
+	options.TerraformVars = []testschematic.TestSchematicTerraformVar{
+		{Name: "ibmcloud_api_key", Value: options.RequiredEnvironmentVars["TF_VAR_ibmcloud_api_key"], DataType: "string", Secure: true},
+		{Name: "region", Value: region, DataType: "string"},
+		{Name: "primary_metadata_region", Value: "eu-de", DataType: "string"},
+		{Name: "backup_metadata_region", Value: "us-east", DataType: "string"}, // The `backup_metadata_region` should not be same as `primary_metadata_region` so hard-coded the region here
+		{Name: "permitted_target_regions", Value: permitted_target_regions, DataType: "list(string)"},
+	}
+
+	err := options.RunSchematicTest()
+	assert.Nil(t, err, "This should not have errored")
 }

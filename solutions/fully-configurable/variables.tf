@@ -116,6 +116,12 @@ variable "enable_metrics_routing_to_cloud_monitoring" {
   default     = true
 }
 
+variable "enable_primary_metadata_region" {
+  type        = bool
+  description = "Whether to configure `primary_metadata_region` of the IBM Cloud Metrics Router account settings."
+  default     = false
+}
+
 variable "metrics_router_routes" {
   type = list(object({
     name = string
@@ -132,7 +138,7 @@ variable "metrics_router_routes" {
     }))
   }))
   default     = []
-  description = "Routes for IBM Cloud Metrics Routing. [Learn more](https://github.com/terraform-ibm-modules/terraform-ibm-observability-da/blob/main/solutions/instances/DA-types.md#metrics-router-routes-)"
+  description = "Routes for IBM Cloud Metrics Routing. [Learn more](https://github.com/terraform-ibm-modules/terraform-ibm-cloud-monitoring/blob/main/solutions/fully-configurable/DA-types.md#metrics-router-routes-)"
 }
 
 variable "cbr_rules" {
