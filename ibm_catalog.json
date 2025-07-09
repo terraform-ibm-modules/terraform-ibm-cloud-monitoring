@@ -302,9 +302,42 @@
             },
             {
               "key": "private_api_endpoint_only"
+            },
+            {
+              "key": "provider_visibility",
+              "hidden": true,
+              "options": [
+                {
+                  "displayname": "private",
+                  "value": "private"
+                },
+                {
+                  "displayname": "public",
+                  "value": "public"
+                },
+                {
+                  "displayname": "public-and-private",
+                  "value": "public-and-private"
+                }
+              ]
             }
           ],
-          "iam_permissions": [],
+          "iam_permissions": [
+            {
+              "service_name": "All account management services",
+              "role_crns": [
+                "crn:v1:bluemix:public:iam::::role:Administrator"
+              ],
+              "notes": "Required for setting up foundational IBM Cloud account components such as IAM settings, trusted profiles, access groups, and resource groups."
+            },
+            {
+              "service_name": "metrics-router",
+              "role_crns": [
+                "crn:v1:bluemix:public:iam::::role:Administrator"
+              ],
+              "notes": "Required for managing metrics router account settings."
+            }
+          ],
           "architecture": {
             "features": [
               {
