@@ -20,5 +20,9 @@ output "resource_group_id" {
 output "ingestion_endpoint_private" {
   value       = module.cloud_monitoring.ingestion_endpoint_private
   description = "The Cloud Monitoring private ingestion endpoint."
-  sensitive   = true
+}
+
+output "ingestion_endpoint_public" {
+  value       = module.cloud_monitoring.ingestion_endpoint_public
+  description = "The Cloud Monitoring public ingestion endpoint."
 }
