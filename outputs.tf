@@ -33,3 +33,15 @@ output "manager_key_name" {
   value       = ibm_resource_key.resource_key.name
   description = "The cloud monitoring manager key name"
 }
+
+# https://cloud.ibm.com/docs/monitoring?topic=monitoring-endpoints#endpoints_ingestion
+output "ingestion_endpoint_private" {
+  value       = "ingest.private.${var.region}.monitoring.cloud.ibm.com"
+  description = "The Cloud Monitoring private ingestion endpoint."
+}
+
+# https://cloud.ibm.com/docs/monitoring?topic=monitoring-endpoints#endpoints_ingestion_public
+output "ingestion_endpoint_public" {
+  value       = "ingest.${var.region}.monitoring.cloud.ibm.com"
+  description = "The Cloud Monitoring public ingestion endpoint."
+}
