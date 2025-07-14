@@ -163,7 +163,6 @@ func TestRunUpgradeFullyConfigurable(t *testing.T) {
 func TestRunAccountSettings(t *testing.T) {
 	t.Parallel()
 
-	region := validRegions[rand.Intn(len(validRegions))]
 	prefix := "mr"
 
 	// Verify ibmcloud_api_key variable is set
@@ -176,7 +175,6 @@ func TestRunAccountSettings(t *testing.T) {
 
 	options := testschematic.TestSchematicOptionsDefault(&testschematic.TestSchematicOptions{
 		Testing: t,
-		Region:  region,
 		Prefix:  prefix,
 		TarIncludePatterns: []string{
 			"*.tf",
@@ -191,7 +189,6 @@ func TestRunAccountSettings(t *testing.T) {
 
 	options.TerraformVars = []testschematic.TestSchematicTerraformVar{
 		{Name: "ibmcloud_api_key", Value: options.RequiredEnvironmentVars["TF_VAR_ibmcloud_api_key"], DataType: "string", Secure: true},
-		{Name: "region", Value: region, DataType: "string"},
 		{Name: "primary_metadata_region", Value: "eu-de", DataType: "string"},
 		{Name: "backup_metadata_region", Value: "us-east", DataType: "string"}, // The `backup_metadata_region` should not be same as `primary_metadata_region` so hard-coded the region here
 		{Name: "permitted_target_regions", Value: permitted_target_regions, DataType: "list(string)"},
