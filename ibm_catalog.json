@@ -286,9 +286,6 @@
               "key": "ibmcloud_api_key"
             },
             {
-              "key": "region"
-            },
-            {
               "key": "default_targets"
             },
             {

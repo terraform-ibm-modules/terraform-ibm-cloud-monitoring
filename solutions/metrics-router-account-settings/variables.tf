@@ -19,22 +19,14 @@ variable "provider_visibility" {
   }
 }
 
-variable "region" {
-  description = "The IBM Cloud region where Cloud monitoring instance will be created."
-  type        = string
-  default     = "us-south"
-}
-
 ########################################################################################################################
 # IBM Cloud Metrics Routing
 ########################################################################################################################
 
 variable "default_targets" {
   description = "The default target locations, that is, 1 or more targets in the account, that will collect metrics from supported IBM Cloud Metrics Routing locations where you have not configured how you want to collect metrics. You can define up to 2 default targets per account. [Learn more](https://github.com/terraform-ibm-modules/terraform-ibm-cloud-monitoring/blob/main/solutions/metrics-router-account-settings/DA-types.md#default-targets-)"
-  type = list(object({
-    id = string
-  }))
-  default = []
+  type        = list(string)
+  default     = []
 }
 
 variable "primary_metadata_region" {
