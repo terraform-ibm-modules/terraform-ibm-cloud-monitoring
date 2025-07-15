@@ -37,3 +37,16 @@ output "account_id" {
   value       = local.create_cloud_monitoring ? module.cloud_monitoring[0].account_id : module.existing_cloud_monitoring_crn_parser[0].account_id
   description = "The account id where cloud monitoring instance is provisioned."
 }
+
+# https://cloud.ibm.com/docs/monitoring?topic=monitoring-endpoints#endpoints_ingestion
+output "ingestion_endpoint_private" {
+  value       = local.create_cloud_monitoring ? module.cloud_monitoring[0].ingestion_endpoint_private : null
+  description = "The Cloud Monitoring private ingestion endpoint."
+  sensitive   = true
+}
+
+# https://cloud.ibm.com/docs/monitoring?topic=monitoring-endpoints#endpoints_ingestion_public
+output "ingestion_endpoint_public" {
+  value       = local.create_cloud_monitoring ? module.cloud_monitoring[0].ingestion_endpoint_public : null
+  description = "The Cloud Monitoring public ingestion endpoint."
+}
