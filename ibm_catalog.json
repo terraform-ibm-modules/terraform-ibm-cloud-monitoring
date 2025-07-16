@@ -231,7 +231,7 @@
             "features": [
               {
                 "title": " ",
-                "description": "Configured to use IBM secure by default standards, but can be edited to fit your use case."
+                "description": "Configures IBM Cloud Monitoring and Metrics Routing route with a cloud monitoring target."
               }
             ],
             "diagrams": [
@@ -241,7 +241,7 @@
                   "url": "https://raw.githubusercontent.com/terraform-ibm-modules/terraform-ibm-cloud-monitoring/refs/heads/main/reference-architecture/deployable-architecture-cloud-monitoring.svg",
                   "type": "image/svg+xml"
                 },
-                "description": "This architecture supports creating and configuring IBM Cloud Monitoring resources & Metrics Routing route with a cloud monitoring target"
+                "description": "This architecture supports creating and configuring IBM Cloud Monitoring resources & Metrics Routing route with a cloud monitoring target."
               }
             ]
           },
@@ -276,11 +276,11 @@
           "terraform_version": "1.10.5"
         },
         {
-          "label": "Metrics Router account settings",
-          "name": "metrics-router-account-settings",
+          "label": "Metrics Routing account settings",
+          "name": "metrics-routing-account-settings",
           "index": 2,
           "install_type": "fullstack",
-          "working_directory": "solutions/metrics-router-account-settings",
+          "working_directory": "solutions/metrics-routing-account-settings",
           "configuration": [
             {
               "key": "ibmcloud_api_key"
@@ -324,32 +324,30 @@
               "service_name": "All account management services",
               "role_crns": [
                 "crn:v1:bluemix:public:iam::::role:Administrator"
-              ],
-              "notes": "Required for setting up foundational IBM Cloud account components such as IAM settings, trusted profiles, access groups, and resource groups."
+              ]
             },
             {
               "service_name": "metrics-router",
               "role_crns": [
                 "crn:v1:bluemix:public:iam::::role:Administrator"
-              ],
-              "notes": "Required for managing metrics router account settings."
+              ]
             }
           ],
           "architecture": {
             "features": [
               {
                 "title": " ",
-                "description": "Configured to use IBM secure by default standards, but can be edited to fit your use case."
+                "description": "Configures account settings for IBM Cloud Metrics Routing."
               }
             ],
             "diagrams": [
               {
                 "diagram": {
-                  "caption": "Metrics Router Account Settings",
+                  "caption": "Metrics Routing account settings",
                   "url": "https://raw.githubusercontent.com/terraform-ibm-modules/terraform-ibm-cloud-monitoring/refs/heads/main/reference-architecture/deployable-architecture-account-settings.svg",
                   "type": "image/svg+xml"
                 },
-                "description": "This architecture supports configuring the IBM Cloud Metrics Router Account Settings."
+                "description": "This architecture supports configuring the IBM Cloud Metrics Routing Account Settings."
               }
             ]
           }

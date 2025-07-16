@@ -118,7 +118,7 @@ variable "enable_metrics_routing_to_cloud_monitoring" {
 
 variable "enable_primary_metadata_region" {
   type        = bool
-  description = "Whether to configure `primary_metadata_region` of the IBM Cloud Metrics Router account settings."
+  description = "When set to `true`, sets `primary_metadata_region` to `var.region`, storing Metrics Router metadata in that region. When `false`, no region is set and the default global region is used. [Learn more](https://cloud.ibm.com/docs/metrics-router?topic=metrics-router-getting-started#configuring_account_settings)."
   default     = false
 }
 

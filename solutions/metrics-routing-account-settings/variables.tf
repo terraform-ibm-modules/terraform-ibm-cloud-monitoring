@@ -4,14 +4,14 @@
 
 variable "ibmcloud_api_key" {
   type        = string
-  description = "The IBM Cloud API key to deploy resources."
+  description = "The IBM Cloud API key with access to configure Metrics Routing account settings."
   sensitive   = true
 }
 
 variable "provider_visibility" {
   description = "Set the visibility value for the IBM terraform provider. Supported values are `public`, `private`, `public-and-private`. [Learn more](https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/guides/custom-service-endpoints)."
   type        = string
-  default     = "private"
+  default     = "public"
 
   validation {
     condition     = contains(["public", "private", "public-and-private"], var.provider_visibility)
@@ -24,13 +24,12 @@ variable "provider_visibility" {
 ########################################################################################################################
 
 variable "default_targets" {
-  description = "The default target locations, that is, 1 or more targets in the account, that will collect metrics from supported IBM Cloud Metrics Routing locations where you have not configured how you want to collect metrics. You can define up to 2 default targets per account. [Learn more](https://github.com/terraform-ibm-modules/terraform-ibm-cloud-monitoring/blob/main/solutions/metrics-router-account-settings/DA-types.md#default-targets-)"
-  type        = list(string)
+  description = "Where metrics that are not explicitly managed in the account's routing rules are routed. You can define up to 2 default targets per account. Consider defining a second default target to collect data in a backup location."
   default     = []
 }
 
 variable "primary_metadata_region" {
-  description = "The location in your IBM Cloud account where the IBM Cloud Metrics Routing account configuration metadata is stored. To store all your meta data in a single region. For new accounts, all target/route creation will fail until `primary_metadata_region` is set."
+  description = "Storage location for target, route, and settings metadata in your IBM Cloud account. To store all configuration metadata in a single region, set this value explicitly. For new accounts, creating targets and routes will fail until `primary_metadata_region` is set. If set to `null`, no change is made to the current value."  
   type        = string
   default     = null
 }
@@ -42,13 +41,13 @@ variable "backup_metadata_region" {
 }
 
 variable "permitted_target_regions" {
-  description = "List of regions where metrics are allowed to be sent."
+  description = "Controls where targets collecting platform metrics can be located. To allow targets in any region (i.e., No restrictions), configure this field as an empty list `[]`."
   type        = list(string)
   default     = []
 }
 
 variable "private_api_endpoint_only" {
-  description = "The type of endpoints that are allowed to manage the IBM Cloud Metrics Routing account configuration in the account. By default, public and private endpoints are enabled. When public endpoints are disabled, the IBM Cloud Metrics Routing UI will be inaccessible."
+  description = "Public endpoints can be disabled for managing IBM Cloud Metrics Routing configuration via the CLI or REST API. When public endpoints are disabled, the IBM Cloud Metrics Routing UI will be inaccessible."
   type        = bool
   default     = false
 }
