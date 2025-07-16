@@ -25,11 +25,12 @@ variable "provider_visibility" {
 
 variable "default_targets" {
   description = "Where metrics that are not explicitly managed in the account's routing rules are routed. You can define up to 2 default targets per account. Consider defining a second default target to collect data in a backup location."
+  type        = list(string)
   default     = []
 }
 
 variable "primary_metadata_region" {
-  description = "Storage location for target, route, and settings metadata in your IBM Cloud account. To store all configuration metadata in a single region, set this value explicitly. For new accounts, creating targets and routes will fail until `primary_metadata_region` is set. If set to `null`, no change is made to the current value."  
+  description = "Storage location for target, route, and settings metadata in your IBM Cloud account. To store all configuration metadata in a single region, set this value explicitly. For new accounts, creating targets and routes will fail until `primary_metadata_region` is set. If set to `null`, no change is made to the current value."
   type        = string
   default     = null
 }
