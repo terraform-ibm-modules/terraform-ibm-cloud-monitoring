@@ -29,6 +29,7 @@ var validRegions = []string{
 	"ca-tor",
 	"eu-de",
 	"eu-gb",
+	"eu-fr2",
 	"jp-osa",
 	"jp-tok",
 	"us-south",
