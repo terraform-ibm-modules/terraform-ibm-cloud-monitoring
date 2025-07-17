@@ -17,12 +17,17 @@ variable "instance_name" {
 
 variable "plan" {
   type        = string
-  description = "The IBM Cloud Monitoring plan to provision. Available: lite, graduated-tier"
+  description = "The IBM Cloud Monitoring plan to provision. Available: lite, graduated-tier and graduated-tier-sysdig-secure-plus-monitor (available in region eu-fr2 only)"
   default     = "lite"
 
   validation {
-    condition     = can(regex("^lite$|^graduated-tier$", var.plan))
-    error_message = "The plan value must be one of the following: lite, graduated-tier."
+    condition     = can(regex("^lite$|^graduated-tier$|^graduated-tier-sysdig-secure-plus-monitor$", var.plan))
+    error_message = "The plan value must be one of the following: lite, graduated-tier and graduated-tier-sysdig-secure-plus-monitor (available in region eu-fr2 only)."
+  }
+
+  validation {
+    condition     = (var.plan != "graduated-tier-sysdig-secure-plus-monitor") || var.region == "eu-fr2"
+    error_message = "When plan is graduated-tier-sysdig-secure-plus-monitor region should be set to eu-fr2."
   }
 }
 

@@ -29,6 +29,7 @@ var validRegions = []string{
 	"ca-tor",
 	"eu-de",
 	"eu-gb",
+	"eu-fr2",
 	"jp-osa",
 	"jp-tok",
 	"us-south",
@@ -40,6 +41,12 @@ func TestRunFullyConfigurable(t *testing.T) {
 
 	region := validRegions[rand.Intn(len(validRegions))]
 	prefix := "icm-da"
+	plan := "lite"
+
+	// when region is 'eu-fr2' take opportunity to test 'graduated-tier-sysdig-secure-plus-monitor' plan
+	if region == "eu-fr2" {
+		plan = "graduated-tier-sysdig-secure-plus-monitor"
+	}
 
 	// Verify ibmcloud_api_key variable is set
 	checkVariable := "TF_VAR_ibmcloud_api_key"
@@ -68,6 +75,7 @@ func TestRunFullyConfigurable(t *testing.T) {
 		{Name: "region", Value: region, DataType: "string"},
 		{Name: "cloud_monitoring_resource_tags", Value: options.Tags, DataType: "list(string)"},
 		{Name: "prefix", Value: options.Prefix, DataType: "string"},
+		{Name: "cloud_monitoring_plan", Value: plan, DataType: "string"},
 	}
 
 	err := options.RunSchematicTest()
