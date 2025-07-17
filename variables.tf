@@ -24,6 +24,11 @@ variable "plan" {
     condition     = can(regex("^lite$|^graduated-tier$|^graduated-tier-sysdig-secure-plus-monitor$", var.plan))
     error_message = "The plan value must be one of the following: lite, graduated-tier and graduated-tier-sysdig-secure-plus-monitor (available in region eu-fr2 only)."
   }
+
+  validation {
+    condition     = (var.plan != "graduated-tier-sysdig-secure-plus-monitor") || var.region == "eu-fr2"
+    error_message = "When plan is graduated-tier-sysdig-secure-plus-monitor region should be set to eu-fr2."
+  }
 }
 
 variable "manager_key_name" {

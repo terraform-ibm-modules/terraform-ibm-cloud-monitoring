@@ -35,7 +35,7 @@ variable "prefix" {
 variable "provider_visibility" {
   description = "Set the visibility value for the IBM terraform provider. Supported values are `public`, `private`, `public-and-private`. [Learn more](https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/guides/custom-service-endpoints)."
   type        = string
-  default     = "private"
+  default     = "public"
 
   validation {
     condition     = contains(["public", "private", "public-and-private"], var.provider_visibility)
@@ -80,11 +80,16 @@ variable "cloud_monitoring_access_tags" {
 variable "cloud_monitoring_plan" {
   type        = string
   description = "The IBM Cloud Monitoring plan to provision. Available values are `lite` and `graduated-tier` and graduated-tier-sysdig-secure-plus-monitor (available in region eu-fr2 only)."
-  default     = "graduated-tier-sysdig-secure-plus-monitor"
+  default     = "graduated-tier"
 
   validation {
     condition     = can(regex("^lite$|^graduated-tier$|^graduated-tier-sysdig-secure-plus-monitor$", var.cloud_monitoring_plan))
     error_message = "The plan value must be one of the following: lite, graduated-tier and graduated-tier-sysdig-secure-plus-monitor (available in region eu-fr2 only)."
+  }
+
+  validation {
+    condition     = (var.cloud_monitoring_plan != "graduated-tier-sysdig-secure-plus-monitor") || var.region == "eu-fr2"
+    error_message = "When cloud_monitoring_plan is graduated-tier-sysdig-secure-plus-monitor region should be set to eu-fr2."
   }
 }
 
