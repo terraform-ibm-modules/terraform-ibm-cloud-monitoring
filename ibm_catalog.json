@@ -9,7 +9,8 @@
         "target_terraform",
         "terraform",
         "solution",
-        "logging_monitoring"
+        "logging_monitoring",
+        "converged_infra"
       ],
       "keywords": [
         "IaC",
@@ -134,12 +135,16 @@
               "required": true,
               "options": [
                 {
-                  "displayname": "graduated-tier",
+                  "displayname": "Graduated tier",
                   "value": "graduated-tier"
                 },
                 {
-                  "displayname": "lite",
+                  "displayname": "Lite",
                   "value": "lite"
+                },
+                {
+                  "displayname": "Graduated tier Sysdig Secure plus Monitor",
+                  "value": "graduated-tier-sysdig-secure-plus-monitor"
                 }
               ]
             },
