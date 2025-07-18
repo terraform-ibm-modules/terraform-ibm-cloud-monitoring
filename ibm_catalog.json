@@ -181,6 +181,9 @@
               "key": "enable_metrics_routing_to_cloud_monitoring"
             },
             {
+              "key": "enable_primary_metadata_region"
+            },
+            {
               "key": "metrics_routing_route_name"
             },
             {
@@ -232,12 +235,8 @@
           "architecture": {
             "features": [
               {
-                "title": "Cloud Monitoring instance",
-                "description": "Creates and configures an instance of cloud monitoring."
-              },
-              {
-                "title": "Metric Routing route and target",
-                "description": "Configures an IBM Cloud Metrics Routing route with a cloud monitoring target."
+                "title": " ",
+                "description": "Configures IBM Cloud Monitoring and Metrics Routing route with a cloud monitoring target."
               }
             ],
             "diagrams": [
@@ -247,7 +246,7 @@
                   "url": "https://raw.githubusercontent.com/terraform-ibm-modules/terraform-ibm-cloud-monitoring/refs/heads/main/reference-architecture/deployable-architecture-cloud-monitoring.svg",
                   "type": "image/svg+xml"
                 },
-                "description": "This architecture supports creating and configuring IBM Cloud Monitoring resources & Metrics Routing route with a cloud monitoring target"
+                "description": "This architecture supports creating and configuring IBM Cloud Monitoring resources & Metrics Routing route with a cloud monitoring target."
               }
             ]
           },
@@ -280,6 +279,97 @@
           ],
           "dependency_version_2": true,
           "terraform_version": "1.10.5"
+        },
+        {
+          "label": "Metrics Routing account settings",
+          "name": "metrics-routing-account-settings",
+          "index": 2,
+          "install_type": "fullstack",
+          "working_directory": "solutions/metrics-routing-account-settings",
+          "configuration": [
+            {
+              "key": "ibmcloud_api_key"
+            },
+            {
+              "key": "default_targets",
+              "custom_config": {
+                "grouping": "deployment",
+                "original_grouping": "deployment",
+                "config_constraints": {
+                  "type": "string"
+                }
+              }
+            },
+            {
+              "key": "primary_metadata_region"
+            },
+            {
+              "key": "backup_metadata_region"
+            },
+            {
+              "key": "permitted_target_regions",
+              "custom_config": {
+                "grouping": "deployment",
+                "original_grouping": "deployment",
+                "config_constraints": {
+                  "type": "string"
+                }
+              }
+            },
+            {
+              "key": "private_api_endpoint_only"
+            },
+            {
+              "key": "provider_visibility",
+              "hidden": true,
+              "options": [
+                {
+                  "displayname": "private",
+                  "value": "private"
+                },
+                {
+                  "displayname": "public",
+                  "value": "public"
+                },
+                {
+                  "displayname": "public-and-private",
+                  "value": "public-and-private"
+                }
+              ]
+            }
+          ],
+          "iam_permissions": [
+            {
+              "service_name": "All account management services",
+              "role_crns": [
+                "crn:v1:bluemix:public:iam::::role:Administrator"
+              ]
+            },
+            {
+              "service_name": "metrics-router",
+              "role_crns": [
+                "crn:v1:bluemix:public:iam::::role:Administrator"
+              ]
+            }
+          ],
+          "architecture": {
+            "features": [
+              {
+                "title": " ",
+                "description": "Configures account settings for IBM Cloud Metrics Routing."
+              }
+            ],
+            "diagrams": [
+              {
+                "diagram": {
+                  "caption": "Metrics Routing account settings",
+                  "url": "https://raw.githubusercontent.com/terraform-ibm-modules/terraform-ibm-cloud-monitoring/refs/heads/main/reference-architecture/deployable-architecture-account-settings.svg",
+                  "type": "image/svg+xml"
+                },
+                "description": "This architecture supports configuring the IBM Cloud Metrics Routing Account Settings."
+              }
+            ]
+          }
         }
       ]
     }

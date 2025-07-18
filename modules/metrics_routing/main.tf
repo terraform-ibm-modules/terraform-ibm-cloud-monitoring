@@ -73,7 +73,7 @@ resource "ibm_metrics_router_settings" "metrics_router_settings" {
   dynamic "default_targets" {
     for_each = var.metrics_router_settings.default_targets
     content {
-      id = default_targets.value.id
+      id = default_targets.value
     }
   }
   permitted_target_regions  = var.metrics_router_settings.permitted_target_regions
