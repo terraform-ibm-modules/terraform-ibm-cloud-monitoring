@@ -291,7 +291,14 @@
               "key": "ibmcloud_api_key"
             },
             {
-              "key": "default_targets"
+              "key": "default_targets",
+              "custom_config": {
+                "grouping": "deployment",
+                "original_grouping": "deployment",
+                "config_constraints": {
+                  "type": "string"
+                }
+              }
             },
             {
               "key": "primary_metadata_region"
@@ -300,7 +307,14 @@
               "key": "backup_metadata_region"
             },
             {
-              "key": "permitted_target_regions"
+              "key": "permitted_target_regions",
+              "custom_config": {
+                "grouping": "deployment",
+                "original_grouping": "deployment",
+                "config_constraints": {
+                  "type": "string"
+                }
+              }
             },
             {
               "key": "private_api_endpoint_only"
