@@ -15,6 +15,7 @@ import (
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 	"github.com/terraform-ibm-modules/ibmcloud-terratest-wrapper/common"
+	"github.com/terraform-ibm-modules/ibmcloud-terratest-wrapper/testhelper"
 	"github.com/terraform-ibm-modules/ibmcloud-terratest-wrapper/testschematic"
 )
 
@@ -23,6 +24,10 @@ const resourceGroup = "geretain-test-resources"
 
 const fullyconfigurableDADir = "solutions/fully-configurable"
 const AccountSettingsDADir = "solutions/metrics-routing-account-settings"
+
+var IgnoreUpdates = []string{
+	"module.metrics_routing[0].ibm_metrics_router_settings.metrics_router_settings[0]",
+}
 
 var validRegions = []string{
 	"au-syd",
@@ -64,10 +69,14 @@ func TestRunFullyConfigurable(t *testing.T) {
 			"modules/metrics_routing" + "/*.tf",
 			fullyconfigurableDADir + "/*.tf",
 		},
+
 		TemplateFolder:         fullyconfigurableDADir,
 		Tags:                   []string{"icm-da-test"},
 		DeleteWorkspaceOnFail:  false,
 		WaitJobCompleteMinutes: 60,
+		IgnoreUpdates: testhelper.Exemptions{ // Ignore for consistency check
+			List: IgnoreUpdates,
+		},
 	})
 
 	options.TerraformVars = []testschematic.TestSchematicTerraformVar{
