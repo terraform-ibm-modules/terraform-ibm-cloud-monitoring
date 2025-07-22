@@ -15,6 +15,7 @@ import (
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 	"github.com/terraform-ibm-modules/ibmcloud-terratest-wrapper/common"
+	"github.com/terraform-ibm-modules/ibmcloud-terratest-wrapper/testhelper"
 	"github.com/terraform-ibm-modules/ibmcloud-terratest-wrapper/testschematic"
 )
 
@@ -22,6 +23,11 @@ import (
 const resourceGroup = "geretain-test-resources"
 
 const fullyconfigurableDADir = "solutions/fully-configurable"
+const AccountSettingsDADir = "solutions/metrics-routing-account-settings"
+
+var IgnoreUpdates = []string{
+	"module.metrics_routing[0].ibm_metrics_router_settings.metrics_router_settings[0]",
+}
 
 var validRegions = []string{
 	"au-syd",
@@ -63,10 +69,14 @@ func TestRunFullyConfigurable(t *testing.T) {
 			"modules/metrics_routing" + "/*.tf",
 			fullyconfigurableDADir + "/*.tf",
 		},
+
 		TemplateFolder:         fullyconfigurableDADir,
 		Tags:                   []string{"icm-da-test"},
 		DeleteWorkspaceOnFail:  false,
 		WaitJobCompleteMinutes: 60,
+		IgnoreUpdates: testhelper.Exemptions{ // Ignore for consistency check
+			List: IgnoreUpdates,
+		},
 	})
 
 	options.TerraformVars = []testschematic.TestSchematicTerraformVar{
@@ -165,4 +175,38 @@ func TestRunUpgradeFullyConfigurable(t *testing.T) {
 		terraform.WorkspaceDelete(t, existingTerraformOptions, prefix)
 		logger.Log(t, "END: Destroy (prereq resources)")
 	}
+}
+
+func TestRunAccountSettings(t *testing.T) {
+	t.Parallel()
+
+	prefix := "mr"
+
+	// Verify ibmcloud_api_key variable is set
+	checkVariable := "TF_VAR_ibmcloud_api_key"
+	val, present := os.LookupEnv(checkVariable)
+	require.True(t, present, checkVariable+" environment variable not set")
+	require.NotEqual(t, "", val, checkVariable+" environment variable is empty")
+
+	options := testschematic.TestSchematicOptionsDefault(&testschematic.TestSchematicOptions{
+		Testing: t,
+		Prefix:  prefix,
+		TarIncludePatterns: []string{
+			"*.tf",
+			"modules/metrics_routing" + "/*.tf",
+			AccountSettingsDADir + "/*.tf",
+		},
+		TemplateFolder:         AccountSettingsDADir,
+		Tags:                   []string{"mr-da-test"},
+		DeleteWorkspaceOnFail:  false,
+		WaitJobCompleteMinutes: 60,
+	})
+
+	options.TerraformVars = []testschematic.TestSchematicTerraformVar{
+		{Name: "ibmcloud_api_key", Value: options.RequiredEnvironmentVars["TF_VAR_ibmcloud_api_key"], DataType: "string", Secure: true},
+		{Name: "primary_metadata_region", Value: "eu-de", DataType: "string"},
+	}
+
+	err := options.RunSchematicTest()
+	assert.Nil(t, err, "This should not have errored")
 }
