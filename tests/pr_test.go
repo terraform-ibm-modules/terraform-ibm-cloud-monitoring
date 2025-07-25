@@ -28,6 +28,9 @@ const AccountSettingsDADir = "solutions/metrics-routing-account-settings"
 var IgnoreUpdates = []string{
 	"module.metrics_routing[0].ibm_metrics_router_settings.metrics_router_settings[0]",
 }
+var IgnoreUpdatesAccountSettings = []string{
+	"module.metrics_router_account_settings.ibm_metrics_router_settings.metrics_router_settings[0]",
+}
 
 var validRegions = []string{
 	"au-syd",
@@ -148,6 +151,9 @@ func TestRunUpgradeFullyConfigurable(t *testing.T) {
 			Tags:                   []string{"test-schematic"},
 			DeleteWorkspaceOnFail:  false,
 			WaitJobCompleteMinutes: 60,
+			IgnoreUpdates: testhelper.Exemptions{ // Ignore for consistency check
+				List: IgnoreUpdates,
+			},
 		})
 
 		options.TerraformVars = []testschematic.TestSchematicTerraformVar{
@@ -200,6 +206,9 @@ func TestRunAccountSettings(t *testing.T) {
 		Tags:                   []string{"mr-da-test"},
 		DeleteWorkspaceOnFail:  false,
 		WaitJobCompleteMinutes: 60,
+		IgnoreUpdates: testhelper.Exemptions{ // Ignore for consistency check
+			List: IgnoreUpdatesAccountSettings,
+		},
 	})
 
 	options.TerraformVars = []testschematic.TestSchematicTerraformVar{

@@ -21,6 +21,9 @@ func setupOptions(t *testing.T, prefix string, dir string) *testhelper.TestOptio
 		Prefix:        prefix,
 		ResourceGroup: resourceGroup,
 		Region:        validRegions[rand.Intn(len(validRegions))],
+		IgnoreUpdates: testhelper.Exemptions{ // Ignore for consistency check
+			List: IgnoreUpdates,
+		},
 	})
 	return options
 }
@@ -54,6 +57,9 @@ func TestRunAdvancedExampleInSchematics(t *testing.T) {
 		Tags:                   []string{"test-schematic"},
 		DeleteWorkspaceOnFail:  false,
 		WaitJobCompleteMinutes: 60,
+		IgnoreUpdates: testhelper.Exemptions{ // Ignore for consistency check
+			List: IgnoreUpdates,
+		},
 	})
 
 	options.TerraformVars = []testschematic.TestSchematicTerraformVar{
