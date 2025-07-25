@@ -28,6 +28,9 @@ const AccountSettingsDADir = "solutions/metrics-routing-account-settings"
 var IgnoreUpdates = []string{
 	"module.metrics_routing[0].ibm_metrics_router_settings.metrics_router_settings[0]",
 }
+var IgnoreUpdatesAccountSettings = []string{
+	"module.metrics_router_account_settings.ibm_metrics_router_settings.metrics_router_settings[0]",
+}
 
 var validRegions = []string{
 	"au-syd",
@@ -75,9 +78,7 @@ func TestRunFullyConfigurable(t *testing.T) {
 		DeleteWorkspaceOnFail:  false,
 		WaitJobCompleteMinutes: 60,
 		IgnoreUpdates: testhelper.Exemptions{ // Ignore for consistency check
-			List: []string{
-				"module.metrics_routing[0].ibm_metrics_router_settings.metrics_router_settings[0]",
-			},
+			List: IgnoreUpdates,
 		},
 	})
 
@@ -151,9 +152,7 @@ func TestRunUpgradeFullyConfigurable(t *testing.T) {
 			DeleteWorkspaceOnFail:  false,
 			WaitJobCompleteMinutes: 60,
 			IgnoreUpdates: testhelper.Exemptions{ // Ignore for consistency check
-				List: []string{
-					"module.metrics_routing[0].ibm_metrics_router_settings.metrics_router_settings[0]",
-				},
+				List: IgnoreUpdates,
 			},
 		})
 
@@ -208,9 +207,7 @@ func TestRunAccountSettings(t *testing.T) {
 		DeleteWorkspaceOnFail:  false,
 		WaitJobCompleteMinutes: 60,
 		IgnoreUpdates: testhelper.Exemptions{ // Ignore for consistency check
-			List: []string{
-				"module.metrics_router_account_settings.ibm_metrics_router_settings.metrics_router_settings[0]",
-			},
+			List: IgnoreUpdatesAccountSettings,
 		},
 	})
 

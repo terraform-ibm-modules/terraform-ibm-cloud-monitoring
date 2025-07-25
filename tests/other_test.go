@@ -22,9 +22,7 @@ func setupOptions(t *testing.T, prefix string, dir string) *testhelper.TestOptio
 		ResourceGroup: resourceGroup,
 		Region:        validRegions[rand.Intn(len(validRegions))],
 		IgnoreUpdates: testhelper.Exemptions{ // Ignore for consistency check
-			List: []string{
-				"module.metrics_routing[0].ibm_metrics_router_settings.metrics_router_settings[0]",
-			},
+			List: IgnoreUpdates,
 		},
 	})
 	return options
@@ -60,9 +58,7 @@ func TestRunAdvancedExampleInSchematics(t *testing.T) {
 		DeleteWorkspaceOnFail:  false,
 		WaitJobCompleteMinutes: 60,
 		IgnoreUpdates: testhelper.Exemptions{ // Ignore for consistency check
-			List: []string{
-				"module.metrics_routing[0].ibm_metrics_router_settings.metrics_router_settings[0]",
-			},
+			List: IgnoreUpdates,
 		},
 	})
 
