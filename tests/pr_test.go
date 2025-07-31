@@ -50,7 +50,7 @@ func TestRunFullyConfigurable(t *testing.T) {
 
 	region := validRegions[rand.Intn(len(validRegions))]
 	prefix := "icm-da"
-	plan := "lite"
+	plan := "graduated-tier"
 
 	// when region is 'eu-fr2' take opportunity to test 'graduated-tier-sysdig-secure-plus-monitor' plan
 	if region == "eu-fr2" {
