@@ -373,7 +373,8 @@
                 "description": "This architecture supports configuring the IBM Cloud Metrics Routing Account Settings."
               }
             ]
-          }
+          },
+          "terraform_version": "1.10.5"
         }
       ]
     }
