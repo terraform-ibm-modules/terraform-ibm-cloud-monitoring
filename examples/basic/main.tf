@@ -24,4 +24,5 @@ module "cloud_monitoring" {
   region            = var.region
   resource_tags     = var.resource_tags
   instance_name     = local.cloud_monitoring_instance_name
+  plan              = var.plan
 }
