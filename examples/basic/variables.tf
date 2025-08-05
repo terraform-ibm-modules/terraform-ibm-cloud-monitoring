@@ -37,9 +37,3 @@ variable "resource_tags" {
   description = "List of resource tag to associate with all resource instances created by this example."
   default     = []
 }
-
-variable "plan" {
-  type        = string
-  description = "The IBM Cloud Monitoring plan to provision. Available: lite, graduated-tier and graduated-tier-sysdig-secure-plus-monitor (available in region eu-fr2 only)"
-  default     = "graduated-tier"
-}
