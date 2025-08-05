@@ -9,7 +9,7 @@ module "resource_group" {
 }
 
 ##############################################################################
-# Resource Group 1
+# IBM Cloud Monitoring instance
 ##############################################################################
 
 module "cloud_monitoring" {
