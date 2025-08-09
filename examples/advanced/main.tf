@@ -52,7 +52,7 @@ module "cloud_monitoring" {
 
 module "cbr_schematics_zone" {
   source           = "terraform-ibm-modules/cbr/ibm//modules/cbr-zone-module"
-  version          = "1.32.6"
+  version          = "1.32.7"
   name             = "${var.prefix}-schematics-network-zone"
   zone_description = "CBR Network zone containing Schematics"
   account_id       = module.cloud_monitoring.account_id
