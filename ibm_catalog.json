@@ -217,8 +217,15 @@
               "role_crns": [
                 "crn:v1:bluemix:public:iam::::role:Administrator"
               ],
-              "service_name": "iam-identity",
-              "notes": "[Optional] Required if Cloud automation for account configuration is enabled."
+              "service_name": "All Account Management services",
+              "notes": "Administrator access is required to create and delete resource groups."
+            },
+            {
+              "role_crns": [
+                "crn:v1:bluemix:public:iam::::role:Administrator"
+              ],
+              "service_name": "All Identity and Access enabled services",
+              "notes": "Required to create `ibm_iam_authorization_policy` between metrics router and cloud monitoring."
             },
             {
               "role_crns": [
@@ -226,14 +233,7 @@
                 "crn:v1:bluemix:public:iam::::role:Editor"
               ],
               "service_name": "sysdig-monitor",
-              "notes": "[Optional] Required for creating a new instance of cloud monitoring."
-            },
-            {
-              "role_crns": [
-                "crn:v1:bluemix:public:iam::::role:Editor"
-              ],
-              "service_name": "metrics-router",
-              "notes": "[Optional] Required if metrics routing to cloud monitoring instance is enabled."
+              "notes": "Required for creating a new instance of cloud monitoring."
             }
           ],
           "architecture": {
