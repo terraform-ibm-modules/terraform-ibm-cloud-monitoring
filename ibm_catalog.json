@@ -264,7 +264,7 @@
           "dependencies": [
             {
               "name": "deploy-arch-ibm-account-infra-base",
-              "description": "Enable to create a resource groups by default where all the resources will be provisioned and, when you enable the “with Account Settings” option, it also applies baseline security and governance settings. When disabled, provide your own resource group via the `existing_resource_group_name` input.",
+              "description": "Organize your IBM Cloud account with preconfigured resource groups. If not selected, the default resource group is used. Optionally, expand to apply recommended security controls via \"with Account Settings\" variation.",
               "id": "63641cec-6093-4b4f-b7b0-98d2f4185cd6-global",
               "version": "v3.0.7",
               "flavors": [
