@@ -217,8 +217,22 @@
               "role_crns": [
                 "crn:v1:bluemix:public:iam::::role:Administrator"
               ],
-              "service_name": "iam-identity",
-              "notes": "[Optional] Required if Cloud automation for account configuration is enabled."
+              "service_name": "All Account Management services",
+              "notes": "[Optional] Required to create new resource groups when enabling the Account Configuration integration."
+            },
+            {
+              "role_crns": [
+                "crn:v1:bluemix:public:iam::::role:Viewer"
+              ],
+              "service_name": "Resource group only",
+              "notes": "Viewer access is required in the resource group you want to provision in."
+            },
+            {
+              "role_crns": [
+                "crn:v1:bluemix:public:iam::::role:Administrator"
+              ],
+              "service_name": "All Identity and Access enabled services",
+              "notes": "Required to create an IAM authorization policy between Metrics Router and Cloud Monitoring, and to set up new resource groups with account settings when enabling Account Configuration integration."
             },
             {
               "role_crns": [
@@ -226,14 +240,7 @@
                 "crn:v1:bluemix:public:iam::::role:Editor"
               ],
               "service_name": "sysdig-monitor",
-              "notes": "[Optional] Required for creating a new instance of cloud monitoring."
-            },
-            {
-              "role_crns": [
-                "crn:v1:bluemix:public:iam::::role:Editor"
-              ],
-              "service_name": "metrics-router",
-              "notes": "[Optional] Required if metrics routing to cloud monitoring instance is enabled."
+              "notes": "Required for creating a new instance of Cloud Monitoring."
             }
           ],
           "architecture": {
@@ -257,7 +264,7 @@
           "dependencies": [
             {
               "name": "deploy-arch-ibm-account-infra-base",
-              "description": "Enable to create a resource groups by default where all the resources will be provisioned and, when you enable the “with Account Settings” option, it also applies baseline security and governance settings. When disabled, provide your own resource group via the `existing_resource_group_name` input.",
+              "description": "Organize your IBM Cloud account with preconfigured resource groups. If not selected, the default resource group is used. Optionally, expand to apply recommended security controls via \"with Account Settings\" variation.",
               "id": "63641cec-6093-4b4f-b7b0-98d2f4185cd6-global",
               "version": "v3.0.7",
               "flavors": [
