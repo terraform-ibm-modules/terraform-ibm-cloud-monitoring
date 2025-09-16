@@ -31,16 +31,30 @@ variable "plan" {
   }
 }
 
-variable "manager_key_name" {
-  type        = string
-  description = "The name to give the IBM Cloud Monitoring manager key."
-  default     = "SysdigManagerKey"
-}
-
-variable "manager_key_tags" {
-  type        = list(string)
-  description = "Tags associated with the IBM Cloud Monitoring manager key."
-  default     = []
+# 'name' is the terraform static reference to the object in the list
+# 'key_name' is the IBM Cloud resource key name
+# name MUST not be dynamic, so that it is known at plan time
+# if key_name is not specified, name will be used for the key_name
+# key_name can be a dynamic reference created during apply
+variable "resource_keys" {
+  description = "The definition of the resource keys to generate. [Learn more](https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/resources/resource_key)."
+  type = list(object({
+    name                      = string
+    key_name                  = optional(string, null)
+    generate_hmac_credentials = optional(bool, false)
+    role                      = optional(string, "Reader")
+    service_id_crn            = optional(string, null)
+  }))
+  default = []
+  validation {
+    # From: https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/resources/resource_key
+    # Service roles (for Cloud Monitoring) https://cloud.ibm.com/iam/roles
+    # Reader, Writer, Manager, Supertenant Metrics Publisher, NONE
+    condition = alltrue([
+      for key in var.resource_keys : contains(["Writer", "Reader", "Manager", "Supertenant Metrics Publisher", "NONE"], key.role)
+    ])
+    error_message = "resource_keys role must be one of 'Writer', 'Reader', 'Manager', 'Supertenant Metrics Publisher', 'NONE', reference https://cloud.ibm.com/iam/roles and `Cloud Monitoring`"
+  }
 }
 
 variable "resource_tags" {
