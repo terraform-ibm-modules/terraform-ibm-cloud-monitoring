@@ -14,3 +14,4 @@ CRA_TARGETS:
     # SCC_REGION: "" # The IBM Cloud region that the SCC instance is in. If not provided, a default global value will be used.
     CRA_ENVIRONMENT_VARIABLES:  # An optional map of environment variables for CRA, where the key is the variable name and value is the value. Useful for providing TF_VARs.
       TF_VAR_prefix: "monitoring"
+      TF_VAR_provider_visibility: "public"
