@@ -11,6 +11,25 @@ module "resource_group" {
 }
 
 ##############################################################################
+# CBR zone
+##############################################################################
+
+module "cbr_schematics_zone" {
+  source           = "terraform-ibm-modules/cbr/ibm//modules/cbr-zone-module"
+  version          = "1.33.2"
+  name             = "${var.prefix}-schematics-network-zone"
+  zone_description = "CBR Network zone containing Schematics"
+  account_id       = module.cloud_monitoring.account_id
+  addresses = [{
+    type = "serviceRef"
+    ref = {
+      account_id   = module.cloud_monitoring.account_id
+      service_name = "schematics"
+    }
+  }]
+}
+
+##############################################################################
 # Cloud Monitoring
 ##############################################################################
 
@@ -28,7 +47,7 @@ module "cloud_monitoring" {
   plan              = "graduated-tier"
   instance_name     = local.cloud_monitoring_instance_name
   cbr_rules = [{
-    description      = "${var.prefix}-cloud-monitoring access from vpc and schematics"
+    description      = "${var.prefix}-cloud-monitoring access from schematics zone"
     account_id       = module.cloud_monitoring.account_id
     enforcement_mode = "report"
     rule_contexts = [{
@@ -43,25 +62,6 @@ module "cloud_monitoring" {
         }
       ]
     }]
-  }]
-}
-
-##############################################################################
-# CBR
-##############################################################################
-
-module "cbr_schematics_zone" {
-  source           = "terraform-ibm-modules/cbr/ibm//modules/cbr-zone-module"
-  version          = "1.33.2"
-  name             = "${var.prefix}-schematics-network-zone"
-  zone_description = "CBR Network zone containing Schematics"
-  account_id       = module.cloud_monitoring.account_id
-  addresses = [{
-    type = "serviceRef"
-    ref = {
-      account_id   = module.cloud_monitoring.account_id
-      service_name = "schematics"
-    }
   }]
 }
 
