@@ -96,6 +96,10 @@
                   "value": "eu-es"
                 },
                 {
+                  "displayname": "Europe (eu-fr2)",
+                  "value": "eu-fr2"
+                },
+                {
                   "displayname": "Dallas (us-south)",
                   "value": "us-south"
                 },
