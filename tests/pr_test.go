@@ -56,11 +56,12 @@ func setupOptions(t *testing.T, prefix string) *testschematic.TestSchematicOptio
 			"modules/metrics_routing" + "/*.tf",
 			fullyConfigurableDADir + "/*.tf",
 		},
-		TemplateFolder:         fullyConfigurableDADir,
-		Prefix:                 prefix,
-		Tags:                   tags,
-		DeleteWorkspaceOnFail:  false,
-		WaitJobCompleteMinutes: 60,
+		TemplateFolder:             fullyConfigurableDADir,
+		Prefix:                     prefix,
+		Tags:                       tags,
+		DeleteWorkspaceOnFail:      false,
+		WaitJobCompleteMinutes:     60,
+		CheckApplyResultForUpgrade: true,
 		IgnoreUpdates: testhelper.Exemptions{ // Ignore for consistency check
 			List: []string{
 				// Have to ignore account settings as other tests may be updating them concurrently
