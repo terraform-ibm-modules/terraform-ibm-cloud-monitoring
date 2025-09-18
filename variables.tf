@@ -41,7 +41,7 @@ variable "resource_keys" {
   type = list(object({
     name                      = string
     key_name                  = optional(string, null)
-    generate_hmac_credentials = optional(bool, false)
+    generate_hmac_credentials = optional(bool, false) # pragma: allowlist secret
     role                      = optional(string, "Reader")
     service_id_crn            = optional(string, null)
   }))
