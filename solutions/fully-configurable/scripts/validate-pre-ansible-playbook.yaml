@@ -1,0 +1,83 @@
+---
+- name: Find IBM Cloud Monitoring Instance with Platform Metrics
+  hosts: localhost
+  connection: local
+  gather_facts: false
+
+  tasks:
+    - name: Set conditional variable from environment
+      set_fact:
+        enable_platform_metrics: "{{ lookup('env', 'enable_platform_metrics') | default('false') | lower }}"
+    - name: Ensure enable_platform_metrics is a boolean
+      set_fact:
+        is_enabled: "{{ enable_platform_metrics | bool }}"
+
+    - name: Find IBM Cloud Monitoring Instance
+      block:
+        - name: get running ansible env variables
+          set_fact:
+            ibmcloud_api_key: "{{ lookup('env', 'ibmcloud_api_key') }}" # pragma: allowlist secret
+            target_instance_filter: "sysdig-monitor"
+        - name: Check if 'jq' command is available
+          ansible.builtin.command: which jq
+          register: jq_check
+          ignore_errors: true
+          changed_when: false
+
+        - name: Fail if 'jq' is not installed
+          ansible.builtin.fail:
+            msg: "Error: 'jq' is not installed. Please install 'jq' to run this playbook (e.g., sudo apt-get install jq)."
+          when: jq_check.rc != 0
+
+        - name: Log in to IBM Cloud
+          ansible.builtin.shell: |
+            ibmcloud login --apikey "{{ ibmcloud_api_key }}" --no-region
+          register: ibmcloud_login_result
+          changed_when: false
+          failed_when: ibmcloud_login_result.rc != 0 or
+                       'FAILED' in ibmcloud_login_result.stderr or
+                       'Error' in ibmcloud_login_result.stderr
+
+        - name: Display IBM Cloud login success message
+          ansible.builtin.debug:
+            msg: "Authentication successful."
+          when: ibmcloud_login_result.rc == 0
+
+        - name: List IBM Cloud service instances and filter for Cloud Monitoring instance
+          ansible.builtin.shell: |
+            ibmcloud resource service-instances --service-name {{ target_instance_filter }} --output JSON | \
+            jq -r '
+                .[] | select(
+                    ((.id | test("{{ target_instance_filter }}"; "i")) or (.crn | test("{{ target_instance_filter }}"; "i"))) and
+                    .state == "active" and
+                    .parameters.default_receiver == true
+                ) |
+                "Instance Name: \(.name)\nInstance ID:   \(.guid)\nRegion:        \(.region_id)\n"
+            '
+          register: found_instance_result
+          changed_when: false
+          failed_when: false
+
+        - name: Fail if found IBM Cloud Monitoring instances with platform metrics
+          ansible.builtin.fail:
+            msg: |
+              Active IBM Cloud Monitoring instances with platform metrics enabled were found:
+              {{ found_instance_result.stdout }}
+          when: found_instance_result.stdout | length > 0
+
+        - name: Inform if no IBM Cloud Monitoring instances were found
+          ansible.builtin.debug:
+            msg: "No active IBM Cloud Monitoring instances with platform metrics enabled were found."
+          when: found_instance_result.stdout | length == 0
+
+        - name: Log out of IBM Cloud
+          ansible.builtin.shell: |
+            ibmcloud logout >/dev/null 2>&1
+          changed_when: false
+          failed_when: false
+      when: is_enabled
+
+    - name: Skip due to environment variable
+      ansible.builtin.debug:
+        msg: "Skipping search for IBM Cloud Monitoring instances because 'enable_platform_metrics' is not set to 'true'."
+      when: not is_enabled
