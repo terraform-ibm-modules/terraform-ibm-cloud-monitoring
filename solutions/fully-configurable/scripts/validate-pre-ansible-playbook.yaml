@@ -18,10 +18,6 @@
           set_fact:
             ibmcloud_api_key: "{{ lookup('env', 'ibmcloud_api_key') }}" # pragma: allowlist secret
             target_instance_filter: "sysdig-monitor"
-        - name: Ensure 'jq' is installed
-          ansible.builtin.package:
-            name: jq
-            state: present
 
         - name: Log in to IBM Cloud
           ansible.builtin.shell: |
@@ -37,32 +33,29 @@
             msg: "Authentication successful."
           when: ibmcloud_login_result.rc == 0
 
-        - name: List IBM Cloud service instances and filter for Cloud Monitoring instance
+        - name: List IBM Cloud service instances
           ansible.builtin.shell: |
-            ibmcloud resource service-instances --service-name {{ target_instance_filter }} --output JSON | \
-            jq -r '
-                .[] | select(
-                    ((.id | test("{{ target_instance_filter }}"; "i")) or (.crn | test("{{ target_instance_filter }}"; "i"))) and
-                    .state == "active" and
-                    .parameters.default_receiver == true
-                ) |
-                "Instance Name: \(.name)\nInstance ID:   \(.guid)\nRegion:        \(.region_id)\n"
-            '
-          register: found_instance_result
+            ibmcloud resource service-instances --service-name {{ target_instance_filter }}  --output JSON
+          register: ibmcloud_instances
           changed_when: false
-          failed_when: false
-
+        
+        - name: Filter for Cloud Monitoring instances with platform metrics
+          set_fact:
+            filtered_instances: "{{ ibmcloud_instances.stdout | from_json | json_query(query) }}"
+          vars:
+            query: "[?state=='active' && parameters.default_receiver==`true`].{Name: name, ID: guid, Region: region_id}"
+        
         - name: Fail if found IBM Cloud Monitoring instances with platform metrics
           ansible.builtin.fail:
             msg: |
               Active IBM Cloud Monitoring instances with platform metrics enabled were found:
-              {{ found_instance_result.stdout }}
-          when: found_instance_result.stdout | length > 0
-
+              {{ filtered_instances }}
+          when: filtered_instances | length > 0
+        
         - name: Inform if no IBM Cloud Monitoring instances were found
           ansible.builtin.debug:
             msg: "No active IBM Cloud Monitoring instances with platform metrics enabled were found."
-          when: found_instance_result.stdout | length == 0
+          when: filtered_instances | length == 0
       when: is_enabled
       rescue:
         - name: Fail with a specific error message
