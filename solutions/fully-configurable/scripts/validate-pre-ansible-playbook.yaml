@@ -18,20 +18,14 @@
           set_fact:
             ibmcloud_api_key: "{{ lookup('env', 'ibmcloud_api_key') }}" # pragma: allowlist secret
             target_instance_filter: "sysdig-monitor"
-        - name: Check if 'jq' command is available
-          ansible.builtin.command: which jq
-          register: jq_check
-          ignore_errors: true
-          changed_when: false
-
-        - name: Fail if 'jq' is not installed
-          ansible.builtin.fail:
-            msg: "Error: 'jq' is not installed. Please install 'jq' to run this playbook (e.g., sudo apt-get install jq)."
-          when: jq_check.rc != 0
+        - name: Ensure 'jq' is installed
+          ansible.builtin.package:
+            name: jq
+            state: present
 
         - name: Log in to IBM Cloud
           ansible.builtin.shell: |
-            ibmcloud login --apikey "{{ ibmcloud_api_key }}" --no-region
+            ibmcloud login --apikey "{{ ibmcloud_api_key }}" --no-region -q >/dev/null 2>&1
           register: ibmcloud_login_result
           changed_when: false
           failed_when: ibmcloud_login_result.rc != 0 or
