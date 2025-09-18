@@ -69,13 +69,17 @@
           ansible.builtin.debug:
             msg: "No active IBM Cloud Monitoring instances with platform metrics enabled were found."
           when: found_instance_result.stdout | length == 0
-
+      when: is_enabled
+      rescue:
+        - name: Fail with a specific error message
+          ansible.builtin.fail:
+            msg: "An unhandled error occurred in the primary block. Check previous task output for details."
+      always:
         - name: Log out of IBM Cloud
           ansible.builtin.shell: |
             ibmcloud logout >/dev/null 2>&1
           changed_when: false
           failed_when: false
-      when: is_enabled
 
     - name: Skip due to environment variable
       ansible.builtin.debug:
