@@ -32,10 +32,14 @@ resource "ibm_resource_tag" "cloud_monitoring_tag" {
 }
 
 resource "ibm_resource_key" "resource_key" {
-  name                 = var.manager_key_name
+  for_each             = { for key in var.resource_keys : key.name => key }
+  name                 = each.value.key_name == null ? each.key : each.value.key_name
   resource_instance_id = ibm_resource_instance.cloud_monitoring.id
-  role                 = "Manager"
-  tags                 = var.manager_key_tags
+  role                 = each.value.role
+  parameters = {
+    "serviceid_crn" = each.value.service_id_crn
+    "HMAC"          = each.value.generate_hmac_credentials
+  }
 }
 
 ########################################################################
