@@ -42,10 +42,11 @@ variable "resource_keys" {
     name                      = string
     key_name                  = optional(string, null)
     generate_hmac_credentials = optional(bool, false)
-    role                      = optional(string, "Reader")
+    role                      = optional(string, "Manager")
     service_id_crn            = optional(string, null)
   }))
-  default = []
+  default = [{
+  name = "SysdigManagerKey" }]
   validation {
     # From: https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/resources/resource_key
     # Service roles (for Cloud Monitoring) https://cloud.ibm.com/iam/roles
