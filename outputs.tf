@@ -32,9 +32,10 @@ output "access_key" {
   sensitive = true
 }
 
-output "manager_key_name" {
-  description = "The cloud monitoring manager key name"
-  value       = [for rk in ibm_resource_key.resource_key : rk.name]
+output "resource_keys" {
+  description = "List of resource resource_keys"
+  value       = ibm_resource_key.resource_keys
+  sensitive   = true
 }
 
 # https://cloud.ibm.com/docs/monitoring?topic=monitoring-endpoints#endpoints_ingestion

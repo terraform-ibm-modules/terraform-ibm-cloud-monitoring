@@ -159,7 +159,7 @@ You need the following permissions to run this module.
 | Name | Type |
 |------|------|
 | [ibm_resource_instance.cloud_monitoring](https://registry.terraform.io/providers/ibm-cloud/ibm/latest/docs/resources/resource_instance) | resource |
-| [ibm_resource_key.resource_key](https://registry.terraform.io/providers/ibm-cloud/ibm/latest/docs/resources/resource_key) | resource |
+| [ibm_resource_key.resource_keys](https://registry.terraform.io/providers/ibm-cloud/ibm/latest/docs/resources/resource_key) | resource |
 | [ibm_resource_tag.cloud_monitoring_tag](https://registry.terraform.io/providers/ibm-cloud/ibm/latest/docs/resources/resource_tag) | resource |
 
 ### Inputs
@@ -187,9 +187,9 @@ You need the following permissions to run this module.
 | <a name="output_guid"></a> [guid](#output\_guid) | The guid of the provisioned cloud monitoring instance. |
 | <a name="output_ingestion_endpoint_private"></a> [ingestion\_endpoint\_private](#output\_ingestion\_endpoint\_private) | The Cloud Monitoring private ingestion endpoint. |
 | <a name="output_ingestion_endpoint_public"></a> [ingestion\_endpoint\_public](#output\_ingestion\_endpoint\_public) | The Cloud Monitoring public ingestion endpoint. |
-| <a name="output_manager_key_name"></a> [manager\_key\_name](#output\_manager\_key\_name) | The cloud monitoring manager key name |
 | <a name="output_name"></a> [name](#output\_name) | The name of the provisioned cloud monitoring instance. |
 | <a name="output_resource_group_id"></a> [resource\_group\_id](#output\_resource\_group\_id) | The resource group where cloud monitoring monitor instance resides |
+| <a name="output_resource_keys"></a> [resource\_keys](#output\_resource\_keys) | List of resource resource\_keys |
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 
 <!-- Leave this section as is so that your module has a link to local development environment set-up steps for contributors to follow -->
