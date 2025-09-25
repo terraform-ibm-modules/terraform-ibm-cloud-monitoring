@@ -41,12 +41,15 @@ variable "resource_keys" {
   type = list(object({
     name                      = string
     key_name                  = optional(string, null)
-    generate_hmac_credentials = optional(bool, false)
+    generate_hmac_credentials = optional(bool, false) # pragma: allowlist secret
     role                      = optional(string, "Manager")
     service_id_crn            = optional(string, null)
   }))
-  default = [{
-  name = "SysdigManagerKey" }]
+  default = [
+    {
+      name = "SysdigManagerKey"
+    }
+  ]
   validation {
     # From: https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/resources/resource_key
     # Service roles (for Cloud Monitoring) https://cloud.ibm.com/iam/roles

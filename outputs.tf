@@ -23,18 +23,10 @@ output "resource_group_id" {
   description = "The resource group where cloud monitoring monitor instance resides"
 }
 
-output "access_key" {
-  description = "The cloud monitoring access key for agents to use"
-  value = {
-    for name, rk in ibm_resource_key.resource_key :
-    name => rk.credentials["Sysdig Access Key"]
-  }
-  sensitive = true
-}
-
-output "manager_key_name" {
-  description = "The cloud monitoring manager key name"
-  value       = [for rk in ibm_resource_key.resource_key : rk.name]
+output "resource_keys" {
+  description = "List of resource resource_keys"
+  value       = ibm_resource_key.resource_keys
+  sensitive   = true
 }
 
 # https://cloud.ibm.com/docs/monitoring?topic=monitoring-endpoints#endpoints_ingestion

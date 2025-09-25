@@ -31,7 +31,7 @@ resource "ibm_resource_tag" "cloud_monitoring_tag" {
   tag_type    = "access"
 }
 
-resource "ibm_resource_key" "resource_key" {
+resource "ibm_resource_key" "resource_keys" {
   for_each             = { for key in var.resource_keys : key.name => key }
   name                 = each.value.key_name == null ? each.key : each.value.key_name
   resource_instance_id = ibm_resource_instance.cloud_monitoring.id
