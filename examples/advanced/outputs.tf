@@ -27,17 +27,6 @@ output "resource_group_id" {
   description = "The resource group where cloud monitoring monitor instance resides."
 }
 
-output "access_key" {
-  value       = module.cloud_monitoring.access_key
-  description = "The cloud monitoring access key for agents to use."
-  sensitive   = true
-}
-
-output "manager_key_name" {
-  value       = module.cloud_monitoring.manager_key_name
-  description = "The cloud monitoring manager key name."
-}
-
 output "metrics_router_routes" {
   value       = module.metrics_routing.metrics_router_routes
   description = "The created metrics routing routes."
