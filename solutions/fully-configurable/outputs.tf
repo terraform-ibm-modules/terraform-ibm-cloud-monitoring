@@ -29,7 +29,7 @@ output "cloud_monitoring_guid" {
 
 output "cloud_monitoring_resource_keys" {
   value       = local.create_cloud_monitoring ? module.cloud_monitoring[0].resource_keys : null
-  description = "IBM cloud monitoring access keys for agents to use"
+  description = "IBM cloud monitoring resource keys for agents to use"
   sensitive   = true
 }
 

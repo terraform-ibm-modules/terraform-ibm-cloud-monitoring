@@ -27,6 +27,12 @@ output "resource_group_id" {
   description = "The resource group where cloud monitoring monitor instance resides."
 }
 
+output "cloud_monitoring_resource_keys" {
+  value       = module.cloud_monitoring.resource_keys
+  description = "IBM Cloud Monitoring resource keys for agents to use"
+  sensitive   = true
+}
+
 output "metrics_router_routes" {
   value       = module.metrics_routing.metrics_router_routes
   description = "The created metrics routing routes."
