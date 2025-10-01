@@ -26,3 +26,10 @@ output "ingestion_endpoint_public" {
   value       = module.cloud_monitoring.ingestion_endpoint_public
   description = "The Cloud Monitoring public ingestion endpoint."
 }
+
+
+output "cloud_monitoring_access_key" {
+  value       = module.cloud_monitoring.access_keys["SysdigManagerKey"]
+  description = "The Cloud Monitoring access keys for agents to use."
+  sensitive   = true
+}

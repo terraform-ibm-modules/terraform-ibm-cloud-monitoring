@@ -24,9 +24,19 @@ output "resource_group_id" {
 }
 
 output "resource_keys" {
-  description = "List of resource resource_keys"
+  description = "Map of resource keys created for the IBM Cloud Monitoring instance, used by agents for authentication and data forwarding."
   value       = ibm_resource_key.resource_keys
   sensitive   = true
+}
+
+# https://cloud.ibm.com/docs/monitoring?topic=monitoring-access_key
+output "access_keys" {
+  description = "The Cloud Monitoring access keys for agents to use."
+  value = {
+    for name, key in ibm_resource_key.resource_keys :
+    name => key.credentials["Sysdig Access Key"]
+  }
+  sensitive = true
 }
 
 # https://cloud.ibm.com/docs/monitoring?topic=monitoring-endpoints#endpoints_ingestion

@@ -77,6 +77,17 @@ variable "cloud_monitoring_access_tags" {
   default     = []
 }
 
+variable "cloud_monitoring_resource_keys" {
+  description = "List of access keys to create for the IBM Cloud Monitoring instance. These keys are used by monitoring agents to forward data. Each entry defines one resource key. For guidance on access keys, see: https://cloud.ibm.com/docs/monitoring?topic=monitoring-access_key"
+  type = list(object({
+    name                      = string
+    key_name                  = optional(string, null)
+    generate_hmac_credentials = optional(bool, false) # pragma: allowlist secret
+    role                      = optional(string, "Manager")
+    service_id_crn            = optional(string, null)
+  }))
+}
+
 variable "cloud_monitoring_plan" {
   type        = string
   description = "The IBM Cloud Monitoring plan to provision. Available values are `lite` and `graduated-tier` and graduated-tier-sysdig-secure-plus-monitor (available in region eu-fr2 only)."
