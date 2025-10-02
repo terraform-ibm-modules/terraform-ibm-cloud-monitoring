@@ -173,7 +173,7 @@ You need the following permissions to run this module.
 | <a name="input_plan"></a> [plan](#input\_plan) | The IBM Cloud Monitoring plan to provision. Available: lite, graduated-tier and graduated-tier-sysdig-secure-plus-monitor (available in region eu-fr2 only) | `string` | `"lite"` | no |
 | <a name="input_region"></a> [region](#input\_region) | The IBM Cloud region where Cloud Monitoring instance will be created. | `string` | `"us-south"` | no |
 | <a name="input_resource_group_id"></a> [resource\_group\_id](#input\_resource\_group\_id) | The id of the IBM Cloud resource group where the Cloud Monitoring instance will be created. | `string` | n/a | yes |
-| <a name="input_resource_keys"></a> [resource\_keys](#input\_resource\_keys) | The definition of the resource keys to generate. [Learn more](https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/resources/resource_key). | <pre>list(object({<br/>    name                      = string<br/>    key_name                  = optional(string, null)<br/>    generate_hmac_credentials = optional(bool, false) # pragma: allowlist secret<br/>    role                      = optional(string, "Manager")<br/>    service_id_crn            = optional(string, null)<br/>  }))</pre> | <pre>[<br/>  {<br/>    "name": "SysdigManagerKey"<br/>  }<br/>]</pre> | no |
+| <a name="input_resource_keys"></a> [resource\_keys](#input\_resource\_keys) | List of access keys to create for the IBM Cloud Monitoring instance. These keys are used by monitoring agents to forward data. Each entry defines one resource key. For guidance on access keys, see: https://cloud.ibm.com/docs/monitoring?topic=monitoring-access_key | <pre>list(object({<br/>    name                      = string<br/>    key_name                  = optional(string, null)<br/>    generate_hmac_credentials = optional(bool, false) # pragma: allowlist secret<br/>    role                      = optional(string, "Manager")<br/>    service_id_crn            = optional(string, null)<br/>  }))</pre> | <pre>[<br/>  {<br/>    "generate_hmac_credentials": false,<br/>    "key_name": "SysdigManagerKey",<br/>    "name": "SysdigManagerKey",<br/>    "role": "Manager",<br/>    "service_id_crn": null<br/>  }<br/>]</pre> | no |
 | <a name="input_resource_tags"></a> [resource\_tags](#input\_resource\_tags) | Tags associated with the IBM Cloud Monitoring instance (Optional, array of strings). | `list(string)` | `[]` | no |
 | <a name="input_service_endpoints"></a> [service\_endpoints](#input\_service\_endpoints) | The type of the service endpoint that will be set for the Sisdig instance. | `string` | `"public-and-private"` | no |
 
@@ -181,6 +181,7 @@ You need the following permissions to run this module.
 
 | Name | Description |
 |------|-------------|
+| <a name="output_access_keys"></a> [access\_keys](#output\_access\_keys) | The Cloud Monitoring access keys for agents to use. |
 | <a name="output_account_id"></a> [account\_id](#output\_account\_id) | The account id where cloud monitoring instance is provisioned. |
 | <a name="output_crn"></a> [crn](#output\_crn) | The id of the provisioned cloud monitoring instance. |
 | <a name="output_guid"></a> [guid](#output\_guid) | The guid of the provisioned cloud monitoring instance. |
@@ -188,7 +189,7 @@ You need the following permissions to run this module.
 | <a name="output_ingestion_endpoint_public"></a> [ingestion\_endpoint\_public](#output\_ingestion\_endpoint\_public) | The Cloud Monitoring public ingestion endpoint. |
 | <a name="output_name"></a> [name](#output\_name) | The name of the provisioned cloud monitoring instance. |
 | <a name="output_resource_group_id"></a> [resource\_group\_id](#output\_resource\_group\_id) | The resource group where cloud monitoring monitor instance resides |
-| <a name="output_resource_keys"></a> [resource\_keys](#output\_resource\_keys) | List of resource resource\_keys |
+| <a name="output_resource_keys"></a> [resource\_keys](#output\_resource\_keys) | Map of resource keys created for the IBM Cloud Monitoring instance, used by agents for authentication and data forwarding. |
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 
 <!-- Leave this section as is so that your module has a link to local development environment set-up steps for contributors to follow -->
