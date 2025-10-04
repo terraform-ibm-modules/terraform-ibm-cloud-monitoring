@@ -1,0 +1,74 @@
+---
+- name: Find IBM Cloud Monitoring Instance with Platform Metrics
+  hosts: localhost
+  connection: local
+  gather_facts: false
+
+  tasks:
+    - name: Set conditional variable from environment
+      set_fact:
+        enable_platform_metrics: "{{ lookup('env', 'enable_platform_metrics') | default('false') | lower }}"
+    - name: Ensure enable_platform_metrics is a boolean
+      set_fact:
+        is_enabled: "{{ enable_platform_metrics | bool }}"
+
+    - name: Find IBM Cloud Monitoring Instance
+      block:
+        - name: get running ansible env variables
+          set_fact:
+            ibmcloud_api_key: "{{ lookup('env', 'ibmcloud_api_key') }}" # pragma: allowlist secret
+            target_instance_filter: "sysdig-monitor"
+
+        - name: Log in to IBM Cloud
+          ansible.builtin.shell: |
+            ibmcloud login --apikey "{{ ibmcloud_api_key }}" --no-region -q >/dev/null 2>&1
+          register: ibmcloud_login_result
+          changed_when: false
+          failed_when: ibmcloud_login_result.rc != 0 or
+                       'FAILED' in ibmcloud_login_result.stderr or
+                       'Error' in ibmcloud_login_result.stderr
+
+        - name: Display IBM Cloud login success message
+          ansible.builtin.debug:
+            msg: "Authentication successful."
+          when: ibmcloud_login_result.rc == 0
+
+        - name: List IBM Cloud service instances
+          ansible.builtin.shell: |
+            ibmcloud resource service-instances --service-name {{ target_instance_filter }}  --output JSON
+          register: ibmcloud_instances
+          changed_when: false
+
+        - name: Filter for Cloud Monitoring instances with platform metrics
+          set_fact:
+            filtered_instances: "{{ ibmcloud_instances.stdout | from_json | json_query(query) }}"
+          vars:
+            query: "[?state=='active' && parameters.default_receiver==`true`].{Name: name, ID: guid, Region: region_id}"
+
+        - name: Fail if found IBM Cloud Monitoring instances with platform metrics
+          ansible.builtin.fail:
+            msg: |
+              Active IBM Cloud Monitoring instances with platform metrics enabled were found:
+              {{ filtered_instances }}
+          when: filtered_instances | length > 0
+
+        - name: Inform if no IBM Cloud Monitoring instances were found
+          ansible.builtin.debug:
+            msg: "No active IBM Cloud Monitoring instances with platform metrics enabled were found."
+          when: filtered_instances | length == 0
+      when: is_enabled
+      rescue:
+        - name: Fail with a specific error message
+          ansible.builtin.fail:
+            msg: "An unhandled error occurred in the primary block. Check previous task output for details."
+      always:
+        - name: Log out of IBM Cloud
+          ansible.builtin.shell: |
+            ibmcloud logout >/dev/null 2>&1
+          changed_when: false
+          failed_when: false
+
+    - name: Skip due to environment variable
+      ansible.builtin.debug:
+        msg: "Skipping search for IBM Cloud Monitoring instances because 'enable_platform_metrics' is not set to 'true'."
+      when: not is_enabled
