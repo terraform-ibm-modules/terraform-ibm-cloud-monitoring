@@ -27,15 +27,16 @@ output "resource_group_id" {
   description = "The resource group where cloud monitoring monitor instance resides."
 }
 
-output "access_key" {
-  value       = module.cloud_monitoring.access_key
-  description = "The cloud monitoring access key for agents to use."
+output "cloud_monitoring_resource_keys" {
+  value       = module.cloud_monitoring.resource_keys
+  description = "The map of resource keys created for the Cloud Monitoring instance."
   sensitive   = true
 }
 
-output "manager_key_name" {
-  value       = module.cloud_monitoring.manager_key_name
-  description = "The cloud monitoring manager key name."
+output "cloud_monitoring_access_key" {
+  value       = module.cloud_monitoring.access_keys["SysdigManagerKey"]
+  description = "The Cloud Monitoring access keys for agents to use."
+  sensitive   = true
 }
 
 output "metrics_router_routes" {
