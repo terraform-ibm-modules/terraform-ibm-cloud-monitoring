@@ -4,6 +4,7 @@ Several optional input variables in the IBM Cloud [Cloud Monitoring instances de
 
 * [IBM Cloud Metrics Router Routes](#metrics_router_routes) (`metrics_router_routes`)
 * [Context Based Restrictions Rules](#cbr_rules) (`cbr_rules`)
+* [Cloud Monitoring Resource Keys](#cloud_monitoring_resource_keys) (`cloud_monitoring_resource_keys`)
 
 ## Metrics Router Routes <a name="metrics_router_routes"></a>
 
@@ -102,6 +103,39 @@ The `cbr_rules` input variable allows you to provide a rule for the target servi
         ]
       }
     ]
+  }
+]
+```
+
+## Cloud Monitoring Resource Keys <a name="cloud_monitoring_resource_keys"></a>
+
+The `cloud_monitoring_resource_keys` input variable allows you to provide a list of resource key to create that will be configured in the IBM Cloud Monitoring instance. In the configuration, specify the name of the resource key, whether HMAC credentials should be included, the Role of the key and an optional Service ID CRN to create with a Service ID. Refer [here](https://cloud.ibm.com/docs/monitoring?topic=monitoring-access_key) for more information.
+
+* Variable name: `cloud_monitoring_resource_keys`.
+* Type: A list of objects that represent a resource key
+* Default value: An empty list (`[]`).
+
+### Options for cloud_monitoring_resource_keys
+
+* `name` (required): A unique human-readable name that identifies this resource key.
+* `generate_hmac_credentials` (optional, default = `false`): Set to true to include HMAC keys in the resource key. [Learn more](https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/resources/resource_key#example-to-create-by-using-hmac).
+* `role` (optional, default = `Reader`): The name of the user role.
+* `service_id_crn` (optional, default = `null`): Pass a Service ID CRN to create credentials for a resource with a Service ID. [Learn more](https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/resources/resource_key#example-to-create-by-using-serviceid).
+
+### Example route for Cloud Monitoring Resource Keys
+
+The following example includes all the configuration options for two resource keys. One is a HMAC key with a `Reader` role, the other with an IAM key with `Manager` role.
+
+```hcl
+[
+  {
+    "name": "icm-resource-key",
+    "generate_hmac_credentials": true,
+    "role": "Reader",
+  },
+  {
+    "name": "icm-resource-key",
+    "role": "Manager"
   }
 ]
 ```
