@@ -185,13 +185,11 @@
             },
             {
               "key": "cloud_monitoring_resource_keys",
+              "type": "array",
               "custom_config": {
+                "type": "code_editor",
                 "grouping": "deployment",
-                "type": "array",
-                "original_grouping": "deployment",
-                "config_constraints": {
-                  "type": "string"
-                }
+                "original_grouping": "deployment"
               }
             },
             {
