@@ -279,7 +279,7 @@
               {
                 "diagram": {
                   "caption": "Cloud Monitoring",
-                  "url": "https://raw.githubusercontent.com/terraform-ibm-modules/terraform-ibm-cloud-monitoring/refs/heads/main/reference-architecture/deployable-architecture-cloud-monitoring.svg",
+                  "url": "https://raw.githubusercontent.com/terraform-ibm-modules/terraform-ibm-cloud-monitoring/refs/heads/main/reference-architectures/deployable-architecture-cloud-monitoring.svg",
                   "type": "image/svg+xml"
                 },
                 "description": "This architecture supports creating and configuring IBM Cloud Monitoring resources & Metrics Routing route with a cloud monitoring target."
@@ -399,7 +399,7 @@
               {
                 "diagram": {
                   "caption": "Metrics Routing account settings",
-                  "url": "https://raw.githubusercontent.com/terraform-ibm-modules/terraform-ibm-cloud-monitoring/refs/heads/main/reference-architecture/deployable-architecture-account-settings.svg",
+                  "url": "https://raw.githubusercontent.com/terraform-ibm-modules/terraform-ibm-cloud-monitoring/refs/heads/main/reference-architectures/deployable-architecture-account-settings.svg",
                   "type": "image/svg+xml"
                 },
                 "description": "This architecture supports configuring the IBM Cloud Metrics Routing Account Settings."
