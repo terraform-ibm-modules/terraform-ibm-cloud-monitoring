@@ -78,7 +78,7 @@ variable "cloud_monitoring_access_tags" {
 }
 
 variable "cloud_monitoring_resource_keys" {
-  description = "List of access keys to create for the IBM Cloud Monitoring instance. These keys are used by monitoring agents to forward data. Each entry defines one resource key. [Learn more](https://github.com/terraform-ibm-modules/terraform-ibm-cloud-monitoring/tree/main/solutions/fully-configurable/DA-types.md#cloud-monitoring-resource-keys)"
+  description = "List of access keys to create for the IBM Cloud Monitoring instance. Each entry defines one resource key. [Learn more](https://github.com/terraform-ibm-modules/terraform-ibm-cloud-monitoring/tree/main/solutions/fully-configurable/DA-types.md#cloud-monitoring-resource-keys)."
   type = list(object({
     name                      = string
     generate_hmac_credentials = optional(bool, false) # pragma: allowlist secret

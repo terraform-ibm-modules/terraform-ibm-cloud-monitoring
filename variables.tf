@@ -37,7 +37,7 @@ variable "plan" {
 # if key_name is not specified, name will be used for the key_name
 # key_name can be a dynamic reference created during apply
 variable "resource_keys" {
-  description = "List of access keys to create for the IBM Cloud Monitoring instance. These keys are used by monitoring agents to forward data. Each entry defines one resource key. For guidance on access keys, see: https://cloud.ibm.com/docs/monitoring?topic=monitoring-access_key"
+  description = "List of access keys to create for the IBM Cloud Monitoring instance. Each entry defines one resource key. For guidance on access keys, see [here](https://cloud.ibm.com/docs/monitoring?topic=monitoring-access_key)."
   type = list(object({
     name                      = string
     key_name                  = optional(string, null)
