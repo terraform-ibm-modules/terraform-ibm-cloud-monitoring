@@ -38,7 +38,7 @@ variable "disable_access_key_creation" {
 }
 
 variable "access_key_name" {
-  type        = optional(string)
+  type        = string
   description = "The name to give the default IBM Cloud Monitoring Manager access key."
   default     = "SysdigManagerKey"
 }
