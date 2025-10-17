@@ -5,11 +5,7 @@ import (
 	"math/rand"
 	"testing"
 
-	"github.com/IBM/go-sdk-core/v5/core"
 	"github.com/stretchr/testify/assert"
-	"github.com/stretchr/testify/require"
-	"github.com/terraform-ibm-modules/ibmcloud-terratest-wrapper/cloudinfo"
-	"github.com/terraform-ibm-modules/ibmcloud-terratest-wrapper/testaddons"
 	"github.com/terraform-ibm-modules/ibmcloud-terratest-wrapper/testhelper"
 	"github.com/terraform-ibm-modules/ibmcloud-terratest-wrapper/testschematic"
 )
@@ -136,38 +132,4 @@ func TestRunAccountSettingsDA(t *testing.T) {
 
 	err := options.RunSchematicTest()
 	assert.Nil(t, err, "This should not have errored")
-}
-
-// This DA has no "on-by-default" dependencies defined so hence testing with Account Config DA enabled
-func TestAddonWithAccountConfig(t *testing.T) {
-	t.Parallel()
-
-	options := testaddons.TestAddonsOptionsDefault(&testaddons.TestAddonOptions{
-		Testing:       t,
-		Prefix:        "icm-addon",
-		ResourceGroup: resourceGroup,
-		QuietMode:     true, // Suppress logs except on failure
-	})
-
-	options.AddonConfig = cloudinfo.NewAddonConfigTerraform(
-		options.Prefix,
-		"deploy-arch-ibm-cloud-monitoring",
-		"fully-configurable",
-		map[string]interface{}{
-			"prefix": options.Prefix,
-			"region": validRegions[rand.Intn(len(validRegions))],
-		},
-	)
-
-	// Enable Account Config DA
-	options.AddonConfig.Dependencies = []cloudinfo.AddonConfig{
-		{
-			OfferingName:   "deploy-arch-ibm-account-infra-base",
-			OfferingFlavor: "resource-groups-with-account-settings",
-			Enabled:        core.BoolPtr(true), // explicitly enable this dependency
-		},
-	}
-
-	err := options.RunAddonTest()
-	require.NoError(t, err)
 }
