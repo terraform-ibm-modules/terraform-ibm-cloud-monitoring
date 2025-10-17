@@ -31,13 +31,31 @@ variable "plan" {
   }
 }
 
+variable "disable_access_key_creation" {
+  type        = bool
+  description = "When set to true, disables the creation of the default Manager access key. See `resource_keys` to handle rotation, or even creation of non manager role keys."
+  default     = false
+}
+
+variable "access_key_name" {
+  type        = optional(string)
+  description = "The name to give the default IBM Cloud Monitoring Manager access key."
+  default     = "SysdigManagerKey"
+}
+
+variable "manager_key_tags" {
+  type        = list(string)
+  description = "Tags associated with the IBM Cloud Monitoring manager key."
+  default     = []
+}
+
 # 'name' is the terraform static reference to the object in the list
 # 'key_name' is the IBM Cloud resource key name
 # name MUST not be dynamic, so that it is known at plan time
 # if key_name is not specified, name will be used for the key_name
 # key_name can be a dynamic reference created during apply
 variable "resource_keys" {
-  description = "List of access keys to create for the IBM Cloud Monitoring instance. Each entry defines one resource key. For guidance on access keys, see [here](https://cloud.ibm.com/docs/monitoring?topic=monitoring-access_key)."
+  description = "List of keys to create for the IBM Cloud Monitoring instance. Each entry defines one resource key. Use this to manage custom keys, rotation, and disable default access key creation using `disable_access_key_creation`. For guidance on access keys, see [here](https://cloud.ibm.com/docs/monitoring?topic=monitoring-access_key)."
   type = list(object({
     name                      = string
     key_name                  = optional(string, null)
@@ -45,15 +63,7 @@ variable "resource_keys" {
     role                      = optional(string, "Manager")
     service_id_crn            = optional(string, null)
   }))
-  default = [
-    {
-      name                      = "SysdigManagerKey"
-      key_name                  = "SysdigManagerKey"
-      generate_hmac_credentials = false
-      role                      = "Manager"
-      service_id_crn            = null
-    }
-  ]
+  default = []
   validation {
     # From: https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/resources/resource_key
     # Service roles (for Cloud Monitoring) https://cloud.ibm.com/iam/roles
