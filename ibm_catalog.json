@@ -195,6 +195,12 @@
               }
             },
             {
+              "key": "access_key_name"
+            },
+            {
+              "key": "access_key_tags"
+            },
+            {
               "key": "disable_access_key_creation"
             },
             {

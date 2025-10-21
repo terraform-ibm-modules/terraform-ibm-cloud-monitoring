@@ -79,12 +79,24 @@ variable "cloud_monitoring_access_tags" {
 
 variable "disable_access_key_creation" {
   type        = bool
-  description = "When set to true, disables the creation of the default Manager access key. See `resource_keys` to handle rotation, or even creation of non manager role keys."
+  description = "When set to true, disables the creation of the default manager access key. You can use `resource_keys` to create custom resource keys for the instance with different roles."
   default     = false
 }
 
+variable "access_key_name" {
+  type        = string
+  description = "The name to give the default IBM Cloud Monitoring Manager access key. Use `disable_access_key_creation` to disable key creation. For guidance on access keys, see [here](https://cloud.ibm.com/docs/monitoring?topic=monitoring-access_key)."
+  default     = "SysdigManagerKey"
+}
+
+variable "access_key_tags" {
+  type        = list(string)
+  description = "Tags associated with the IBM Cloud Monitoring access key."
+  default     = []
+}
+
 variable "cloud_monitoring_resource_keys" {
-  description = "List of access keys to create for the IBM Cloud Monitoring instance. Each entry defines one resource key. [Learn more](https://github.com/terraform-ibm-modules/terraform-ibm-cloud-monitoring/tree/main/solutions/fully-configurable/DA-types.md#cloud-monitoring-resource-keys)."
+  description = "A list of maps representing resource keys to create for the IBM Cloud Monitoring instance. Each entry defines a single resource key. Use this list to manage custom keys and handle key rotation."
   type = list(object({
     name                      = string
     generate_hmac_credentials = optional(bool, false) # pragma: allowlist secret

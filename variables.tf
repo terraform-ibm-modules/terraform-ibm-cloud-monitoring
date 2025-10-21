@@ -33,19 +33,19 @@ variable "plan" {
 
 variable "disable_access_key_creation" {
   type        = bool
-  description = "When set to true, disables the creation of the default Manager access key. See `resource_keys` to handle rotation, or even creation of non manager role keys."
+  description = "When set to true, disables the creation of the default manager access key. You can use `resource_keys` to create custom resource keys for the instance with different roles."
   default     = false
 }
 
 variable "access_key_name" {
   type        = string
-  description = "The name to give the default IBM Cloud Monitoring Manager access key."
+  description = "The name to give the default IBM Cloud Monitoring Manager access key. Use `disable_access_key_creation` to disable key creation. For guidance on access keys, see [here](https://cloud.ibm.com/docs/monitoring?topic=monitoring-access_key)."
   default     = "SysdigManagerKey"
 }
 
-variable "manager_key_tags" {
+variable "access_key_tags" {
   type        = list(string)
-  description = "Tags associated with the IBM Cloud Monitoring manager key."
+  description = "Tags associated with the IBM Cloud Monitoring access key."
   default     = []
 }
 
@@ -55,7 +55,7 @@ variable "manager_key_tags" {
 # if key_name is not specified, name will be used for the key_name
 # key_name can be a dynamic reference created during apply
 variable "resource_keys" {
-  description = "List of keys to create for the IBM Cloud Monitoring instance. Each entry defines one resource key. Use this to manage custom keys, rotation, and disable default access key creation using `disable_access_key_creation`. For guidance on access keys, see [here](https://cloud.ibm.com/docs/monitoring?topic=monitoring-access_key)."
+  description = "A list of maps representing resource keys to create for the IBM Cloud Monitoring instance. Each entry defines a single resource key. Use this list to manage custom keys and handle key rotation."
   type = list(object({
     name                      = string
     key_name                  = optional(string, null)

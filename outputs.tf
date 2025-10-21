@@ -29,20 +29,11 @@ output "resource_keys" {
   sensitive   = true
 }
 
+# https://cloud.ibm.com/docs/monitoring?topic=monitoring-access_key
 output "access_key" {
   value       = !var.disable_access_key_creation ? ibm_resource_key.resource_key[0].credentials["Sysdig Access Key"] : null
   description = "The cloud monitoring access key for agents to use"
   sensitive   = true
-}
-
-# https://cloud.ibm.com/docs/monitoring?topic=monitoring-access_key
-output "access_keys" {
-  description = "The Cloud Monitoring access keys for agents to use."
-  value = length(var.resource_keys) == 0 ? null : {
-    for name, key in ibm_resource_key.resource_keys :
-    name => key.credentials["Sysdig Access Key"]
-  }
-  sensitive = true
 }
 
 # https://cloud.ibm.com/docs/monitoring?topic=monitoring-endpoints#endpoints_ingestion

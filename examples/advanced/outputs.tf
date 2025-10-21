@@ -35,12 +35,12 @@ output "access_key" {
 
 output "access_key_name" {
   value       = module.cloud_monitoring.name
-  description = "The cloud monitoring manager key name."
+  description = "The cloud monitoring access key name."
 }
 
 output "cloud_monitoring_resource_keys" {
   value       = module.cloud_monitoring.resource_keys
-  description = "The map of resource keys created for the Cloud Monitoring instance."
+  description = "A list of maps containing resource keys created for the Cloud Monitoring instance."
   sensitive   = true
 }
 

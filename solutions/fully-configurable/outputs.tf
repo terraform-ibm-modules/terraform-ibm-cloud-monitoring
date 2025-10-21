@@ -35,7 +35,7 @@ output "cloud_monitoring_access_key" {
 
 output "cloud_monitoring_resource_keys" {
   value       = local.create_cloud_monitoring ? module.cloud_monitoring[0].resource_keys : null
-  description = "Map of resource keys created for the IBM Cloud Monitoring instance, used by agents for authentication and data forwarding."
+  description = "A list of maps representing resource keys created for the IBM Cloud Monitoring instance."
   sensitive   = true
 }
 

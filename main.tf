@@ -40,11 +40,11 @@ resource "ibm_resource_key" "resource_key" {
   name                 = var.access_key_name
   resource_instance_id = ibm_resource_instance.cloud_monitoring.id
   role                 = "Manager"
-  tags                 = var.manager_key_tags
+  tags                 = var.access_key_tags
 }
 
 ###############################################################################
-# Resource Keys (Custom Access Keys)
+# Resource Keys
 ###############################################################################
 
 resource "ibm_resource_key" "resource_keys" {
