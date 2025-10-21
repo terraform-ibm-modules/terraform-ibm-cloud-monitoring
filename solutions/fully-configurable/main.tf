@@ -44,18 +44,19 @@ locals {
 }
 
 module "cloud_monitoring" {
-  count                   = local.create_cloud_monitoring ? 1 : 0
-  source                  = "../.."
-  resource_group_id       = module.resource_group.resource_group_id
-  region                  = var.region
-  instance_name           = local.cloud_monitoring_instance_name
-  plan                    = var.cloud_monitoring_plan
-  resource_tags           = var.cloud_monitoring_resource_tags
-  access_tags             = var.cloud_monitoring_access_tags
-  resource_keys           = var.cloud_monitoring_resource_keys
-  service_endpoints       = "public-and-private"
-  enable_platform_metrics = var.enable_platform_metrics
-  cbr_rules               = var.cbr_rules
+  count                       = local.create_cloud_monitoring ? 1 : 0
+  source                      = "../.."
+  resource_group_id           = module.resource_group.resource_group_id
+  region                      = var.region
+  instance_name               = local.cloud_monitoring_instance_name
+  plan                        = var.cloud_monitoring_plan
+  resource_tags               = var.cloud_monitoring_resource_tags
+  access_tags                 = var.cloud_monitoring_access_tags
+  resource_keys               = var.cloud_monitoring_resource_keys
+  disable_access_key_creation = var.disable_access_key_creation
+  service_endpoints           = "public-and-private"
+  enable_platform_metrics     = var.enable_platform_metrics
+  cbr_rules                   = var.cbr_rules
 }
 
 module "metrics_routing" {

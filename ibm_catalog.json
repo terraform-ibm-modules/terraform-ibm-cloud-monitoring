@@ -195,6 +195,9 @@
               }
             },
             {
+              "key": "disable_access_key_creation"
+            },
+            {
               "key": "enable_platform_metrics",
               "required": true
             },

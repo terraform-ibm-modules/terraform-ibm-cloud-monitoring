@@ -77,6 +77,12 @@ variable "cloud_monitoring_access_tags" {
   default     = []
 }
 
+variable "disable_access_key_creation" {
+  type        = bool
+  description = "When set to true, disables the creation of the default Manager access key. See `resource_keys` to handle rotation, or even creation of non manager role keys."
+  default     = false
+}
+
 variable "cloud_monitoring_resource_keys" {
   description = "List of access keys to create for the IBM Cloud Monitoring instance. Each entry defines one resource key. [Learn more](https://github.com/terraform-ibm-modules/terraform-ibm-cloud-monitoring/tree/main/solutions/fully-configurable/DA-types.md#cloud-monitoring-resource-keys)."
   type = list(object({
