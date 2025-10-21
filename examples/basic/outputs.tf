@@ -24,7 +24,7 @@ output "cloud_monitoring_resource_keys" {
 }
 
 output "cloud_monitoring_access_key" {
-  value       = module.cloud_monitoring.access_keys["SysdigManagerKey"]
+  value       = module.cloud_monitoring.access_key
   description = "The Cloud Monitoring access key for agents to use."
   sensitive   = true
 }
