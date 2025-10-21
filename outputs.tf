@@ -38,7 +38,7 @@ output "access_key" {
 # https://cloud.ibm.com/docs/monitoring?topic=monitoring-access_key
 output "access_keys" {
   description = "The Cloud Monitoring access keys for agents to use."
-  value = {
+  value = length(var.resource_keys) == 0 ? null : {
     for name, key in ibm_resource_key.resource_keys :
     name => key.credentials["Sysdig Access Key"]
   }

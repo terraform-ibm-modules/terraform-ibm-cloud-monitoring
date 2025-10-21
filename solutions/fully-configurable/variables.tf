@@ -85,14 +85,7 @@ variable "cloud_monitoring_resource_keys" {
     role                      = optional(string, "Manager")
     service_id_crn            = optional(string, null)
   }))
-  default = [
-    {
-      name                      = "SysdigManagerKey"
-      generate_hmac_credentials = false
-      role                      = "Manager"
-      service_id_crn            = null
-    }
-  ]
+  default = []
 }
 
 variable "cloud_monitoring_plan" {
