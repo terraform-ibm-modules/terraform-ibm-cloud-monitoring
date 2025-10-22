@@ -54,8 +54,6 @@ module "cloud_monitoring" {
   access_tags                 = var.cloud_monitoring_access_tags
   resource_keys               = var.cloud_monitoring_resource_keys
   disable_access_key_creation = var.disable_access_key_creation
-  access_key_name             = var.access_key_name
-  access_key_tags             = var.access_key_tags
   service_endpoints           = "public-and-private"
   enable_platform_metrics     = var.enable_platform_metrics
   cbr_rules                   = var.cbr_rules
