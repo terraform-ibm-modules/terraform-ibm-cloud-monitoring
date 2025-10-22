@@ -193,7 +193,7 @@ You need the following permissions to run this module.
 | <a name="output_ingestion_endpoint_public"></a> [ingestion\_endpoint\_public](#output\_ingestion\_endpoint\_public) | The Cloud Monitoring public ingestion endpoint. |
 | <a name="output_name"></a> [name](#output\_name) | The name of the provisioned cloud monitoring instance. |
 | <a name="output_resource_group_id"></a> [resource\_group\_id](#output\_resource\_group\_id) | The resource group where cloud monitoring monitor instance resides |
-| <a name="output_resource_keys"></a> [resource\_keys](#output\_resource\_keys) | Map of resource keys created for the IBM Cloud Monitoring instance, used by agents for authentication and data forwarding. |
+| <a name="output_resource_keys"></a> [resource\_keys](#output\_resource\_keys) | A list of maps representing resource keys created for the IBM Cloud Monitoring instance. |
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 
 <!-- Leave this section as is so that your module has a link to local development environment set-up steps for contributors to follow -->

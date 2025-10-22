@@ -19,7 +19,7 @@ output "resource_group_id" {
 
 output "cloud_monitoring_resource_keys" {
   value       = module.cloud_monitoring.resource_keys
-  description = "The list of resource keys created for the Cloud Monitoring instance."
+  description = "A list of maps containing resource keys created for the Cloud Monitoring instance."
   sensitive   = true
 }
 

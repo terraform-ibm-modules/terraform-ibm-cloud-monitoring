@@ -24,7 +24,7 @@ output "resource_group_id" {
 }
 
 output "resource_keys" {
-  description = "Map of resource keys created for the IBM Cloud Monitoring instance, used by agents for authentication and data forwarding."
+  description = "A list of maps representing resource keys created for the IBM Cloud Monitoring instance."
   value       = ibm_resource_key.resource_keys
   sensitive   = true
 }
