@@ -83,18 +83,6 @@ variable "disable_access_key_creation" {
   default     = false
 }
 
-variable "access_key_name" {
-  type        = string
-  description = "The name to give the default IBM Cloud Monitoring Manager access key. Use `disable_access_key_creation` to disable access key creation. For guidance on access keys, see [here](https://cloud.ibm.com/docs/monitoring?topic=monitoring-access_key)."
-  default     = "SysdigManagerKey"
-}
-
-variable "access_key_tags" {
-  type        = list(string)
-  description = "Tags associated with the IBM Cloud Monitoring access key."
-  default     = []
-}
-
 variable "cloud_monitoring_resource_keys" {
   description = "A list of maps representing resource keys to create for the IBM Cloud Monitoring instance. Each entry defines a single resource key. Use this list to manage custom keys and handle key rotation."
   type = list(object({

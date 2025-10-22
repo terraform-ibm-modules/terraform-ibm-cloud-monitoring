@@ -195,20 +195,6 @@
               }
             },
             {
-              "key": "access_key_name"
-            },
-            {
-              "key": "access_key_tags",
-              "custom_config": {
-                "grouping": "deployment",
-                "type": "array",
-                "original_grouping": "deployment",
-                "config_constraints": {
-                  "type": "string"
-                }
-              }
-            },
-            {
               "key": "disable_access_key_creation"
             },
             {
