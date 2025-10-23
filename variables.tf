@@ -33,7 +33,7 @@ variable "plan" {
 
 variable "disable_access_key_creation" {
   type        = bool
-  description = "When set to true, disables the creation of the default manager access key. You can use `resource_keys` to create custom resource keys for the instance with different roles."
+  description = "When set to true, disables the creation of a default manager access key which is required by agents to ingest metrics."
   default     = false
 }
 

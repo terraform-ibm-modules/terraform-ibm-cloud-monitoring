@@ -32,7 +32,7 @@ output "resource_keys" {
 # https://cloud.ibm.com/docs/monitoring?topic=monitoring-access_key
 output "access_key" {
   value       = !var.disable_access_key_creation ? ibm_resource_key.resource_key[0].credentials["Sysdig Access Key"] : null
-  description = "The cloud monitoring access key for agents to use"
+  description = "The Cloud Monitoring access key for agents to use"
   sensitive   = true
 }
 
