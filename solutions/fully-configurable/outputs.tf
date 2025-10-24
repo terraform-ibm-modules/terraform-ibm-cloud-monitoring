@@ -34,7 +34,7 @@ output "cloud_monitoring_access_key_name" {
 
 output "cloud_monitoring_access_key" {
   value       = local.create_cloud_monitoring ? module.cloud_monitoring[0].access_key : null
-  description = "IBM Cloud Monitoring access key for agents to use"
+  description = "The IBM Cloud Monitoring access key for agents to use"
   sensitive   = true
 }
 

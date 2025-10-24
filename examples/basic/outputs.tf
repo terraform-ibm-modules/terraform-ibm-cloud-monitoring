@@ -4,17 +4,17 @@
 
 output "cloud_monitoring_crn" {
   value       = module.cloud_monitoring.crn
-  description = "The CRN of the provisioned IBM cloud monitoring instance."
+  description = "The CRN of the provisioned IBM Cloud Monitoring instance."
 }
 
 output "cloud_monitoring_name" {
   value       = module.cloud_monitoring.name
-  description = "The name of the provisioned IBM cloud monitoring instance."
+  description = "The name of the provisioned IBM Cloud Monitoring instance."
 }
 
 output "resource_group_id" {
   value       = module.resource_group.resource_group_id
-  description = "The resource group where cloud monitoring monitor instance resides."
+  description = "The resource group where Cloud Monitoring monitor instance resides."
 }
 
 output "cloud_monitoring_resource_keys" {
