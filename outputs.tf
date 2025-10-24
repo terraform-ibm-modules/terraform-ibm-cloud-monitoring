@@ -29,6 +29,11 @@ output "resource_keys" {
   sensitive   = true
 }
 
+output "access_key_name" {
+  value       = !var.disable_access_key_creation ? ibm_resource_key.resource_key[0].name : null
+  description = "The Cloud Monitoring access key name"
+}
+
 # https://cloud.ibm.com/docs/monitoring?topic=monitoring-access_key
 output "access_key" {
   value       = !var.disable_access_key_creation ? ibm_resource_key.resource_key[0].credentials["Sysdig Access Key"] : null

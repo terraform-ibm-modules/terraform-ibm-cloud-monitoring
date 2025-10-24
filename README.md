@@ -186,6 +186,7 @@ You need the following permissions to run this module.
 | Name | Description |
 |------|-------------|
 | <a name="output_access_key"></a> [access\_key](#output\_access\_key) | The Cloud Monitoring access key for agents to use |
+| <a name="output_access_key_name"></a> [access\_key\_name](#output\_access\_key\_name) | The Cloud Monitoring access key name |
 | <a name="output_account_id"></a> [account\_id](#output\_account\_id) | The account id where cloud monitoring instance is provisioned. |
 | <a name="output_crn"></a> [crn](#output\_crn) | The id of the provisioned cloud monitoring instance. |
 | <a name="output_guid"></a> [guid](#output\_guid) | The guid of the provisioned cloud monitoring instance. |

@@ -34,7 +34,7 @@ output "access_key" {
 }
 
 output "access_key_name" {
-  value       = module.cloud_monitoring.name
+  value       = module.cloud_monitoring.access_key_name
   description = "The cloud monitoring access key name."
 }
 

@@ -15,21 +15,26 @@ output "resource_group_id" {
 
 output "cloud_monitoring_crn" {
   value       = local.cloud_monitoring_crn
-  description = "The id of the provisioned IBM cloud monitoring instance."
+  description = "The id of the provisioned IBM Cloud Monitoring instance."
 }
 output "cloud_monitoring_name" {
   value       = local.create_cloud_monitoring ? module.cloud_monitoring[0].name : null
-  description = "The name of the provisioned IBM cloud monitoring instance."
+  description = "The name of the provisioned IBM Cloud Monitoring instance."
 }
 
 output "cloud_monitoring_guid" {
   value       = local.create_cloud_monitoring ? module.cloud_monitoring[0].guid : module.existing_cloud_monitoring_crn_parser[0].service_instance
-  description = "The guid of the provisioned IBM cloud monitoring instance."
+  description = "The guid of the provisioned IBM Cloud Monitoring instance."
+}
+
+output "cloud_monitoring_access_key_name" {
+  value       = local.create_cloud_monitoring ? module.cloud_monitoring[0].access_key_name : null
+  description = "The name of the IBM Cloud Monitoring access key for agents to use"
 }
 
 output "cloud_monitoring_access_key" {
   value       = local.create_cloud_monitoring ? module.cloud_monitoring[0].access_key : null
-  description = "IBM cloud monitoring access key for agents to use"
+  description = "IBM Cloud Monitoring access key for agents to use"
   sensitive   = true
 }
 
@@ -41,7 +46,7 @@ output "cloud_monitoring_resource_keys" {
 
 output "account_id" {
   value       = local.create_cloud_monitoring ? module.cloud_monitoring[0].account_id : module.existing_cloud_monitoring_crn_parser[0].account_id
-  description = "The account id where cloud monitoring instance is provisioned."
+  description = "The account id where Cloud Monitoring instance is provisioned."
 }
 
 # https://cloud.ibm.com/docs/monitoring?topic=monitoring-endpoints#endpoints_ingestion
