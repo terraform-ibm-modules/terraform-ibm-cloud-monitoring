@@ -31,11 +31,31 @@ resource "ibm_resource_tag" "cloud_monitoring_tag" {
   tag_type    = "access"
 }
 
+###############################################################################
+# Resource Key (Default Manager Key)
+###############################################################################
+
 resource "ibm_resource_key" "resource_key" {
-  name                 = var.manager_key_name
+  count                = var.disable_access_key_creation ? 0 : 1
+  name                 = var.access_key_name
   resource_instance_id = ibm_resource_instance.cloud_monitoring.id
   role                 = "Manager"
-  tags                 = var.manager_key_tags
+  tags                 = var.access_key_tags
+}
+
+###############################################################################
+# Resource Keys
+###############################################################################
+
+resource "ibm_resource_key" "resource_keys" {
+  for_each             = { for key in var.resource_keys : key.name => key }
+  name                 = each.value.key_name == null ? each.key : each.value.key_name
+  resource_instance_id = ibm_resource_instance.cloud_monitoring.id
+  role                 = each.value.role
+  parameters = {
+    "serviceid_crn" = each.value.service_id_crn
+    "HMAC"          = each.value.generate_hmac_credentials
+  }
 }
 
 ########################################################################

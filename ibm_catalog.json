@@ -186,6 +186,18 @@
               }
             },
             {
+              "key": "cloud_monitoring_resource_keys",
+              "type": "array",
+              "custom_config": {
+                "type": "code_editor",
+                "grouping": "deployment",
+                "original_grouping": "deployment"
+              }
+            },
+            {
+              "key": "disable_access_key_creation"
+            },
+            {
               "key": "enable_platform_metrics",
               "required": true
             },

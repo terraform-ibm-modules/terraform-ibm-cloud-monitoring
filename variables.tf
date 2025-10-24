@@ -31,16 +31,48 @@ variable "plan" {
   }
 }
 
-variable "manager_key_name" {
+variable "disable_access_key_creation" {
+  type        = bool
+  description = "When set to true, disables the creation of a default manager access key which is required by agents to ingest metrics."
+  default     = false
+}
+
+variable "access_key_name" {
   type        = string
-  description = "The name to give the IBM Cloud Monitoring manager key."
+  description = "The name to give the default IBM Cloud Monitoring Manager access key. Use `disable_access_key_creation` to disable access key creation. For guidance on access keys, see [here](https://cloud.ibm.com/docs/monitoring?topic=monitoring-access_key)."
   default     = "SysdigManagerKey"
 }
 
-variable "manager_key_tags" {
+variable "access_key_tags" {
   type        = list(string)
-  description = "Tags associated with the IBM Cloud Monitoring manager key."
+  description = "Tags associated with the IBM Cloud Monitoring access key."
   default     = []
+}
+
+# 'name' is the terraform static reference to the object in the list
+# 'key_name' is the IBM Cloud resource key name
+# name MUST not be dynamic, so that it is known at plan time
+# if key_name is not specified, name will be used for the key_name
+# key_name can be a dynamic reference created during apply
+variable "resource_keys" {
+  description = "A list of maps representing resource keys to create for the IBM Cloud Monitoring instance. Each entry defines a single resource key. Use this list to manage custom keys and handle key rotation."
+  type = list(object({
+    name                      = string
+    key_name                  = optional(string, null)
+    generate_hmac_credentials = optional(bool, false) # pragma: allowlist secret
+    role                      = optional(string, "Manager")
+    service_id_crn            = optional(string, null)
+  }))
+  default = []
+  validation {
+    # From: https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/resources/resource_key
+    # Service roles (for Cloud Monitoring) https://cloud.ibm.com/iam/roles
+    # Reader, Writer, Manager, Supertenant Metrics Publisher, NONE
+    condition = alltrue([
+      for key in var.resource_keys : contains(["Writer", "Reader", "Manager", "Supertenant Metrics Publisher", "NONE"], key.role)
+    ])
+    error_message = "resource_keys role must be one of 'Writer', 'Reader', 'Manager', 'Supertenant Metrics Publisher', 'NONE', reference https://cloud.ibm.com/iam/roles and `Cloud Monitoring`"
+  }
 }
 
 variable "resource_tags" {

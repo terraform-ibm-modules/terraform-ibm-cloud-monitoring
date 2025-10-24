@@ -9,33 +9,39 @@
 
 output "cloud_monitoring_crn" {
   value       = module.cloud_monitoring.crn
-  description = "The CRN of the provisioned IBM cloud monitoring instance."
+  description = "The CRN of the provisioned IBM Cloud Monitoring instance."
 }
 
 output "cloud_monitoring_guid" {
   value       = module.cloud_monitoring.guid
-  description = "The GUID of the provisioned IBM cloud monitoring instance."
+  description = "The GUID of the provisioned IBM Cloud Monitoring instance."
 }
 
 output "cloud_monitoring_name" {
   value       = module.cloud_monitoring.name
-  description = "The name of the provisioned IBM cloud monitoring instance."
+  description = "The name of the provisioned IBM Cloud Monitoring instance."
 }
 
 output "resource_group_id" {
   value       = module.resource_group.resource_group_id
-  description = "The resource group where cloud monitoring monitor instance resides."
+  description = "The resource group where Cloud Monitoring monitor instance resides."
 }
 
 output "access_key" {
   value       = module.cloud_monitoring.access_key
-  description = "The cloud monitoring access key for agents to use."
+  description = "The Cloud Monitoring access key for agents to use."
   sensitive   = true
 }
 
-output "manager_key_name" {
-  value       = module.cloud_monitoring.manager_key_name
-  description = "The cloud monitoring manager key name."
+output "access_key_name" {
+  value       = module.cloud_monitoring.access_key_name
+  description = "The Cloud Monitoring access key name."
+}
+
+output "cloud_monitoring_resource_keys" {
+  value       = module.cloud_monitoring.resource_keys
+  description = "A list of maps containing resource keys created for the Cloud Monitoring instance."
+  sensitive   = true
 }
 
 output "metrics_router_routes" {
