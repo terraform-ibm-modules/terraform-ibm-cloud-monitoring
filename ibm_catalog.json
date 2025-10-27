@@ -202,6 +202,10 @@
               "required": true
             },
             {
+              "key": "enable_metrics_routing_to_cloud_monitoring",
+              "required": true
+            },
+            {
               "key": "existing_cloud_monitoring_crn",
               "value_constraints": [
                 {
@@ -210,9 +214,6 @@
                   "value": "^__NULL__$|^crn:(.*:){3}sysdig-monitor:(.*:){2}[0-9a-fA-F]{8}(?:-[0-9a-fA-F]{4}){3}-[0-9a-fA-F]{12}::$"
                 }
               ]
-            },
-            {
-              "key": "enable_metrics_routing_to_cloud_monitoring"
             },
             {
               "key": "enable_primary_metadata_region"
