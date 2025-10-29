@@ -14,7 +14,7 @@ import (
 Global variables
 */
 const resourceGroup = "geretain-test-resources"
-const terraformVersion = "terraform_v1.10" // This should match the version in the ibm_catalog.json
+const terraformVersion = "terraform_v1.12.2" // This should match the version in the ibm_catalog.json
 const fullyConfigurableDADir = "solutions/fully-configurable"
 const accountSettingsDADir = "solutions/metrics-routing-account-settings"
 

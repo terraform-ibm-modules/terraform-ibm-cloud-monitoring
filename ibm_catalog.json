@@ -285,7 +285,7 @@
               }
             ]
           },
-          "terraform_version": "1.10.5"
+          "terraform_version": "1.12.2"
         },
         {
           "label": "Metrics Routing account settings",
@@ -377,7 +377,7 @@
               }
             ]
           },
-          "terraform_version": "1.10.5"
+          "terraform_version": "1.12.2"
         }
       ]
     }
