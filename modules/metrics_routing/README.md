@@ -110,5 +110,6 @@ No modules.
 |------|-------------|
 | <a name="output_metrics_router_routes"></a> [metrics\_router\_routes](#output\_metrics\_router\_routes) | The created metrics routing routes. |
 | <a name="output_metrics_router_settings"></a> [metrics\_router\_settings](#output\_metrics\_router\_settings) | The global metrics routing settings. |
+| <a name="output_metrics_router_target_crns"></a> [metrics\_router\_target\_crns](#output\_metrics\_router\_target\_crns) | Map of metrics router target names to their destination CRNs. |
 | <a name="output_metrics_router_targets"></a> [metrics\_router\_targets](#output\_metrics\_router\_targets) | The created metrics routing targets. |
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->

@@ -22,3 +22,8 @@ output "metrics_router_settings" {
   value       = ibm_metrics_router_settings.metrics_router_settings
   description = "The global metrics routing settings."
 }
+
+output "metrics_router_target_crns" {
+  value       = { for target_name, target_resource in ibm_metrics_router_target.metrics_router_targets : target_name => target_resource.destination_crn }
+  description = "Map of metrics router target names to their destination CRNs."
+}
