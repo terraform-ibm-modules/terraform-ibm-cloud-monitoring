@@ -18,7 +18,7 @@ output "next_step_primary_label" {
 }
 
 output "next_step_primary_url" {
-  value       = "https://cloud.ibm.com/observability/metrics-router/${module.metrics_router_account_settings.metrics_router_target_crns}/overview"
+  value       = length(module.metrics_router_account_settings.metrics_router_target_crns) > 0 ? "https://cloud.ibm.com/observability/metrics-router/${module.metrics_router_account_settings.metrics_router_target_crns[0]}/overview" : null
   description = "Primary URL for the IBM Cloud Logs instance"
 }
 
