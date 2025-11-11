@@ -74,7 +74,7 @@ output "next_step_primary_label" {
 
 output "next_step_primary_url" {
   value       = local.create_cloud_monitoring ? "https://cloud.ibm.com/observability/monitoring/${module.cloud_monitoring[0].guid}/overview" : "https://cloud.ibm.com/observability/monitoring/${module.existing_cloud_monitoring_crn_parser[0].service_instance}/overview"
-  description = "Primary URL for the IBM Cloud Logs instance"
+  description = "Primary URL for the IBM Cloud Monitoring instance"
 }
 
 output "next_step_secondary_label" {
