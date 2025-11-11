@@ -78,11 +78,11 @@ output "next_step_primary_url" {
 }
 
 output "next_step_secondary_label" {
-  value       = "Learn more about Metrics Routing"
+  value       = "Learn more about Cloud Monitoring"
   description = "Secondary label"
 }
 
 output "next_step_secondary_url" {
-  value       = "https://cloud.ibm.com/docs/metrics-router?topic=metrics-router-getting-started"
+  value       = "https://cloud.ibm.com/docs/monitoring?topic=monitoring-getting-started"
   description = "Secondary URL"
 }
