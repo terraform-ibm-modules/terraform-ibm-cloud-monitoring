@@ -8,7 +8,7 @@ output "metrics_router_account_settings" {
 }
 
 output "next_steps_text" {
-  value       = "Activity Tracker Event Routing targets and routes are created"
+  value       = "Metrics Router account settings configured"
   description = "Next steps text"
 }
 
