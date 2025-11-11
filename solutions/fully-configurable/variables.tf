@@ -120,6 +120,12 @@ variable "enable_platform_metrics" {
 # Metrics Routing
 ########################################################################################################################
 
+variable "use_private_endpoint" {
+  type        = bool
+  description = "Make true to hit the private endpoint."
+  default     = false
+}
+
 variable "metrics_routing_target_name" {
   type        = string
   description = "The name of the IBM Cloud Metrics Routing target where metrics are collected. If the prefix variable is passed, the name of the target is prefixed to the value in the `<prefix>-value` format."
