@@ -63,12 +63,12 @@ output "ingestion_endpoint_public" {
 }
 
 output "next_steps_text" {
-  value       = "Your Cloud Monitoring Instance is ready."
+  value       = "Your Cloud Monitoring instance is ready."
   description = "Next steps text"
 }
 
 output "next_step_primary_label" {
-  value       = "Go to Cloud Monitoring Instance"
+  value       = "Go to Cloud Monitoring instance"
   description = "Primary label"
 }
 
