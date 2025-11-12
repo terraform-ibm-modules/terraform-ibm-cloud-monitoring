@@ -216,7 +216,7 @@
               ]
             },
             {
-              "key": "enable_primary_metadata_region"
+              "key": "use_private_endpoint"
             },
             {
               "key": "metrics_routing_route_name"
