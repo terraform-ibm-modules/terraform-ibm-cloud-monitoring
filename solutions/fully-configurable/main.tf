@@ -72,7 +72,7 @@ module "metrics_routing" {
   ]
 
   metrics_router_routes   = length(var.metrics_router_routes) != 0 ? var.metrics_router_routes : local.default_metrics_router_route
-  metrics_router_settings = module.primary_metadata_region.primary_metadata_region != null ? null : { primary_metadata_region = var.region }
+  metrics_router_settings = length(module.primary_metadata_region.primary_metadata_region) != 0 ? null : { primary_metadata_region = var.region }
 }
 
 module "primary_metadata_region" {
