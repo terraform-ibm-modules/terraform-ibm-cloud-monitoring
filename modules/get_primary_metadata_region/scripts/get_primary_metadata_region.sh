@@ -6,16 +6,6 @@ IBM_API_KEY=$(echo "$input" | jq -r '.IBM_API_KEY')
 REGION=$(echo "$input" | jq -r '.region')
 USE_PRIVATE_ENDPOINT=$(echo "$input" | jq -r '.use_private_endpoint')
 
-if [[ -z "$IBM_API_KEY" || "$IBM_API_KEY" == "null" ]]; then
-  echo "Error: IBM_API_KEY is missing" >&2
-  exit 1
-fi
-
-if [[ -z "$REGION" || "$REGION" == "null" ]]; then
-  echo "Error: region is missing" >&2
-  exit 1
-fi
-
 get_iam_endpoint() {
   IAM_ENDPOINT="${IBM_IAM_ENDPOINT:-https://iam.cloud.ibm.com}"
   IAM_ENDPOINT=${IAM_ENDPOINT#https://}
