@@ -8,12 +8,12 @@ output "metrics_router_account_settings" {
 }
 
 output "next_steps_text" {
-  value       = "IBM Cloud Metrics Routing account settings are configured"
+  value       = "IBM Cloud Metrics Routing account settings are configured."
   description = "Next steps text"
 }
 
 output "next_step_primary_label" {
-  value       = "Go to Metrics Routing account settings page"
+  value       = "Go to Metrics Routing account settings"
   description = "Primary label"
 }
 
