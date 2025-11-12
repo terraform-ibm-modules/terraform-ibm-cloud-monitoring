@@ -18,7 +18,7 @@ output "next_step_primary_label" {
 }
 
 output "next_step_primary_url" {
-  value       = "https://cloud.ibm.com/observability/metrics-routing/overview"
+  value       = "https://cloud.ibm.com/observability/metrics-routing/settings"
   description = "Primary URL"
 }
 
