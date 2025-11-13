@@ -63,7 +63,7 @@ output "ingestion_endpoint_public" {
 }
 
 output "next_steps_text" {
-  value       = "Your Cloud Monitoring instance is ready."
+  value       = "Now, you can use Cloud Monitoring to monitor the performance and overall system health."
   description = "Next steps text"
 }
 
