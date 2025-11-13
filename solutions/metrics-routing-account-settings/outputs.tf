@@ -23,7 +23,7 @@ output "next_step_primary_url" {
 }
 
 output "next_step_secondary_label" {
-  value       = "Learn more about Metrics Routing account settings"
+  value       = "Learn more about Metrics Routing Account Settings"
   description = "Secondary label"
 }
 
