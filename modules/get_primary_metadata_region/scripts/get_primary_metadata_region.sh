@@ -1,5 +1,5 @@
 #!/bin/bash
-set -euo pipefail
+set -eo pipefail
 
 input=$(cat)
 IBM_API_KEY=$(echo "$input" | jq -r '.IBM_API_KEY')
@@ -7,17 +7,28 @@ REGION=$(echo "$input" | jq -r '.region')
 USE_PRIVATE_ENDPOINT=$(echo "$input" | jq -r '.use_private_endpoint')
 
 get_iam_endpoint() {
-  IAM_ENDPOINT="${IBM_IAM_ENDPOINT:-https://iam.cloud.ibm.com}"
-  IAM_ENDPOINT=${IAM_ENDPOINT#https://}
+  endpoint="${IBM_IAM_ENDPOINT:-https://iam.cloud.ibm.com}"
+  endpoint="${endpoint#https://}"
+
+  if [ "$USE_PRIVATE_ENDPOINT" = true ] && [ "$endpoint" = "iam.cloud.ibm.com" ]; then
+      IAM_ENDPOINT="private.${endpoint}"
+  else
+      IAM_ENDPOINT="${endpoint}"
+  fi
 }
 
 get_metrics_router_endpoint() {
-  metrics_endpoint="${IBM_CLOUD_METRICS_ENDPOINT:-metrics-router.cloud.ibm.com}"
+  metrics_endpoint="${IBMCLOUD_METRICS_ROUTING_API_ENDPOINT:-metrics-router.cloud.ibm.com}"
+  metrics_endpoint="${metrics_endpoint#https://}"
 
-  if [[ "$USE_PRIVATE_ENDPOINT" == "true" ]]; then
-    BASE_URL="https://private.${REGION}.${metrics_endpoint}"
+  if [ "$metrics_endpoint" = "metrics-router.cloud.ibm.com" ]; then
+    if [ "$USE_PRIVATE_ENDPOINT" = true ]; then
+        BASE_URL="https://private.${REGION}.${metrics_endpoint}"
+    else
+        BASE_URL="https://${REGION}.${metrics_endpoint}"
+    fi
   else
-    BASE_URL="https://${REGION}.${metrics_endpoint}"
+    BASE_URL="https://${metrics_endpoint}"
   fi
 }
 
