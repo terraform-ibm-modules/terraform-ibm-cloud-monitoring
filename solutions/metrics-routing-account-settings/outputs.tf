@@ -13,7 +13,7 @@ output "next_steps_text" {
 }
 
 output "next_step_primary_label" {
-  value       = "Go to Metrics Routing account settings"
+  value       = "Go to Metrics Routing Account Settings"
   description = "Primary label"
 }
 
