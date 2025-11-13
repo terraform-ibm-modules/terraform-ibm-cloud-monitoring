@@ -9,6 +9,17 @@ This module utilizes an external script that relies on the following command-lin
 - `jq`: A lightweight and flexible command-line JSON processor. It is required for parsing the input provided by the Terraform external data source.
 - `curl`: A tool to transfer data with URLs, required for making API calls to the IBM Cloud Enterprise Management API.
 
+### Customizing default cloud service endpoints
+
+The user must export the endpoint as an environment variable in order to use custom cloud service endpoints with this module. [Learn more](https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/guides/custom-service-endpoints#getting-started-with-custom-service-endpoints).
+
+**Important** The only supported method for customizing cloud service endpoints is to export the environment variables endpoint; be sure to export the value for `IBM_IAM_ENDPOINT` and `IBMCLOUD_METRICS_ROUTING_API_ENDPOINT`. For example,
+
+```
+export IBM_IAM_ENDPOINT="<endpoint_url>"
+export IBMCLOUD_METRICS_ROUTING_API_ENDPOINT="<endpoint_url>"
+```
+
 ## Usage
 
 ```hcl
