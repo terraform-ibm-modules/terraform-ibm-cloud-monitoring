@@ -61,3 +61,28 @@ output "ingestion_endpoint_public" {
   value       = local.create_cloud_monitoring ? module.cloud_monitoring[0].ingestion_endpoint_public : null
   description = "The Cloud Monitoring public ingestion endpoint."
 }
+
+output "next_steps_text" {
+  value       = "Now, you can use Cloud Monitoring to monitor the performance and overall system health."
+  description = "Next steps text"
+}
+
+output "next_step_primary_label" {
+  value       = "Go to Cloud Monitoring"
+  description = "Primary label"
+}
+
+output "next_step_primary_url" {
+  value       = local.create_cloud_monitoring ? "https://cloud.ibm.com/observability/monitoring/${module.cloud_monitoring[0].guid}/overview" : "https://cloud.ibm.com/observability/monitoring/${module.existing_cloud_monitoring_crn_parser[0].service_instance}/overview"
+  description = "Primary URL for the IBM Cloud Monitoring instance"
+}
+
+output "next_step_secondary_label" {
+  value       = "Learn more about Cloud Monitoring"
+  description = "Secondary label"
+}
+
+output "next_step_secondary_url" {
+  value       = "https://cloud.ibm.com/docs/monitoring?topic=monitoring-getting-started"
+  description = "Secondary URL"
+}
