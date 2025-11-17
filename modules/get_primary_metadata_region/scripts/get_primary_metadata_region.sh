@@ -1,19 +1,21 @@
 #!/bin/bash
 set -eo pipefail
 
+API_KEY="$IBM_API_KEY"
+
+
 input=$(cat)
-IBM_API_KEY=$(echo "$input" | jq -r '.IBM_API_KEY')
 REGION=$(echo "$input" | jq -r '.region')
 USE_PRIVATE_ENDPOINT=$(echo "$input" | jq -r '.use_private_endpoint')
 
 get_iam_endpoint() {
-  endpoint="${IBM_IAM_ENDPOINT:-https://iam.cloud.ibm.com}"
+  endpoint="${IBMCLOUD_IAM_API_ENDPOINT:-https://iam.cloud.ibm.com}"
   endpoint="${endpoint#https://}"
 
   if [ "$USE_PRIVATE_ENDPOINT" = true ] && [ "$endpoint" = "iam.cloud.ibm.com" ]; then
-      IAM_ENDPOINT="private.${endpoint}"
+      IBMCLOUD_IAM_API_ENDPOINT="private.${endpoint}"
   else
-      IAM_ENDPOINT="${endpoint}"
+      IBMCLOUD_IAM_API_ENDPOINT="${endpoint}"
   fi
 }
 
@@ -35,16 +37,15 @@ get_metrics_router_endpoint() {
 get_iam_endpoint
 get_metrics_router_endpoint
 
-# Obtain IAM token
-IAM_TOKEN=$(curl -s -X POST "https://${IAM_ENDPOINT}/identity/token" \
-  -H "Content-Type: application/x-www-form-urlencoded" \
-  -d "grant_type=urn:ibm:params:oauth:grant-type:apikey&apikey=${IBM_API_KEY}" \
-  | jq -r '.access_token')
+iam_response=$(curl --retry 3 -s -X POST "https://${IBMCLOUD_IAM_API_ENDPOINT}/identity/token" --header 'Content-Type: application/x-www-form-urlencoded' --header 'Accept: application/json' --data-urlencode 'grant_type=urn:ibm:params:oauth:grant-type:apikey' --data-urlencode "apikey=$API_KEY") # pragma: allowlist secret
+error_message=$(echo "${iam_response}" | jq 'has("errorMessage")')
 
-if [[ -z "$IAM_TOKEN" || "$IAM_TOKEN" == "null" ]]; then
-  echo "Error: Failed to obtain IAM token" >&2
-  exit 1
+if [[ "${error_message}" != false ]]; then
+    echo "${iam_response}" | jq '.errorMessage' >&2
+    echo "Could not obtain an IAM access token" >&2
+    exit 1
 fi
+IAM_TOKEN=$(echo "${iam_response}" | jq -r '.access_token')
 
 URL="${BASE_URL}/api/v3/settings"
 
