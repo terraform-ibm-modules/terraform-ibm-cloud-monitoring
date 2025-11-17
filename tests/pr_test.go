@@ -113,6 +113,7 @@ func TestRunAccountSettingsDA(t *testing.T) {
 		TarIncludePatterns: []string{
 			"modules/metrics_routing" + "/*.tf",
 			"modules/get_primary_metadata_region" + "/*.tf",
+			"modules/get_primary_metadata_region/scripts" + "/*.sh",
 			accountSettingsDADir + "/*.tf",
 		},
 		TemplateFolder:         accountSettingsDADir,
