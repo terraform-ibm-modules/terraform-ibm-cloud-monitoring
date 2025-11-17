@@ -51,6 +51,7 @@ func setupOptions(t *testing.T, prefix string) *testschematic.TestSchematicOptio
 			"*.tf",
 			"modules/metrics_routing" + "/*.tf",
 			"modules/get_primary_metadata_region" + "/*.tf",
+			"modules/get_primary_metadata_region/scripts" + "/*.sh",
 			fullyConfigurableDADir + "/*.tf",
 		},
 		TemplateFolder:             fullyConfigurableDADir,
