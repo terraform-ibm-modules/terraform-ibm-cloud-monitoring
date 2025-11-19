@@ -50,6 +50,8 @@ func setupOptions(t *testing.T, prefix string) *testschematic.TestSchematicOptio
 		TarIncludePatterns: []string{
 			"*.tf",
 			"modules/metrics_routing" + "/*.tf",
+			"modules/get_primary_metadata_region" + "/*.tf",
+			"modules/get_primary_metadata_region/scripts" + "/*.sh",
 			fullyConfigurableDADir + "/*.tf",
 		},
 		TemplateFolder:             fullyConfigurableDADir,
@@ -111,6 +113,8 @@ func TestRunAccountSettingsDA(t *testing.T) {
 		Testing: t,
 		TarIncludePatterns: []string{
 			"modules/metrics_routing" + "/*.tf",
+			"modules/get_primary_metadata_region" + "/*.tf",
+			"modules/get_primary_metadata_region/scripts" + "/*.sh",
 			accountSettingsDADir + "/*.tf",
 		},
 		TemplateFolder:         accountSettingsDADir,
