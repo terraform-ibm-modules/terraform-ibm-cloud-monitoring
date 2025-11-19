@@ -1,12 +1,10 @@
 #!/bin/bash
 set -eo pipefail
 
-API_KEY="$IBM_API_KEY"
-
-
 input=$(cat)
 REGION=$(echo "$input" | jq -r '.region')
 USE_PRIVATE_ENDPOINT=$(echo "$input" | jq -r '.use_private_endpoint')
+API_KEY=$(echo "$input" | jq -r '.IBM_API_KEY')
 
 get_iam_endpoint() {
   endpoint="${IBMCLOUD_IAM_API_ENDPOINT:-https://iam.cloud.ibm.com}"
