@@ -3,7 +3,7 @@
 #########################################################################
 
 data "external" "get_primary_metadata_region" {
-  program = ["bash", "${path.module}/scripts/get_primary_metadata_region.sh"]
+  program = ["python3", "${path.module}/scripts/primary_metadata_region.py"]
 
   query = {
     IBM_API_KEY          = var.ibmcloud_api_key
