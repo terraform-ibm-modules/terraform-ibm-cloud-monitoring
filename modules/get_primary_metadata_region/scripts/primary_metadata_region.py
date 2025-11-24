@@ -1,8 +1,11 @@
+#!/usr/bin/env python3
 import json
 import os
 import sys
 import time
+
 import requests
+
 
 def load_input():
     try:
@@ -11,8 +14,10 @@ def load_input():
         log_error(f"Failed to parse JSON input: {e}")
         sys.exit(1)
 
+
 def log_error(message):
     print(message, file=sys.stderr)
+
 
 def resolve_iam_endpoint(use_private):
     endpoint = os.getenv("IBMCLOUD_IAM_API_ENDPOINT", "https://iam.cloud.ibm.com")
@@ -25,8 +30,7 @@ def resolve_iam_endpoint(use_private):
 
 def resolve_metrics_router_endpoint(region, use_private):
     metrics_endpoint = os.getenv(
-        "IBMCLOUD_METRICS_ROUTING_API_ENDPOINT",
-        "metrics-router.cloud.ibm.com"
+        "IBMCLOUD_METRICS_ROUTING_API_ENDPOINT", "metrics-router.cloud.ibm.com"
     )
     metrics_endpoint = metrics_endpoint.replace("https://", "")
 
@@ -38,12 +42,13 @@ def resolve_metrics_router_endpoint(region, use_private):
 
     return f"https://{metrics_endpoint}"
 
+
 def fetch_iam_token(iam_endpoint, api_key):
     url = f"https://{iam_endpoint}/identity/token"
 
     payload = {
         "grant_type": "urn:ibm:params:oauth:grant-type:apikey",
-        "apikey": api_key
+        "apikey": api_key,
     }
 
     try:
@@ -52,9 +57,9 @@ def fetch_iam_token(iam_endpoint, api_key):
             data=payload,
             headers={
                 "Content-Type": "application/x-www-form-urlencoded",
-                "Accept": "application/json"
+                "Accept": "application/json",
             },
-            timeout=10
+            timeout=10,
         )
 
         iam_json = resp.json()
@@ -74,6 +79,7 @@ def fetch_iam_token(iam_endpoint, api_key):
         sys.exit(1)
 
     return token
+
 
 def fetch_primary_metadata_region(base_url, iam_token):
     url = f"{base_url}/api/v3/settings"
@@ -95,15 +101,16 @@ def fetch_primary_metadata_region(base_url, iam_token):
         log_error(f"Attempt {attempt} failed, retrying in {retry_delay}s...")
         time.sleep(retry_delay)
 
-    log_error("`primary_metadata_region` is empty or could not be fetched")
-    return ""
+    log_error("`primary_metadata_region` could not be fetched after 5 attempts.")
+    sys.exit(1)
+
 
 def main():
     input_data = load_input()
 
-    region = input_data.get("region")
-    use_private_endpoint = bool(input_data.get("use_private_endpoint"))
-    api_key = input_data.get("IBM_API_KEY")
+    region = input_data["region"]
+    api_key = input_data["IBM_API_KEY"]
+    use_private_endpoint = json.loads(input_data["use_private_endpoint"])
 
     iam_endpoint = resolve_iam_endpoint(use_private_endpoint)
     base_url = resolve_metrics_router_endpoint(region, use_private_endpoint)
@@ -112,6 +119,7 @@ def main():
     primary_region = fetch_primary_metadata_region(base_url, iam_token)
 
     print(json.dumps({"primary_metadata_region": primary_region}))
+
 
 if __name__ == "__main__":
     main()
