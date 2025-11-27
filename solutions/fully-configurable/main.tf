@@ -77,7 +77,6 @@ module "metrics_routing" {
 
 module "primary_metadata_region" {
   source               = "../../modules/get_primary_metadata_region"
-  ibmcloud_api_key     = var.ibmcloud_api_key
   region               = var.region
   use_private_endpoint = var.use_private_endpoint
 }

@@ -2,11 +2,11 @@
 # Input Variables
 ##############################################################################
 
-variable "ibmcloud_api_key" {
-  description = "The IBM Cloud API Key."
-  type        = string
-  sensitive   = true
-}
+# variable "ibmcloud_api_key" {
+#   description = "The IBM Cloud API Key."
+#   type        = string
+#   sensitive   = true
+# }
 
 variable "region" {
   description = "The IBM Cloud Metrics Routing region."

@@ -2,31 +2,26 @@
 
 This module retrieves the `primary_metadata_region` value from the IBM Cloud Metrics Routing Account Settings.
 
-### Prerequisites
-
-This module utilizes an external script that relies on the following command-line tools being installed on the system where Terraform is executed:
-
-- `jq`: A lightweight and flexible command-line JSON processor. It is required for parsing the input provided by the Terraform external data source.
-- `curl`: A tool to transfer data with URLs, required for making API calls to the IBM Cloud Enterprise Management API.
-
 ### Customizing default cloud service endpoints
 
 The user must export the endpoint as an environment variable in order to use custom cloud service endpoints with this module. [Learn more](https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/guides/custom-service-endpoints#getting-started-with-custom-service-endpoints).
 
-**Important** The only supported method for customizing cloud service endpoints is to export the environment variables endpoint; be sure to export the value for `IBMCLOUD_IAM_API_ENDPOINT` and `IBMCLOUD_METRICS_ROUTING_API_ENDPOINT`. For example,
+**Important** The only supported method for customizing cloud service endpoints is to export the environment variables endpoint; be sure to export the value for `IBMCLOUD_METRICS_ROUTING_API_ENDPOINT`. For example,
 
 ```
-export IBM_IAM_ENDPOINT="<endpoint_url>"
 export IBMCLOUD_METRICS_ROUTING_API_ENDPOINT="<endpoint_url>"
 ```
 
 ## Usage
 
 ```hcl
+
+provider "ibm" {
+  ibmcloud_api_key      = "XXXXXXXXXXXXXXXXXXXXXXXX"  # pragma: allowlist secret
+}
+
 module "metrics_router" {
   source = "terraform-ibm-modules/cloud-monitoring/ibm//modules/get_primary_metadata_region"
-
-  ibmcloud_api_key    = "XXXXXXXXXXXXXXXXXXXXXXXX"  # pragma: allowlist secret
   region              = "us-south"
   use_private_endpoint = false
 }
@@ -39,6 +34,7 @@ module "metrics_router" {
 |------|---------|
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.9.0 |
 | <a name="requirement_external"></a> [external](#requirement\_external) | >= 2.3.5, <3.0.0 |
+| <a name="requirement_ibm"></a> [ibm](#requirement\_ibm) | >= 1.69.2, < 2.0.0 |
 
 ### Modules
 
@@ -49,6 +45,7 @@ No modules.
 | Name | Type |
 |------|------|
 | [external_external.get_primary_metadata_region](https://registry.terraform.io/providers/hashicorp/external/latest/docs/data-sources/external) | data source |
+| [ibm_iam_auth_token.token](https://registry.terraform.io/providers/ibm-cloud/ibm/latest/docs/data-sources/iam_auth_token) | data source |
 
 ### Inputs
 
