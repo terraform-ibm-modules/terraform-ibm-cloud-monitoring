@@ -24,12 +24,12 @@ def resolve_iam_endpoint(use_private):
     endpoint = endpoint.replace("https://", "")
 
     if endpoint == "iam.cloud.ibm.com":
-        if use_private
+        if use_private:
             return f"private.{endpoint}"
         else:
             return f"{endpoint}"
-    
-    return f"https://{endpoint}"
+
+    return f"{endpoint}"
 
 
 def resolve_metrics_router_endpoint(region, use_private):
