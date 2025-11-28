@@ -27,7 +27,7 @@ def log_error(message):
 def resolve_metrics_router_endpoint(region, use_private):
     dbg(f"Running the function to get the metrics router endpoint(region={region}, use_private={use_private})")
     metrics_endpoint = os.getenv(
-        "IBMCLOUD_METRICS_ROUTING_API_ENDPOINT", "metrics-router.cloud.ibm.com"
+        'IBMCLOUD_METRICS_ROUTING_API_ENDPOINT', 'metrics-router.cloud.ibm.com'
     )
     metrics_endpoint = metrics_endpoint.replace("https://", "")
 
@@ -76,10 +76,9 @@ def fetch_primary_metadata_region(base_url, iam_token):
 
 def main():
     input_data = load_input()
-    dbg(f"input data is : {input_data}")
 
     region = input_data["region"]
-    dbg(f"region is : {input_data}")
+    dbg(f"region is : {region}")
     iam_token = input_data["iam_access_token"]
     use_private_endpoint = json.loads(input_data["use_private_endpoint"])
     dbg(f"private endpoint or not is : {use_private_endpoint}")
