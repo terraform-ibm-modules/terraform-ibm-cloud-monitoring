@@ -21,7 +21,7 @@
         "observability"
       ],
       "short_description": "Creates and configures IBM Cloud Monitoring resources",
-      "long_description": "This architecture supports creating and configuring [IBM Cloud Monitoring](https://www.ibm.com/products/cloud-monitoring) resources. IBM Cloud Monitoring is a cloud-native, and container-intelligence management system that you can include as part of your IBM Cloud architecture. Use it to gain operational visibility into the performance and health of your applications, services, and platforms. It offers administrators, DevOps teams and developers full-stack telemetry with advanced features to monitor and troubleshoot, define alerts, and design custom dashboards.",
+      "long_description": "This architecture supports creating and configuring [IBM Cloud Monitoring](https://www.ibm.com/products/cloud-monitoring) resources. IBM Cloud Monitoring is a cloud-native, and container-intelligence management system that you can include as part of your IBM Cloud architecture. Use it to gain operational visibility into the performance and health of your applications, services, and platforms. It offers administrators, DevOps teams and developers full-stack telemetry with advanced features to monitor and troubleshoot, define alerts, and design custom dashboards. \n\nLeverage [Terraform IBM Modules](https://github.com/terraform-ibm-modules) to shape and scale your solutions. You can integrate Terraform IBM Modules (TIM) to extend functionality and design a solution tailored to your environment and operations needs. These modules offer reusable, customizable elements that follow IBM Cloud's recommended practices. You can access the [source code and documentation](https://github.com/terraform-ibm-modules/terraform-ibm-cloud-monitoring) and use it to extend your current architecture or create new solutions.",
       "offering_docs_url": "https://github.com/terraform-ibm-modules/terraform-ibm-cloud-monitoring/blob/main/README.md",
       "offering_icon_url": "https://raw.githubusercontent.com/terraform-ibm-modules/terraform-ibm-cloud-monitoring/refs/heads/main/images/monitoring-icon.svg",
       "provider_name": "IBM",
@@ -33,6 +33,10 @@
         {
           "title": "Metrics Routing",
           "description": "Supports configuring the routing of platform metrics generated in your IBM Cloud account. For more details on metrics routing, refer [this](https://cloud.ibm.com/docs/metrics-router?topic=metrics-router-getting-started)."
+        },
+        {
+          "title": "Composable and Extensible Architecture",
+          "description": "This architecture illustrates how Terraform IBM Modules(TIM) can be integrated to deliver a complete solution on IBM Cloud. Each module is a reusable, and validated component for security, compliance, and operational IBM best practices. You can deploy this architecture as-is or configure it as code by leveraging the underlying modules to fit your specific requirements. Explore the [source code and documentation](https://github.com/terraform-ibm-modules/terraform-ibm-cloud-monitoring) to adapt, extend, or create entirely new solutions using these building blocks."
         }
       ],
       "support_details": "This product is in the community registry, as such support is handled through the originated repo. If you experience issues please open an issue in that repository [here](https://github.com/terraform-ibm-modules/terraform-ibm-cloud-monitoring/issues). Please note this product is currently not supported via the IBM Cloud Support Center.",
