@@ -51,7 +51,6 @@ def fetch_primary_metadata_region(base_url, iam_token):
     url = f"{base_url}/api/v3/settings"
     dbg(f"url is: {url}")
     headers = {"Authorization": f"{iam_token}"}
-    dbg(f"header is: {headers}")
 
     max_retries = 5
     retry_delay = 3
