@@ -26,9 +26,12 @@ def log_error(message):
 
 def resolve_metrics_router_endpoint(region, use_private):
     dbg(f"Running the function to get the metrics router endpoint(region={region}, use_private={use_private})")
-    metrics_endpoint = os.getenv(
-        'IBMCLOUD_METRICS_ROUTING_API_ENDPOINT', 'metrics-router.cloud.ibm.com'
-    )
+    
+    metrics_endpoint = os.getenv("IBMCLOUD_METRICS_ROUTING_API_ENDPOINT")
+    dbg(f"environment input is: {metrics_endpoint}")
+
+    if not metrics_endpoint:
+        metrics_endpoint = "metrics-router.cloud.ibm.com"
     metrics_endpoint = metrics_endpoint.replace("https://", "")
 
     dbg(f"The final endpoint: {metrics_endpoint}")
