@@ -13,9 +13,7 @@ def dbg(msg):
 def load_input():
     try:
         raw = sys.stdin.read()
-        dbg(f"Raw input read from stdin: {raw}")
         data = json.loads(raw)
-        dbg(f"Parsed input: {data}")
         return data
     except Exception as e:
         log_error(f"Failed to parse JSON input: {e}")
