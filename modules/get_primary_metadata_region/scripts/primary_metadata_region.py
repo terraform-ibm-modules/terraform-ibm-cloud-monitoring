@@ -16,11 +16,12 @@ def load_input():
         log_error(f"Failed to parse JSON input: {e}")
         sys.exit(1)
 
+
 def log_error(message):
     print(message, file=sys.stderr)
 
+
 def resolve_metrics_router_endpoint(region, use_private):
-    
     metrics_endpoint = os.getenv("IBMCLOUD_METRICS_ROUTING_API_ENDPOINT")
 
     if not metrics_endpoint:
@@ -71,6 +72,7 @@ def main():
     primary_region = fetch_primary_metadata_region(base_url, iam_token)
 
     print(json.dumps({"primary_metadata_region": primary_region}))
-    
+
+
 if __name__ == "__main__":
     main()
