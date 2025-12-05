@@ -3,8 +3,8 @@ import json
 import os
 import sys
 import time
-
-import requests
+import http.client
+import urllib.parse
 
 
 def load_input():
@@ -20,7 +20,7 @@ def log_error(message):
     print(message, file=sys.stderr)
 
 def resolve_metrics_router_endpoint(region, use_private):
-    
+
     metrics_endpoint = os.getenv("IBMCLOUD_METRICS_ROUTING_API_ENDPOINT")
 
     if not metrics_endpoint:
@@ -36,24 +36,39 @@ def resolve_metrics_router_endpoint(region, use_private):
     return f"https://{metrics_endpoint}"
 
 
+def http_get(url, headers=None, timeout=10):
+    headers = headers or {}
+    parsed = urllib.parse.urlparse(url)
+    metricsrouterconn = http.client.HTTPSConnection(parsed.hostname, parsed.port, timeout=timeout)
+    
+    metricsrouterconn.request("GET", parsed.path, headers=headers)
+    response = metricsrouterconn.getresponse()
+    metrics_router_response = response.read().decode("utf-8")
+    metricsrouterconn.close()
+    
+    return response.status, metrics_router_response   
+
 def fetch_primary_metadata_region(base_url, iam_token):
     url = f"{base_url}/api/v3/settings"
-    headers = {"Authorization": f"{iam_token}"}
+    headers = {"Authorization": iam_token}
 
     max_retries = 5
     retry_delay = 3
 
     for attempt in range(1, max_retries + 1):
         try:
-            resp = requests.get(url, headers=headers, timeout=10)
-            data = resp.json()
-        except Exception:
+            status, body = http_get(url, headers=headers, timeout=10)
+            data = json.loads(body)
+
+        except Exception as e:
+            log_error(f"Attempt {attempt} failed: {e}")
             data = {}
+            status="exception"
 
         if "primary_metadata_region" in data:
             return data["primary_metadata_region"]
 
-        log_error(f"Attempt {attempt} failed, retrying in {retry_delay}s...")
+        log_error(f"Attempt {attempt} failed (status {status}), retrying in {retry_delay}s...")
         time.sleep(retry_delay)
 
     log_error("`primary_metadata_region` could not be fetched after 5 attempts.")
