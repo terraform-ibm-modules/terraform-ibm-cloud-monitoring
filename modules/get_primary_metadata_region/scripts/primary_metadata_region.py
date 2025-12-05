@@ -50,7 +50,7 @@ def http_get(url, headers=None, timeout=10):
         return response.status, metrics_router_response
     
     except Exception as e:
-        log_error(f"Exception occured: {e}")
+        raise
     
     finally:
         metricsrouterconn.close()
