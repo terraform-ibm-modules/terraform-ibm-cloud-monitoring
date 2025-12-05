@@ -43,12 +43,17 @@ def http_get(url, headers=None, timeout=10):
     parsed = urllib.parse.urlparse(url)
     metricsrouterconn = http.client.HTTPSConnection(parsed.hostname, parsed.port, timeout=timeout)
     
-    metricsrouterconn.request("GET", parsed.path, headers=headers)
-    response = metricsrouterconn.getresponse()
-    metrics_router_response = response.read().decode("utf-8")
-    metricsrouterconn.close()
+    try:
+        metricsrouterconn.request("GET", parsed.path, headers=headers)
+        response = metricsrouterconn.getresponse()
+        metrics_router_response = response.read().decode("utf-8")
+        return response.status, metrics_router_response
     
-    return response.status, metrics_router_response   
+    except Exception as e:
+        log_error(f"Exception occured: {e}")
+    
+    finally:
+        metricsrouterconn.close()
 
 def fetch_primary_metadata_region(base_url, iam_token):
     url = f"{base_url}/api/v3/settings"
@@ -63,9 +68,8 @@ def fetch_primary_metadata_region(base_url, iam_token):
             data = json.loads(body)
 
         except Exception as e:
-            log_error(f"Attempt {attempt} failed: {e}")
             data = {}
-            status="exception"
+            status = str(e)
 
         if "primary_metadata_region" in data:
             return data["primary_metadata_region"]
