@@ -58,7 +58,6 @@ No modules.
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| <a name="input_region"></a> [region](#input\_region) | The IBM Cloud Metrics Routing region. | `string` | `"us-south"` | no |
 | <a name="input_use_private_endpoint"></a> [use\_private\_endpoint](#input\_use\_private\_endpoint) | Set to true to use the private endpoints instead of public endpoints for IBM Cloud Metrics Routing service. When true, the script queries the private Metrics Routing endpoint for the given region. [Learn more](https://cloud.ibm.com/docs/metrics-router?topic=metrics-router-endpoints) | `bool` | `false` | no |
 
 ### Outputs
