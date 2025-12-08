@@ -27,6 +27,14 @@ module "metrics_router" {
 }
 ```
 
+### Required IAM access policies
+
+You need the following permissions to run this module.
+
+* Service
+  * **Metric Routing**
+    * `Viewer` platform access
+
 <!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 ### Requirements
 
