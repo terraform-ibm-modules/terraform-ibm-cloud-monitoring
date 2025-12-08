@@ -8,7 +8,7 @@ data "external" "get_primary_metadata_region" {
   program = ["python3", "${path.module}/scripts/primary_metadata_region.py"]
 
   query = {
-    iam_access_token     = data.ibm_iam_auth_token.token.iam_access_token
+    iam_access_token     = sensitive(data.ibm_iam_auth_token.token.iam_access_token)
     region               = var.region
     use_private_endpoint = var.use_private_endpoint
   }

@@ -21,9 +21,9 @@ provider "ibm" {
 }
 
 module "metrics_router" {
-  source = "terraform-ibm-modules/cloud-monitoring/ibm//modules/get_primary_metadata_region"
-  region              = "us-south"
-  use_private_endpoint = false
+  source                = "terraform-ibm-modules/cloud-monitoring/ibm//modules/get_primary_metadata_region"
+  region                = "us-south"
+  use_private_endpoint  = false
 }
 ```
 
