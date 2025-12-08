@@ -9,12 +9,6 @@ data "external" "get_primary_metadata_region" {
 
   query = {
     iam_access_token     = sensitive(data.ibm_iam_auth_token.token.iam_access_token)
-    region               = var.region
     use_private_endpoint = var.use_private_endpoint
   }
-}
-
-provider "ibm" {
-  ibmcloud_api_key = var.ibmcloud_api_key
-  region           = var.region
 }

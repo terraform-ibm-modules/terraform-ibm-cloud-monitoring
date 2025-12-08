@@ -77,6 +77,5 @@ module "metrics_routing" {
 
 module "primary_metadata_region" {
   source               = "../../modules/get_primary_metadata_region"
-  region               = var.region
   use_private_endpoint = var.use_private_endpoint
 }

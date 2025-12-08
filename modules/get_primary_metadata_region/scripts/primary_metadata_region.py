@@ -21,7 +21,7 @@ def log_error(message):
     print(message, file=sys.stderr)
 
 
-def resolve_metrics_router_endpoint(region, use_private):
+def resolve_metrics_router_endpoint(use_private):
     metrics_endpoint = os.getenv("IBMCLOUD_METRICS_ROUTING_API_ENDPOINT")
 
     if not metrics_endpoint:
@@ -30,9 +30,9 @@ def resolve_metrics_router_endpoint(region, use_private):
 
     if metrics_endpoint == "metrics-router.cloud.ibm.com":
         if use_private:
-            return f"https://private.{region}.{metrics_endpoint}"
+            return f"https://private.us-south.{metrics_endpoint}"
         else:
-            return f"https://{region}.{metrics_endpoint}"
+            return f"https://us-south.{metrics_endpoint}"
 
     return f"https://{metrics_endpoint}"
 
@@ -88,11 +88,10 @@ def fetch_primary_metadata_region(base_url, iam_token):
 def main():
     input_data = load_input()
 
-    region = input_data["region"]
     iam_token = input_data["iam_access_token"]
     use_private_endpoint = json.loads(input_data["use_private_endpoint"])
 
-    base_url = resolve_metrics_router_endpoint(region, use_private_endpoint)
+    base_url = resolve_metrics_router_endpoint(use_private_endpoint)
     primary_region = fetch_primary_metadata_region(base_url, iam_token)
 
     print(json.dumps({"primary_metadata_region": primary_region}))
