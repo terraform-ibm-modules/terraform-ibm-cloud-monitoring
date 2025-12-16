@@ -44,6 +44,7 @@
         {
           "label": "Fully configurable",
           "name": "fully-configurable",
+          "short_description": "Ideal for users who want to create IBM Cloud Monitoring instances and configure metrics routing with customizable options",
           "index": 1,
           "install_type": "fullstack",
           "working_directory": "solutions/fully-configurable",
@@ -310,6 +311,7 @@
         {
           "label": "Metrics Routing account settings",
           "name": "metrics-routing-account-settings",
+          "short_description": "Ideal for users who want to configure account-level settings for IBM Cloud Metrics Routing",
           "index": 2,
           "install_type": "fullstack",
           "working_directory": "solutions/metrics-routing-account-settings",
