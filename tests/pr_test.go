@@ -50,6 +50,8 @@ func setupOptions(t *testing.T, prefix string) *testschematic.TestSchematicOptio
 		TarIncludePatterns: []string{
 			"*.tf",
 			"modules/metrics_routing" + "/*.tf",
+			"modules/get_primary_metadata_region" + "/*.tf",
+			"modules/get_primary_metadata_region/scripts" + "/*.py",
 			fullyConfigurableDADir + "/*.tf",
 		},
 		TemplateFolder:             fullyConfigurableDADir,

@@ -120,6 +120,12 @@ variable "enable_platform_metrics" {
 # Metrics Routing
 ########################################################################################################################
 
+variable "use_private_endpoint" {
+  type        = bool
+  description = "Set to true to use the private endpoints instead of public endpoints for IBM Cloud Metrics Routing service. When true, the script queries the private Metrics Routing endpoint. [Learn more](https://cloud.ibm.com/docs/metrics-router?topic=metrics-router-endpoints)"
+  default     = true
+}
+
 variable "metrics_routing_target_name" {
   type        = string
   description = "The name of the IBM Cloud Metrics Routing target where metrics are collected. If the prefix variable is passed, the name of the target is prefixed to the value in the `<prefix>-value` format."
@@ -135,12 +141,6 @@ variable "metrics_routing_route_name" {
 variable "enable_metrics_routing_to_cloud_monitoring" {
   type        = bool
   description = "Whether to enable metrics routing from IBM Cloud Metric Routing to Cloud Monitoring."
-  default     = true
-}
-
-variable "enable_primary_metadata_region" {
-  type        = bool
-  description = "When set to `true`, sets `primary_metadata_region` to `region`, storing Metrics Router metadata in that region. When `false`, no region is set and the default global region is used. For new accounts, creating targets and routes will fail until primary_metadata_region is set, so it is recommended to default enable_primary_metadata_region to true. [Learn more](https://cloud.ibm.com/docs/metrics-router?topic=metrics-router-getting-started#configuring_account_settings)."
   default     = true
 }
 
