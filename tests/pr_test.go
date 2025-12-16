@@ -2,10 +2,10 @@
 package test
 
 import (
-	"math/rand"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
+	"github.com/terraform-ibm-modules/ibmcloud-terratest-wrapper/common"
 	"github.com/terraform-ibm-modules/ibmcloud-terratest-wrapper/testhelper"
 	"github.com/terraform-ibm-modules/ibmcloud-terratest-wrapper/testschematic"
 )
@@ -37,7 +37,7 @@ Common setup options for fully configurable DA variation
 */
 func setupOptions(t *testing.T, prefix string) *testschematic.TestSchematicOptions {
 
-	region := validRegions[rand.Intn(len(validRegions))]
+	region := validRegions[common.CryptoIntn(len(validRegions))]
 	plan := "graduated-tier"
 
 	// when region is 'eu-fr2' take opportunity to test 'graduated-tier-sysdig-secure-plus-monitor' plan
@@ -50,6 +50,8 @@ func setupOptions(t *testing.T, prefix string) *testschematic.TestSchematicOptio
 		TarIncludePatterns: []string{
 			"*.tf",
 			"modules/metrics_routing" + "/*.tf",
+			"modules/get_primary_metadata_region" + "/*.tf",
+			"modules/get_primary_metadata_region/scripts" + "/*.py",
 			fullyConfigurableDADir + "/*.tf",
 		},
 		TemplateFolder:             fullyConfigurableDADir,
