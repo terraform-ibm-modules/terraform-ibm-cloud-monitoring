@@ -4,7 +4,7 @@
 
 module "resource_group" {
   source                       = "terraform-ibm-modules/resource-group/ibm"
-  version                      = "1.4.0"
+  version                      = "1.4.7"
   existing_resource_group_name = var.existing_resource_group_name
 }
 
@@ -15,7 +15,7 @@ module "resource_group" {
 module "existing_cloud_monitoring_crn_parser" {
   count   = var.existing_cloud_monitoring_crn != null ? 1 : 0
   source  = "terraform-ibm-modules/common-utilities/ibm//modules/crn-parser"
-  version = "1.3.0"
+  version = "1.3.6"
   crn     = var.existing_cloud_monitoring_crn
 }
 
