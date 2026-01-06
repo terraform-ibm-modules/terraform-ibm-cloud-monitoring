@@ -22,6 +22,13 @@ resource "ibm_resource_instance" "cloud_monitoring" {
   parameters = {
     "default_receiver" = var.enable_platform_metrics
   }
+
+  lifecycle {
+    precondition {
+      condition     = (var.plan != "graduated-tier-sysdig-secure-plus-monitor" || var.region == "eu-fr2")
+      error_message = "The plan `graduated-tier-sysdig-secure-plus-monitor` is only supported in the `eu-fr2` region."
+    }
+  }
 }
 
 resource "ibm_resource_tag" "cloud_monitoring_tag" {
