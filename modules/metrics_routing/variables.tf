@@ -58,15 +58,4 @@ variable "metrics_router_settings" {
   })
   description = "The global account settings for Metrics Routing. To configure metrics routing, the account must have a `primary_metadata_region` set. You will be unable to view the account settings in the UI if `private_api_endpoint_only` is set to true. For more information, see https://cloud.ibm.com/docs/metrics-router?topic=metrics-router-settings-about&interface=ui."
   default     = null
-
-  validation {
-    error_message = "Valid regions for 'permitted_target_regions' are: us-south, eu-de, us-east, eu-es, eu-gb, au-syd, br-sao, ca-tor, jp-tok, jp-osa, eu-fr2"
-    condition = (var.metrics_router_settings == null ?
-      true :
-      alltrue([
-        for region in var.metrics_router_settings.permitted_target_regions :
-        contains(["jp-osa", "au-syd", "jp-tok", "eu-de", "eu-gb", "eu-es", "us-south", "ca-tor", "us-east", "br-sao", "eu-fr2"], region)
-      ])
-    )
-  }
 }
