@@ -84,13 +84,5 @@ resource "ibm_metrics_router_settings" "metrics_router_settings" {
   # The create_before_destroy meta-argument makes sure that the new settings are applied first before the prior ones are removed.
   lifecycle {
     create_before_destroy = true
-
-    precondition {
-      condition = alltrue([
-        for region in var.metrics_router_settings.permitted_target_regions :
-        contains(["us-south", "eu-de", "us-east", "eu-es", "eu-gb", "au-syd", "br-sao", "ca-tor", "jp-tok", "jp-osa", "eu-fr2"], region)
-      ])
-      error_message = "Invalid value in permitted_target_regions. Supported regions are: us-south, us-east, eu-de, eu-es, eu-gb, eu-fr2, jp-tok, jp-osa, au-syd, br-sao, ca-tor"
-    }
   }
 }
