@@ -23,7 +23,6 @@
       "short_description": "Creates and configures IBM Cloud Monitoring resources",
       "long_description": "This architecture supports creating and configuring [IBM Cloud Monitoring](https://www.ibm.com/products/cloud-monitoring) resources. IBM Cloud Monitoring is a cloud-native, and container-intelligence management system that you can include as part of your IBM Cloud architecture. Use it to gain operational visibility into the performance and health of your applications, services, and platforms. It offers administrators, DevOps teams and developers full-stack telemetry with advanced features to monitor and troubleshoot, define alerts, and design custom dashboards. \n\nLeverage [Terraform IBM Modules](https://github.com/terraform-ibm-modules) to shape and scale your solutions. You can integrate Terraform IBM Modules (TIM) to extend functionality and design a solution tailored to your environment and operations needs. These modules offer reusable, customizable elements that follow IBM Cloud's recommended practices. You can access the [source code and documentation](https://github.com/terraform-ibm-modules/terraform-ibm-cloud-monitoring) and use it to extend your current architecture or create new solutions.",
       "offering_docs_url": "https://cloud.ibm.com/docs/ibm-cloud-provider-for-terraform?topic=ibm-cloud-provider-for-terraform-about-tim",
-      "release_notes_url": "https://github.com/terraform-ibm-modules/terraform-ibm-cloud-monitoring/releases",
       "offering_icon_url": "https://raw.githubusercontent.com/terraform-ibm-modules/terraform-ibm-cloud-monitoring/refs/heads/main/images/monitoring-icon.svg",
       "provider_name": "IBM",
       "features": [
@@ -49,6 +48,7 @@
           "index": 1,
           "install_type": "fullstack",
           "working_directory": "solutions/fully-configurable",
+          "release_notes_url": "https://github.com/terraform-ibm-modules/terraform-ibm-cloud-monitoring/releases",
           "configuration": [
             {
               "key": "ibmcloud_api_key"
@@ -282,6 +282,7 @@
           "index": 2,
           "install_type": "fullstack",
           "working_directory": "solutions/metrics-routing-account-settings",
+          "release_notes_url": "https://github.com/terraform-ibm-modules/terraform-ibm-cloud-monitoring/releases",
           "configuration": [
             {
               "key": "ibmcloud_api_key"
