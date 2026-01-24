@@ -15,7 +15,7 @@ module "resource_group" {
 module "existing_cloud_monitoring_crn_parser" {
   count   = var.existing_cloud_monitoring_crn != null ? 1 : 0
   source  = "terraform-ibm-modules/common-utilities/ibm//modules/crn-parser"
-  version = "1.3.7"
+  version = "1.4.1"
   crn     = var.existing_cloud_monitoring_crn
 }
 
