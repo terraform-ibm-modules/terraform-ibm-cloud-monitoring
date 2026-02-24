@@ -48,7 +48,7 @@ module "cloud_monitoring" {
   instance_name     = local.cloud_monitoring_instance_name
   resource_keys = [
     {
-      name     = "advanced-private-resource-key"
+      name     = "${var.prefix}-private-resource-key"
       endpoint = "private"
     }
   ]

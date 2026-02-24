@@ -76,9 +76,9 @@ variable "resource_keys" {
   }
   validation {
     condition = alltrue([
-      for key in var.resource_keys : contains(["public", "private", "public-and-private"], key.endpoint)
+      for key in var.resource_keys : contains(["public", "private"], key.endpoint)
     ])
-    error_message = "resource_keys endpoint must be one of 'public', 'private', or 'public-and-private'."
+    error_message = "resource_keys endpoint must be one of 'public' or 'private'."
   }
 }
 
