@@ -88,7 +88,7 @@ variable "resource_tags" {
 
 variable "access_tags" {
   type        = list(string)
-  description = "Add access management tags to the Cloud Monitoring instance to control access. [Learn more](https://cloud.ibm.com/docs/account?topic=account-tag&interface=ui#tag-types)"
+  description = "Add access management tags to the Cloud Monitoring instance to control access. [Learn more]([Learn more](https://cloud.ibm.com/docs/account?topic=account-tag&interface=ui#create-access-console))"
   default     = []
 }
 
