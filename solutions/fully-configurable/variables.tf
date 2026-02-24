@@ -90,6 +90,7 @@ variable "cloud_monitoring_resource_keys" {
     generate_hmac_credentials = optional(bool, false) # pragma: allowlist secret
     role                      = optional(string, "Manager")
     service_id_crn            = optional(string, null)
+    endpoint                  = optional(string, "private")
   }))
   default = []
 }

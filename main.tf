@@ -53,8 +53,9 @@ resource "ibm_resource_key" "resource_keys" {
   resource_instance_id = ibm_resource_instance.cloud_monitoring.id
   role                 = each.value.role
   parameters = {
-    "serviceid_crn" = each.value.service_id_crn
-    "HMAC"          = each.value.generate_hmac_credentials
+    "serviceid_crn"     = each.value.service_id_crn
+    "HMAC"              = each.value.generate_hmac_credentials
+    "service-endpoints" = each.value.endpoint
   }
 }
 

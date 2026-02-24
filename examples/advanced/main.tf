@@ -46,6 +46,12 @@ module "cloud_monitoring" {
   access_tags       = var.access_tags
   plan              = "graduated-tier"
   instance_name     = local.cloud_monitoring_instance_name
+  resource_keys = [
+    {
+      name     = "advanced-private-resource-key"
+      endpoint = "private"
+    }
+  ]
   cbr_rules = [{
     description      = "${var.prefix}-cloud-monitoring access from schematics zone"
     account_id       = module.cloud_monitoring.account_id
