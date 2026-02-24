@@ -34,6 +34,6 @@ variable "resource_group" {
 
 variable "resource_tags" {
   type        = list(string)
-  description = "Add user resource tags to the Cloud Monitoring instance to organize, track, and manage costs. [Learn more](https://cloud.ibm.com/docs/account?topic=account-tag&interface=ui#tag-types)"
+  description = "Add user resource tags to the Cloud Monitoring instance to organize, track, and manage costs. [Learn more](https://cloud.ibm.com/docs/account?topic=account-tag&interface=ui#tag-types)."
   default     = []
 }
