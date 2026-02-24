@@ -25,7 +25,7 @@ module "existing_cloud_monitoring_crn_parser" {
 
 locals {
   prefix                         = var.prefix != null ? trimspace(var.prefix) != "" ? "${var.prefix}-" : "" : ""
-  create_cloud_monitoring        = var.existing_cloud_monitoring_crn == null
+  create_cloud_monitoring        = var.existing_cloud_monitoring_crn == null || var.existing_cloud_monitoring_crn == ""
   cloud_monitoring_crn           = local.create_cloud_monitoring ? module.cloud_monitoring[0].crn : var.existing_cloud_monitoring_crn
   cloud_monitoring_instance_name = "${local.prefix}${var.cloud_monitoring_instance_name}"
   metrics_router_target_name     = "${local.prefix}${var.metrics_routing_target_name}"
