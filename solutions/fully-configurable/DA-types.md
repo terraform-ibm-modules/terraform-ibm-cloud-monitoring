@@ -131,7 +131,7 @@ The `cloud_monitoring_resource_keys` input variable allows you to provide a list
 * `generate_hmac_credentials` (optional, default = `false`): Set to true to include HMAC keys in the resource key. [Learn more](https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/resources/resource_key#example-to-create-by-using-hmac).
 * `role` (optional, default = `Reader`): The name of the user role.
 * `service_id_crn` (optional, default = `null`): Pass a Service ID CRN to create credentials for a resource with a Service ID. [Learn more](https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/resources/resource_key#example-to-create-by-using-serviceid).
-* `endpoint` (optional, default = `private`): The endpoint of resource key.
+* `endpoint` (optional, default = `private`): The Cloud Monitoring endpoint that the resource key uses. Allowed values are `public` and `private`.
 
 ### Example route for Cloud Monitoring Resource Keys
 
