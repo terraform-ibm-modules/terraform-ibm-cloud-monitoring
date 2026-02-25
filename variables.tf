@@ -62,6 +62,7 @@ variable "resource_keys" {
     generate_hmac_credentials = optional(bool, false) # pragma: allowlist secret
     role                      = optional(string, "Manager")
     service_id_crn            = optional(string, null)
+    endpoint                  = optional(string, "private")
   }))
   default = []
   validation {
@@ -72,6 +73,12 @@ variable "resource_keys" {
       for key in var.resource_keys : contains(["Writer", "Reader", "Manager", "Supertenant Metrics Publisher", "NONE"], key.role)
     ])
     error_message = "resource_keys role must be one of 'Writer', 'Reader', 'Manager', 'Supertenant Metrics Publisher', 'NONE', reference https://cloud.ibm.com/iam/roles and `Cloud Monitoring`"
+  }
+  validation {
+    condition = alltrue([
+      for key in var.resource_keys : contains(["public", "private"], key.endpoint)
+    ])
+    error_message = "resource_keys endpoint must be one of 'public' or 'private'."
   }
 }
 
