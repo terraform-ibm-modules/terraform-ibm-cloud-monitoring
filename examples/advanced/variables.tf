@@ -28,7 +28,7 @@ variable "region" {
 
 variable "resource_tags" {
   type        = list(string)
-  description = "Optional list of resource tag to associate with all resource instances created by this example."
+  description = "Optional list of resource tags to associate with all resource instances created by this example."
   default     = []
 }
 
