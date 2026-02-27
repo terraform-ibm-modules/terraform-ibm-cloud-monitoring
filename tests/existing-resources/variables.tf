@@ -20,6 +20,6 @@ variable "prefix" {
 
 variable "resource_tags" {
   type        = list(string)
-  description = "Optional list of tags to be added to created resources"
+  description = "Optional list of resource tags to associate with all resource instances created by this example."
   default     = []
 }

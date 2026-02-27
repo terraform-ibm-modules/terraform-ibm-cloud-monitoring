@@ -28,12 +28,12 @@ variable "region" {
 
 variable "resource_tags" {
   type        = list(string)
-  description = "Tags associated with the IBM Cloud Monitoring instance (Optional, array of strings)."
+  description = "Optional list of resource tags to associate with all resource instances created by this example."
   default     = []
 }
 
 variable "access_tags" {
   type        = list(string)
-  description = "Access Management Tags associated with the IBM Cloud Monitoring instance (Optional, array of strings)."
+  description = "Optional list of access management tags to add to the Cloud Monitoring instance."
   default     = []
 }
