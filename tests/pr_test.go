@@ -2,8 +2,14 @@
 package test
 
 import (
+	"context"
+	"fmt"
+	"os"
+	"strings"
 	"testing"
 
+	"github.com/gruntwork-io/terratest/modules/logger"
+	"github.com/gruntwork-io/terratest/modules/terraform"
 	"github.com/stretchr/testify/assert"
 	"github.com/terraform-ibm-modules/ibmcloud-terratest-wrapper/common"
 	"github.com/terraform-ibm-modules/ibmcloud-terratest-wrapper/testhelper"
@@ -17,6 +23,7 @@ const resourceGroup = "geretain-test-resources"
 const terraformVersion = "terraform_v1.12.2" // This should match the version in the ibm_catalog.json
 const fullyConfigurableDADir = "solutions/fully-configurable"
 const accountSettingsDADir = "solutions/metrics-routing-account-settings"
+const existingResourcesDir = "tests/existing-resources"
 
 var tags = []string{"test-schematic", "cloud-monitoring"}
 var validRegions = []string{
@@ -30,6 +37,17 @@ var validRegions = []string{
 	"jp-tok",
 	"us-south",
 	"us-east",
+}
+
+func cleanupTerraform(t *testing.T, options *terraform.Options, prefix string) {
+	if t.Failed() && strings.ToLower(os.Getenv("DO_NOT_DESTROY_ON_FAILURE")) == "true" {
+		fmt.Println("Terratest failed. Debug the test and delete resources manually.")
+		return
+	}
+	logger.Log(t, "START: Destroy (existing resources)")
+	terraform.DestroyContext(t, context.Background(), options)
+	terraform.WorkspaceDeleteContext(t, context.Background(), options, prefix)
+	logger.Log(t, "END: Destroy (existing resources)")
 }
 
 /*
@@ -93,15 +111,38 @@ func TestRunFullyConfigurable(t *testing.T) {
 }
 
 // Upgrade test for "Fully configurable" DA variation in schematics
+// This test uses an existing Cloud Monitoring instance to test the path where
+// we are not creating a new Cloud Monitoring instance
 func TestRunFullyConfigurableUpgrade(t *testing.T) {
 	t.Parallel()
 
+	// Provision existing resources first
+	prefix := "icm-exist-upg"
+	existingTerraformOptions := testhelper.TestOptionsDefaultWithVars(&testhelper.TestOptions{
+		Testing:       t,
+		TerraformDir:  existingResourcesDir,
+		Prefix:        prefix,
+		ResourceGroup: resourceGroup,
+		Region:        validRegions[common.CryptoIntn(len(validRegions))],
+	})
+
+	output, err := existingTerraformOptions.RunTestConsistency()
+	assert.Nil(t, err, "Existing resources deployment should not have errored")
+	assert.NotNil(t, output, "Expected output from existing resources")
+
 	options := setupOptions(t, "icm-da-upg")
 
-	err := options.RunSchematicUpgradeTest()
+	// Add the existing_cloud_monitoring_crn variable to test the upgrade path
+	// where we use an existing instance instead of creating a new one
+	options.TerraformVars = append(options.TerraformVars, testschematic.TestSchematicTerraformVar{Name: "existing_cloud_monitoring_crn", Value: terraform.OutputContext(t, context.Background(), existingTerraformOptions.TerraformOptions, "cloud_monitoring_crn"), DataType: "string"})
+
+	err = options.RunSchematicUpgradeTest()
 	if !options.UpgradeTestSkipped {
 		assert.Nil(t, err, "This should not have errored")
 	}
+
+	// Clean up existing resources
+	cleanupTerraform(t, existingTerraformOptions.TerraformOptions, prefix)
 }
 
 // Test "Metrics Routing account settings" DA variation
