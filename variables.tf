@@ -37,6 +37,12 @@ variable "disable_access_key_creation" {
   default     = false
 }
 
+variable "fetch_sysdig_monitor_api_token" {
+  type        = bool
+  description = "When set to true, fetches the Sysdig Monitor API Token for the Cloud Monitoring instance and exposes it as an output. This token is used to authenticate with the Sysdig REST API and to send metrics via Prometheus Remote Write. Requires a valid IAM token at apply time."
+  default     = false
+}
+
 variable "access_key_name" {
   type        = string
   description = "The name to give the default IBM Cloud Monitoring Manager access key. Use `disable_access_key_creation` to disable access key creation. For guidance on access keys, see [here](https://cloud.ibm.com/docs/monitoring?topic=monitoring-access_key)."

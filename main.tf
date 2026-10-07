@@ -37,6 +37,26 @@ resource "ibm_resource_tag" "cloud_monitoring_tag" {
   tag_type    = "access"
 }
 
+##############################################################################
+# Sysdig Monitor API Token
+##############################################################################
+
+data "ibm_iam_auth_token" "sysdig_monitor_api_token" {
+  count = var.fetch_sysdig_monitor_api_token ? 1 : 0
+}
+
+data "http" "sysdig_monitor_api_token" {
+  depends_on = [ibm_resource_instance.cloud_monitoring]
+  count      = var.fetch_sysdig_monitor_api_token ? 1 : 0
+  url        = "https://${var.region}.monitoring.cloud.ibm.com/api/token"
+
+  request_headers = {
+    Accept        = "application/json"
+    Authorization = data.ibm_iam_auth_token.sysdig_monitor_api_token[0].iam_access_token
+    IBMInstanceID = ibm_resource_instance.cloud_monitoring.guid
+  }
+}
+
 ###############################################################################
 # Resource Key (Default Manager Key)
 ###############################################################################

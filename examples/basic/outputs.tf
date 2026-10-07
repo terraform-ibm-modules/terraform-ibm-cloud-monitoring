@@ -29,6 +29,12 @@ output "cloud_monitoring_access_key" {
   sensitive   = true
 }
 
+output "cloud_monitoring_sysdig_monitor_api_token" {
+  value       = module.cloud_monitoring.sysdig_monitor_api_token
+  description = "The Sysdig Monitor API Token for the Cloud Monitoring instance."
+  sensitive   = true
+}
+
 output "ingestion_endpoint_private" {
   value       = module.cloud_monitoring.ingestion_endpoint_private
   description = "The Cloud Monitoring private ingestion endpoint."

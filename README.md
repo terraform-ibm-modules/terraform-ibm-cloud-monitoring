@@ -140,6 +140,8 @@ You need the following permissions to run this module.
     * `Editor` platform access
     * `Manager` service access
 
+> **Note:** When `fetch_sysdig_monitor_api_token` is set to `true`, the IAM identity running Terraform calls the Cloud Monitoring `/api/token` endpoint to retrieve the Sysdig Monitor API Token. This requires at minimum `Reader` service access on the Cloud Monitoring instance. Since `Manager` access is already required to provision the instance, no additional IAM policies are needed.
+
 <!-- The following content is automatically populated by the pre-commit hook -->
 <!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 ### Requirements
@@ -147,6 +149,7 @@ You need the following permissions to run this module.
 | Name | Version |
 |------|---------|
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.9.0 |
+| <a name="requirement_http"></a> [http](#requirement\_http) | >= 3.4.0, < 4.0.0 |
 | <a name="requirement_ibm"></a> [ibm](#requirement\_ibm) | >= 1.88.0, < 3.0.0 |
 
 ### Modules
@@ -163,7 +166,9 @@ You need the following permissions to run this module.
 | [ibm_resource_key.resource_key](https://registry.terraform.io/providers/ibm-cloud/ibm/latest/docs/resources/resource_key) | resource |
 | [ibm_resource_key.resource_keys](https://registry.terraform.io/providers/ibm-cloud/ibm/latest/docs/resources/resource_key) | resource |
 | [ibm_resource_tag.cloud_monitoring_tag](https://registry.terraform.io/providers/ibm-cloud/ibm/latest/docs/resources/resource_tag) | resource |
+| [http_http.sysdig_monitor_api_token](https://registry.terraform.io/providers/hashicorp/http/latest/docs/data-sources/http) | data source |
 | [ibm_iam_access_tag.access_tag](https://registry.terraform.io/providers/ibm-cloud/ibm/latest/docs/data-sources/iam_access_tag) | data source |
+| [ibm_iam_auth_token.sysdig_monitor_api_token](https://registry.terraform.io/providers/ibm-cloud/ibm/latest/docs/data-sources/iam_auth_token) | data source |
 
 ### Inputs
 
@@ -175,6 +180,7 @@ You need the following permissions to run this module.
 | <a name="input_cbr_rules"></a> [cbr\_rules](#input\_cbr\_rules) | The context-based restrictions rule to create. Only one rule is allowed. | <pre>list(object({<br/>    description = string<br/>    account_id  = string<br/>    rule_contexts = list(object({<br/>      attributes = optional(list(object({<br/>        name  = string<br/>        value = string<br/>    }))) }))<br/>    enforcement_mode = string<br/>    operations = optional(list(object({<br/>      api_types = list(object({<br/>        api_type_id = string<br/>      }))<br/>    })))<br/>  }))</pre> | `[]` | no |
 | <a name="input_disable_access_key_creation"></a> [disable\_access\_key\_creation](#input\_disable\_access\_key\_creation) | When set to true, disables the creation of a default manager access key which is required by agents to ingest metrics. | `bool` | `false` | no |
 | <a name="input_enable_platform_metrics"></a> [enable\_platform\_metrics](#input\_enable\_platform\_metrics) | Receive platform metrics in the provisioned IBM Cloud Monitoring instance. Only 1 instance in a given region can be enabled for platform metrics. | `bool` | `false` | no |
+| <a name="input_fetch_sysdig_monitor_api_token"></a> [fetch\_sysdig\_monitor\_api\_token](#input\_fetch\_sysdig\_monitor\_api\_token) | When set to true, fetches the Sysdig Monitor API Token for the Cloud Monitoring instance and exposes it as an output. This token is used to authenticate with the Sysdig REST API and to send metrics via Prometheus Remote Write. Requires a valid IAM token at apply time. | `bool` | `false` | no |
 | <a name="input_instance_name"></a> [instance\_name](#input\_instance\_name) | The name of the IBM Cloud Monitoring instance to create. Defaults to 'cloud-monitoring-<region>' | `string` | `null` | no |
 | <a name="input_plan"></a> [plan](#input\_plan) | The IBM Cloud Monitoring plan to provision. Available: lite, graduated-tier and graduated-tier-sysdig-secure-plus-monitor (available in region eu-fr2 only) | `string` | `"lite"` | no |
 | <a name="input_region"></a> [region](#input\_region) | The IBM Cloud region where Cloud Monitoring instance will be created. | `string` | `"us-south"` | no |
@@ -197,6 +203,7 @@ You need the following permissions to run this module.
 | <a name="output_name"></a> [name](#output\_name) | The name of the provisioned cloud monitoring instance. |
 | <a name="output_resource_group_id"></a> [resource\_group\_id](#output\_resource\_group\_id) | The resource group where cloud monitoring monitor instance resides |
 | <a name="output_resource_keys"></a> [resource\_keys](#output\_resource\_keys) | A list of maps representing resource keys created for the IBM Cloud Monitoring instance. |
+| <a name="output_sysdig_monitor_api_token"></a> [sysdig\_monitor\_api\_token](#output\_sysdig\_monitor\_api\_token) | The Sysdig Monitor API Token for the Cloud Monitoring instance. Used to authenticate with the Sysdig REST API and to send metrics via Prometheus Remote Write. Only populated when `fetch_sysdig_monitor_api_token` is true. |
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 
 <!-- Leave this section as is so that your module has a link to local development environment set-up steps for contributors to follow -->
