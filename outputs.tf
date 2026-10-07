@@ -41,6 +41,13 @@ output "access_key" {
   sensitive   = true
 }
 
+# https://cloud.ibm.com/docs/monitoring?topic=monitoring-prometheus_remote_write
+output "sysdig_monitor_api_token" {
+  value       = var.fetch_sysdig_monitor_api_token ? jsondecode(data.http.sysdig_monitor_api_token[0].response_body).token.key : null
+  description = "The Sysdig Monitor API Token for the Cloud Monitoring instance. Used to authenticate with the Sysdig REST API and to send metrics via Prometheus Remote Write. Only populated when `fetch_sysdig_monitor_api_token` is true."
+  sensitive   = true
+}
+
 # https://cloud.ibm.com/docs/monitoring?topic=monitoring-endpoints#endpoints_ingestion
 output "ingestion_endpoint_private" {
   value       = "ingest.private.${var.region}.monitoring.cloud.ibm.com"

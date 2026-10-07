@@ -83,6 +83,12 @@ variable "disable_access_key_creation" {
   default     = false
 }
 
+variable "fetch_sysdig_monitor_api_token" {
+  type        = bool
+  description = "When set to true, fetches the Sysdig Monitor API Token for the Cloud Monitoring instance and exposes it as an output. This token is used to authenticate with the Sysdig REST API and to send metrics via Prometheus Remote Write. Requires a valid IAM token at apply time."
+  default     = false
+}
+
 variable "cloud_monitoring_resource_keys" {
   description = "A list of maps representing resource keys to create for the IBM Cloud Monitoring instance. Each entry defines a single resource key. Use this list to manage custom keys and handle key rotation."
   type = list(object({
