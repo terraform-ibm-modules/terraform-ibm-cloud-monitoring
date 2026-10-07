@@ -140,8 +140,6 @@ You need the following permissions to run this module.
     * `Editor` platform access
     * `Manager` service access
 
-> **Note:** When `fetch_sysdig_monitor_api_token` is set to `true`, the IAM identity running Terraform calls the Cloud Monitoring `/api/token` endpoint to retrieve the Sysdig Monitor API Token. This requires at minimum `Reader` service access on the Cloud Monitoring instance. Since `Manager` access is already required to provision the instance, no additional IAM policies are needed.
-
 <!-- The following content is automatically populated by the pre-commit hook -->
 <!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 ### Requirements
