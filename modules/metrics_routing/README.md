@@ -77,7 +77,7 @@ You need the following permissions to run this module.
 ### Requirements
 
 | Name | Version |
-|------|---------|
+| ---- | ------- |
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.9.0 |
 | <a name="requirement_ibm"></a> [ibm](#requirement\_ibm) | >= 1.69.2, < 3.0.0 |
 | <a name="requirement_time"></a> [time](#requirement\_time) | >= 0.9.1, < 1.0.0 |
@@ -89,7 +89,7 @@ No modules.
 ### Resources
 
 | Name | Type |
-|------|------|
+| ---- | ---- |
 | [ibm_iam_authorization_policy.metrics_router_cloud_monitoring](https://registry.terraform.io/providers/ibm-cloud/ibm/latest/docs/resources/iam_authorization_policy) | resource |
 | [ibm_metrics_router_route.metrics_router_routes](https://registry.terraform.io/providers/ibm-cloud/ibm/latest/docs/resources/metrics_router_route) | resource |
 | [ibm_metrics_router_settings.metrics_router_settings](https://registry.terraform.io/providers/ibm-cloud/ibm/latest/docs/resources/metrics_router_settings) | resource |
@@ -99,7 +99,7 @@ No modules.
 ### Inputs
 
 | Name | Description | Type | Default | Required |
-|------|-------------|------|---------|:--------:|
+| ---- | ----------- | ---- | ------- | :------: |
 | <a name="input_metrics_router_routes"></a> [metrics\_router\_routes](#input\_metrics\_router\_routes) | List of routes for IBM Metrics Router | <pre>list(object({<br/>    name = string<br/>    rules = list(object({<br/>      action = optional(string, "send")<br/>      targets = optional(list(object({<br/>        id = string<br/>      })))<br/>      inclusion_filters = list(object({<br/>        operand  = string<br/>        operator = string<br/>        values   = list(string)<br/>      }))<br/>    }))<br/>  }))</pre> | `[]` | no |
 | <a name="input_metrics_router_settings"></a> [metrics\_router\_settings](#input\_metrics\_router\_settings) | The global account settings for Metrics Routing. To configure metrics routing, the account must have a `primary_metadata_region` set. You will be unable to view the account settings in the UI if `private_api_endpoint_only` is set to true. For more information, see https://cloud.ibm.com/docs/metrics-router?topic=metrics-router-settings-about&interface=ui. | <pre>object({<br/>    permitted_target_regions  = optional(list(string), [])<br/>    primary_metadata_region   = optional(string)<br/>    backup_metadata_region    = optional(string)<br/>    private_api_endpoint_only = optional(bool, false)<br/>    default_targets           = optional(list(string), [])<br/>  })</pre> | `null` | no |
 | <a name="input_metrics_router_targets"></a> [metrics\_router\_targets](#input\_metrics\_router\_targets) | List of Metrics Router targets to be created. | <pre>list(object({<br/>    destination_crn                 = string<br/>    target_name                     = string<br/>    target_region                   = optional(string)<br/>    skip_metrics_router_auth_policy = optional(bool, false)<br/>  }))</pre> | `[]` | no |
@@ -107,7 +107,7 @@ No modules.
 ### Outputs
 
 | Name | Description |
-|------|-------------|
+| ---- | ----------- |
 | <a name="output_metrics_router_routes"></a> [metrics\_router\_routes](#output\_metrics\_router\_routes) | The created metrics routing routes. |
 | <a name="output_metrics_router_settings"></a> [metrics\_router\_settings](#output\_metrics\_router\_settings) | The global metrics routing settings. |
 | <a name="output_metrics_router_targets"></a> [metrics\_router\_targets](#output\_metrics\_router\_targets) | The created metrics routing targets. |
