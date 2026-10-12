@@ -55,6 +55,13 @@ data "http" "sysdig_monitor_api_token" {
     Authorization = data.ibm_iam_auth_token.sysdig_monitor_api_token[0].iam_access_token
     IBMInstanceID = ibm_resource_instance.cloud_monitoring.guid
   }
+
+  lifecycle {
+    postcondition {
+      condition     = self.status_code == 200
+      error_message = "Sysdig Monitor API token request failed: HTTP ${self.status_code}. Check that the IAM token is valid and the Cloud Monitoring instance GUID is correct."
+    }
+  }
 }
 
 ###############################################################################

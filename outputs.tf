@@ -43,7 +43,7 @@ output "access_key" {
 
 # https://cloud.ibm.com/docs/monitoring?topic=monitoring-prometheus_remote_write
 output "sysdig_monitor_api_token" {
-  value       = var.fetch_sysdig_monitor_api_token ? jsondecode(data.http.sysdig_monitor_api_token[0].response_body).token.key : null
+  value       = var.fetch_sysdig_monitor_api_token ? try(jsondecode(data.http.sysdig_monitor_api_token[0].response_body).token.key, null) : null
   description = "The Sysdig Monitor API Token for the Cloud Monitoring instance. Used to authenticate with the Sysdig REST API and to send metrics via Prometheus Remote Write. Only populated when `fetch_sysdig_monitor_api_token` is true."
   sensitive   = true
 }
