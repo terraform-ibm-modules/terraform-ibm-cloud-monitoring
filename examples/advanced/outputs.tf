@@ -58,3 +58,9 @@ output "metrics_router_settings" {
   value       = module.metrics_routing.metrics_router_settings
   description = "The global metrics routing settings."
 }
+
+output "cloud_monitoring_sysdig_monitor_api_token" {
+  value       = module.cloud_monitoring.sysdig_monitor_api_token
+  description = "The Sysdig Monitor API Token for the Cloud Monitoring instance."
+  sensitive   = true
+}
