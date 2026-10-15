@@ -39,13 +39,14 @@ locals {
 }
 
 module "cloud_monitoring" {
-  source            = "../../"
-  resource_group_id = module.resource_group.resource_group_id
-  region            = var.region
-  resource_tags     = var.resource_tags
-  access_tags       = var.access_tags
-  plan              = "graduated-tier"
-  instance_name     = local.cloud_monitoring_instance_name
+  source                         = "../../"
+  resource_group_id              = module.resource_group.resource_group_id
+  region                         = var.region
+  resource_tags                  = var.resource_tags
+  access_tags                    = var.access_tags
+  plan                           = "graduated-tier"
+  instance_name                  = local.cloud_monitoring_instance_name
+  fetch_sysdig_monitor_api_token = var.fetch_sysdig_monitor_api_token
   resource_keys = [
     {
       name     = "${var.prefix}-private-resource-key"

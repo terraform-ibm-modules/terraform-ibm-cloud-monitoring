@@ -38,6 +38,12 @@ output "cloud_monitoring_access_key" {
   sensitive   = true
 }
 
+output "cloud_monitoring_sysdig_monitor_api_token" {
+  value       = local.create_cloud_monitoring ? module.cloud_monitoring[0].sysdig_monitor_api_token : null
+  description = "The Sysdig Monitor API Token for the Cloud Monitoring instance. Used to authenticate with the Sysdig REST API and to send metrics via Prometheus Remote Write. Only populated when `fetch_sysdig_monitor_api_token` is true."
+  sensitive   = true
+}
+
 output "cloud_monitoring_resource_keys" {
   value       = local.create_cloud_monitoring ? module.cloud_monitoring[0].resource_keys : null
   description = "A list of maps representing resource keys created for the IBM Cloud Monitoring instance."

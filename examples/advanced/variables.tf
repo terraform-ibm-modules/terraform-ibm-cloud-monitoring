@@ -37,3 +37,9 @@ variable "access_tags" {
   description = "Optional list of access management tags to add to the Cloud Monitoring instance."
   default     = []
 }
+
+variable "fetch_sysdig_monitor_api_token" {
+  type        = bool
+  description = "When set to true, fetches the Sysdig Monitor API Token for the Cloud Monitoring instance and exposes it as an output."
+  default     = false
+}
