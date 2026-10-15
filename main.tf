@@ -52,7 +52,7 @@ data "http" "sysdig_monitor_api_token" {
 
   request_headers = {
     Accept        = "application/json"
-    Authorization = data.ibm_iam_auth_token.sysdig_monitor_api_token[0].iam_access_token
+    Authorization = sensitive(data.ibm_iam_auth_token.sysdig_monitor_api_token[0].iam_access_token)
     IBMInstanceID = ibm_resource_instance.cloud_monitoring.guid
   }
 
