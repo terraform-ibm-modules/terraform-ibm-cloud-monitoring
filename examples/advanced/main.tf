@@ -108,21 +108,18 @@ module "metrics_routing" {
     }
   ]
 
-  /*
-
   ##############################################################################
   # - Global Metrics Routing configuration
   ##############################################################################
 
-  Uncomment below to set metrics router settings. A `primary_metadata_region` is required to be set before metrics routing can be configured.
+  # Uncomment below to set metrics router settings. A `primary_metadata_region` is required to be set before metrics routing can be configured.
 
-  metrics_router_settings = {
-    default_targets = [{
-      id = module.metrics_routing.metrics_router_targets[local.metrics_router_target_name].id
-    }]
-    permitted_target_regions  = ["us-south", "eu-de", "us-east", "eu-es", "eu-gb", "au-syd", "br-sao", "ca-tor", "jp-tok", "jp-osa"]
-    primary_metadata_region   = var.region
-    private_api_endpoint_only = false
-  }
-  */
+  # metrics_router_settings = {
+  #   default_targets = [{
+  #     id = module.metrics_routing.metrics_router_targets[local.metrics_router_target_name].id
+  #   }]
+  #   permitted_target_regions  = ["us-south", "eu-de", "us-east", "eu-es", "eu-gb", "au-syd", "br-sao", "ca-tor", "jp-tok", "jp-osa"]
+  #  primary_metadata_region   = var.region
+  #   private_api_endpoint_only = false
+  # }
 }
