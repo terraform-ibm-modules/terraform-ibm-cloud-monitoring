@@ -42,6 +42,7 @@ resource "ibm_resource_tag" "cloud_monitoring_tag" {
 ##############################################################################
 
 data "ibm_cloud_monitoring_api_token" "sysdig_monitor_api_token" {
+  depends_on  = [ibm_resource_instance.cloud_monitoring]
   count       = var.fetch_sysdig_monitor_api_token ? 1 : 0
   instance_id = ibm_resource_instance.cloud_monitoring.guid
   region      = var.region
