@@ -163,8 +163,8 @@ You need the following permissions to run this module.
 | [ibm_resource_key.resource_key](https://registry.terraform.io/providers/ibm-cloud/ibm/latest/docs/resources/resource_key) | resource |
 | [ibm_resource_key.resource_keys](https://registry.terraform.io/providers/ibm-cloud/ibm/latest/docs/resources/resource_key) | resource |
 | [ibm_resource_tag.cloud_monitoring_tag](https://registry.terraform.io/providers/ibm-cloud/ibm/latest/docs/resources/resource_tag) | resource |
-| [ibm_iam_access_tag.access_tag](https://registry.terraform.io/providers/ibm-cloud/ibm/latest/docs/data-sources/iam_access_tag) | data source |
 | [ibm_cloud_monitoring_api_token.sysdig_monitor_api_token](https://registry.terraform.io/providers/ibm-cloud/ibm/latest/docs/data-sources/cloud_monitoring_api_token) | data source |
+| [ibm_iam_access_tag.access_tag](https://registry.terraform.io/providers/ibm-cloud/ibm/latest/docs/data-sources/iam_access_tag) | data source |
 
 ### Inputs
 
