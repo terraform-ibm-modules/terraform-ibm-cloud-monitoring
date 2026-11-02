@@ -108,6 +108,7 @@ func setupOptions(t *testing.T, prefix string) *testschematic.TestSchematicOptio
 		{Name: "cloud_monitoring_resource_tags", Value: options.Tags, DataType: "list(string)"},
 		{Name: "prefix", Value: options.Prefix, DataType: "string"},
 		{Name: "cloud_monitoring_plan", Value: plan, DataType: "string"},
+		{Name: "fetch_sysdig_monitor_api_token", Value: true, DataType: "bool"},
 	}
 
 	return options
