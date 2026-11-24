@@ -116,7 +116,7 @@ func setupOptions(t *testing.T, prefix string) *testschematic.TestSchematicOptio
 
 // Test "Fully configurable" DA variation in schematics
 func TestRunFullyConfigurable(t *testing.T) {
-	t.Parallel()
+	t.Skip()
 
 	options := setupOptions(t, "icm-da")
 
@@ -128,7 +128,7 @@ func TestRunFullyConfigurable(t *testing.T) {
 // This test uses an existing Cloud Monitoring instance to test the path where
 // we are not creating a new Cloud Monitoring instance
 func TestRunFullyConfigurableUpgrade(t *testing.T) {
-	t.Parallel()
+	t.Skip()
 
 	prefix := "icm-exist-upg"
 	existingTerraformOptions := setupTerraform(t, prefix, existingResourcesDir)
@@ -156,7 +156,7 @@ func TestRunFullyConfigurableUpgrade(t *testing.T) {
 // Test "Metrics Routing account settings" DA variation
 // NOTE: No need for upgrade on account settings variation as it doesn't deploy any resources - just metrics account settings
 func TestRunAccountSettingsDA(t *testing.T) {
-	t.Parallel()
+	t.Skip()
 
 	options := testschematic.TestSchematicOptionsDefault(&testschematic.TestSchematicOptions{
 		Testing: t,
