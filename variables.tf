@@ -149,4 +149,3 @@ variable "cbr_rules" {
     error_message = "Only one CBR rule is allowed."
   }
 }
-# test draft
